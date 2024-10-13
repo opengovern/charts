@@ -1,6 +1,6 @@
 apiVersion: v2
-name: open-governance
-description: A Helm chart for deploying open-governance to Kubernetes
+name: opengovernance
+description: A Helm chart for deploying opengovernance to Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
 #
