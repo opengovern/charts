@@ -1,0 +1,364 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: proxy-pass-nginx-config
+  namespace: {{ .Release.Namespace }}
+data:
+  nginx.conf: |
+    events {}
+    http {
+      log_format main '$remote_addr - $remote_user [$time_local] "$request" "$X_Kaytu_WorkspaceID" "$X_Kaytu_WorkspaceName" "$X_Kaytu_UserId" "$X_Kaytu_UserRole" "$X_Kaytu_UserConnectionsScope" '
+                '$status $body_bytes_sent "$http_referer" '
+                '"$http_user_agent" "$http_x_forwarded_for"';
+
+      server {
+        listen 80;
+
+        auth_request /kaytu/auth/api/v1/check;
+        auth_request_set $X_Kaytu_WorkspaceID $upstream_http_X_Kaytu_WorkspaceID;
+        auth_request_set $X_Kaytu_WorkspaceName $upstream_http_X_Kaytu_WorkspaceName;
+        auth_request_set $X_Kaytu_UserId $upstream_http_X_Kaytu_UserId;
+        auth_request_set $X_Kaytu_UserRole $upstream_http_X_Kaytu_UserRole;
+        auth_request_set $X_Kaytu_UserConnectionsScope $upstream_http_X_Kaytu_UserConnectionsScope;
+
+        access_log /var/log/nginx/access.log main;
+
+
+        location /main/integration {
+          rewrite ^/main/integration(.*) $1 break;
+
+          proxy_pass http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000;
+          proxy_ssl_verify off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
+          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
+          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
+          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
+          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+          
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /main/onboard {
+          rewrite ^/main/onboard(.*) $1 break;
+
+          proxy_pass http://onboard-service.{{ .Release.Namespace }}.svc.cluster.local:6251;
+          proxy_ssl_verify off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
+          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
+          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
+          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
+          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /main/inventory {
+          rewrite ^/main/inventory(.*) $1 break;
+
+          proxy_pass http://inventory-service.{{ .Release.Namespace }}.svc.cluster.local:7251;
+          proxy_ssl_verify off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
+          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
+          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
+          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
+          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /main/metadata {
+          rewrite ^/main/metadata(.*) $1 break;
+
+          proxy_pass http://metadata-service.{{ .Release.Namespace }}.svc.cluster.local:6251;
+          proxy_ssl_verify off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
+          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
+          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
+          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
+          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /main/compliance {
+          rewrite ^/main/compliance(.*) $1 break;
+
+          proxy_pass http://compliance-service.{{ .Release.Namespace }}.svc.cluster.local:7251;
+          proxy_ssl_verify off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
+          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
+          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
+          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
+          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /main/schedule {
+          rewrite ^/main/schedule(.*) $1 break;
+
+          proxy_pass http://describe-scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251;
+          proxy_ssl_verify off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
+          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
+          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
+          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
+          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /main/auth {
+          rewrite ^/main/auth(.*) $1 break;
+
+          proxy_pass http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251;
+          proxy_ssl_verify off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
+          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
+          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
+          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
+          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /main/workspace/api/v3/configured/status {
+          auth_request off;
+          proxy_set_header X-Kaytu-WorkspaceID "";
+          proxy_set_header X-Kaytu-WorkspaceName "";
+          proxy_set_header X-Kaytu-UserId "";
+          proxy_set_header X-Kaytu-UserRole "";
+          proxy_set_header X-Kaytu-UserConnectionsScope "";
+
+          rewrite ^/main/workspace(.*) $1 break;
+
+          proxy_pass http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251;
+          proxy_ssl_verify off;
+          proxy_set_header X-Original-URI $request_uri;
+          proxy_set_header X-Original-Method $request_method;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /main/workspace {
+          rewrite ^/main/workspace(.*) $1 break;
+
+          proxy_pass http://workspace-service.{{ .Release.Namespace }}.svc.cluster.local:8351;
+          proxy_ssl_verify off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
+          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
+          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
+          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
+          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /kaytu/auth/api/v1/check {
+            internal;
+            auth_request off;
+            proxy_set_header X-Kaytu-WorkspaceID "";
+            proxy_set_header X-Kaytu-WorkspaceName "";
+            proxy_set_header X-Kaytu-UserId "";
+            proxy_set_header X-Kaytu-UserRole "";
+            proxy_set_header X-Kaytu-UserConnectionsScope "";
+
+            rewrite ^/kaytu/auth/api/v1/check$ /api/v1/check break;
+
+            proxy_pass http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251;
+            proxy_pass_request_body off;
+            proxy_set_header Content-Length "";
+            proxy_set_header X-Original-URI $request_uri;
+            proxy_set_header X-Original-Method $request_method;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Host $host;
+            proxy_set_header X-Forwarded-Port $server_port;
+
+            proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /kaytu/auth/api/v3/setup/check {
+            auth_request off;
+            proxy_set_header X-Kaytu-WorkspaceID "";
+            proxy_set_header X-Kaytu-WorkspaceName "";
+            proxy_set_header X-Kaytu-UserId "";
+            proxy_set_header X-Kaytu-UserRole "";
+            proxy_set_header X-Kaytu-UserConnectionsScope "";
+
+            rewrite ^/kaytu/auth/api/v3/setup/check$ /api/v3/setup/check break;
+
+            proxy_pass http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251;
+            proxy_ssl_verify off;
+            proxy_set_header X-Original-URI $request_uri;
+            proxy_set_header X-Original-Method $request_method;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Host $host;
+            proxy_set_header X-Forwarded-Port $server_port;
+
+            proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /kaytu/auth/api/v3/setup {
+            auth_request off;
+            proxy_set_header X-Kaytu-WorkspaceID "";
+            proxy_set_header X-Kaytu-WorkspaceName "";
+            proxy_set_header X-Kaytu-UserId "";
+            proxy_set_header X-Kaytu-UserRole "";
+            proxy_set_header X-Kaytu-UserConnectionsScope "";
+
+            rewrite ^/kaytu/auth/api/v3/setup$ /api/v3/setup break;
+
+            proxy_pass http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251;
+            proxy_ssl_verify off;
+            proxy_set_header X-Original-URI $request_uri;
+            proxy_set_header X-Original-Method $request_method;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Host $host;
+            proxy_set_header X-Forwarded-Port $server_port;
+
+            proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /kaytu/auth {
+          rewrite ^/kaytu/auth(.*) $1 break;
+
+          proxy_pass http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251;
+          proxy_ssl_verify off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
+          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
+          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
+          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
+          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /kaytu/workspace {
+          rewrite ^/kaytu/workspace(.*) $1 break;
+
+          proxy_pass http://workspace-service.{{ .Release.Namespace }}.svc.cluster.local:8351;
+          proxy_ssl_verify off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
+          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
+          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
+          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
+          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /swagger {
+          auth_request off;
+
+          proxy_pass http://swagger-ui.{{ .Release.Namespace }}.svc.cluster.local:7255;
+          proxy_ssl_verify off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location /dex {
+          auth_request off;
+          proxy_set_header X-Kaytu-WorkspaceID "";
+          proxy_set_header X-Kaytu-WorkspaceName "";
+          proxy_set_header X-Kaytu-UserId "";
+          proxy_set_header X-Kaytu-UserRole "";
+          proxy_set_header X-Kaytu-UserConnectionsScope "";
+
+
+          proxy_pass http://{{.Release.Name}}-dex.{{ .Release.Namespace }}.svc.cluster.local:5556;
+          proxy_ssl_verify off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+
+        location / {
+          auth_request off;
+          proxy_set_header X-Kaytu-WorkspaceID "";
+          proxy_set_header X-Kaytu-WorkspaceName "";
+          proxy_set_header X-Kaytu-UserId "";
+          proxy_set_header X-Kaytu-UserRole "";
+          proxy_set_header X-Kaytu-UserConnectionsScope "";
+
+          proxy_pass http://frontend-v2-svc.{{ .Release.Namespace }}.svc.cluster.local:7298;
+          proxy_ssl_verify off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Port $server_port;
+
+          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        }
+      }
+    }

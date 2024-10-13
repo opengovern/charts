@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkup-worker
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    app: checkup-worker
+spec:
+  minReadySeconds: 10
+  {{- if eq .Values.keda.enabled true }}
+  replicas: 0
+  {{- else }}
+  replicas: 1
+  {{- end }}
+  selector:
+    matchLabels:
+      app: checkup-worker
+  template:
+    metadata:
+      labels:
+        app: checkup-worker
+    spec:
+      serviceAccountName: checkup-worker
+      containers:
+        - name: checkup-worker
+          image: "{{ .Values.opengovernance.docker.registry }}/checkup-worker:{{ .Values.opengovernance.docker.tags.checkupWorker }}"
+          command: ["/checkup-worker"]
+          args:
+            - --id=$(WORKER_ID)
+          imagePullPolicy: Always
+          #resources:
+          #  limits:
+          #    cpu: 100m
+          #    memory: 500Mi
+          #  requests:
+          #    cpu: 100m
+          #    memory: 500Mi
+          env:
+            - name: NATS_URL
+              value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
+
+            - name: WORKER_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: PROMETHEUS_PUSH_ADDRESS
+              value: "prom-system-prometheus-pushgateway.prom-system.svc.cluster.local:9091"
+            - name: ONBOARD_BASE_URL
+              value: "http://onboard-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+            - name: JAEGER_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+
+            - name: JAEGER_SERVICE_NAME
+              value: "checkup-worker"

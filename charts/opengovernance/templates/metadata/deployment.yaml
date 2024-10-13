@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metadata-service
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: metadata-service
+spec:
+  minReadySeconds: 10
+  replicas: {{ .Values.opengovernance.replicaCount }}
+  selector:
+    matchLabels:
+      app: metadata-service
+  template:
+    metadata:
+      labels:
+        app: metadata-service
+    spec:
+      serviceAccountName: metadata
+      containers:
+      - name: metadata-service
+        image: "{{ .Values.opengovernance.docker.registry }}/metadata-service:{{ .Values.opengovernance.docker.tags.metadata }}"
+        command: ["/metadata-service"]
+        imagePullPolicy: Always
+        #resources:
+        #  limits:
+        #    cpu: 100m
+        #    memory: 500Mi
+        #  requests:
+        #    cpu: 100m
+        #    memory: 100Mi
+        env:
+        - name: POSTGRESQL_HOST
+          value: "{{ include "postgres.endpoint" . }}"
+        - name: POSTGRESQL_PORT
+          value: "{{ include "postgres.port" . }}"
+        - name: POSTGRESQL_DB
+          value: "metadata"
+        - name: POSTGRESQL_USERNAME
+          value: "metadata_service"
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: metadataServiceUserPassword
+        - name: POSTGRESQL_SSLMODE
+          value: "{{ include "postgres.sslMode" . }}"
+        - name: HTTP_ADDRESS
+          value: "0.0.0.0:6251"
+
+        - name: JAEGER_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: JAEGER_SERVICE_NAME
+          value: "metadata-service"

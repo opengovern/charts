@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pennywise-server
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: pennywise-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pennywise-server
+  template:
+    metadata:
+      labels:
+        app: pennywise-server
+    spec:
+      containers:
+        - name: integration-service
+          image: "{{ .Values.opengovernance.docker.registry }}/pennywise-server:{{ .Values.opengovernance.docker.tags.pennywise }}"
+          command: ["./main"]
+          imagePullPolicy: Always
+          #resources:
+          #  limits:
+          #    cpu: 200m
+          #    memory: 1Gi
+          #  requests:
+          #    cpu: 100m
+          #    memory: 100Mi
+          env:
+            - name: POSTGRES_HOST
+              value: "{{ include "postgres.endpoint" . }}"
+            - name: POSTGRES_PORT
+              value: "{{ include "postgres.port" . }}"
+            - name: POSTGRES_DB
+              value: "pennywise"
+            - name: POSTGRES_USERNAME
+              value: "pennywise_service"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: pennywiseUserPassword

@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analytics-worker
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    app: analytics-worker
+spec:
+  minReadySeconds: 10
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analytics-worker
+  strategy:
+        type: Recreate
+  template:
+    metadata:
+      labels:
+        app: analytics-worker
+    spec:
+      serviceAccountName: analytics-worker
+      containers:
+        - name: analytics-worker
+          image: "{{ .Values.opengovernance.docker.registry }}/analytics-worker:{{ .Values.opengovernance.docker.tags.analytics }}"
+          command: [ "/analytics-worker" ]
+          args:
+            - --id=$(WORKER_ID)
+          imagePullPolicy: Always
+          #resources:
+          #  limits:
+          #    cpu: 500m
+          #    memory: 2Gi
+          #  requests:
+          #    cpu: 500m
+          #    memory: 2Gi
+          env:
+            {{- include "elastic.envs" . | indent 12 }}
+            - name: STEAMPIPE_LOG_LEVEL
+              value: "WARN"
+            - name: STEAMPIPE_MAX_PARALLEL
+              value: "50"
+            - name: STEAMPIPE_CACHE
+              value: "false"
+            - name: STEAMPIPE_UPDATE_CHECK
+              value: "false"
+            - name: POSTGRESQL_HOST
+              value: "{{ include "postgres.endpoint" . }}"
+            - name: POSTGRESQL_PORT
+              value: "{{ include "postgres.port" . }}"
+            - name: POSTGRESQL_USERNAME
+              value: "inventory_service"
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: inventoryServiceUserPassword
+            - name: POSTGRESQL_DB
+              value: "inventory"
+            - name: POSTGRESQL_SSLMODE
+              value: "{{ include "postgres.sslMode" . }}"
+
+            - name: PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: steampipeUserPassword
+            - name: METADATA_DB_HOST
+              value: "{{ include "postgres.endpoint" . }}"
+            - name: METADATA_DB_PORT
+              value: "{{ include "postgres.port" . }}"
+            - name: METADATA_DB_SSL_MODE
+              value: "{{ include "postgres.sslMode" . }}"
+
+            - name: STEAMPIPE_HOST
+              value: "{{ include "postgres.endpoint" . }}"
+            - name: STEAMPIPE_PORT
+              value: "{{ include "postgres.port" . }}"
+            - name: STEAMPIPE_USERNAME
+              value: "steampipe_user"
+            - name: STEAMPIPE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: steampipeUserPassword
+            - name: STEAMPIPE_DB
+              value: "onboard"
+
+            - name: NATS_URL
+              value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
+
+            - name: WORKER_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+
+            - name: STEAMPIPE_ACCOUNT_ID
+              value: "all"
+            - name: PROMETHEUS_PUSH_ADDRESS
+              value: "prom-system-prometheus-pushgateway.prom-system.svc.cluster.local:9091"
+            - name: ONBOARD_BASEURL
+              value: "http://onboard-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+            - name: SCHEDULER_BASEURL
+              value: "http://describe-scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251"
+            - name: INVENTORY_BASEURL
+              value: "http://inventory-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
+            - name: ESSINK_BASEURL
+              value: "http://es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
+            - name: PENNYWISE_BASE_URL
+              value: "http://pennywise-server-service.{{ .Release.Namespace }}.svc.cluster.local:8080"
