@@ -519,6 +519,9 @@ postgresql:
           secretKeyRef:
             name: postgres-secret
             key: alertingServiceUserPassword
+telemetry:
+    enabled: true
+    baseUrl: http://telemetry.opengovernance.io
 externalOpensearch:
   enabled: false
   endpoint: "https://opensearch.example.com"
