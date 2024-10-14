@@ -7,7 +7,7 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       workspace: v0.427.88
-      frontendv2: v0.3.9-dev
+      frontendv2: v0.3.13-dev
       auth: v0.427.88
       swagger: v0.427.88
       pennywise: v0.4.20-dev
