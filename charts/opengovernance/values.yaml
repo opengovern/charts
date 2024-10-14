@@ -28,7 +28,7 @@ opengovernance:
       esSink: v0.427.88
       queryRunnerWorker: v0.427.92
       demoImport: v0.427.88
-      psqlImport: v0.427.93
+      psqlImport: v0.427.92
   apikey:
     public: ""
     private: ""
