@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: integration-service
-          image: "{{ .Values.opengovernance.docker.registry }}/pennywise-server:{{ .Values.opengovernance.docker.tags.pennywise }}"
+          image: "ghcr.io/kaytu-io/pennywise-server:{{ .Values.opengovernance.docker.tags.pennywise }}"
           command: ["./main"]
           imagePullPolicy: Always
           #resources:

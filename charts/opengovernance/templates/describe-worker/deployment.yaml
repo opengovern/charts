@@ -23,8 +23,8 @@ spec:
       serviceAccountName: kaytu-aws-describer
       containers:
         - name: kaytu-aws-describer
-          image: "{{ .Values.opengovernance.docker.registry }}/kaytu-aws-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAWS }}"
-          command: ["/kaytu-aws-describer"]
+          image: "{{ .Values.opengovernance.docker.registry }}/og-aws-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAWS }}"
+          command: ["/og-aws-describer"]
           imagePullPolicy: Always
           #resources:
           #  limits:
@@ -62,8 +62,8 @@ spec:
       serviceAccountName: kaytu-azure-describer
       containers:
         - name: kaytu-azure-describer
-          image: "{{ .Values.opengovernance.docker.registry }}/kaytu-azure-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAzure }}"
-          command: ["/kaytu-azure-describer"]
+          image: "{{ .Values.opengovernance.docker.registry }}/og-azure-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAzure }}"
+          command: ["/og-azure-describer"]
           imagePullPolicy: Always
           #resources:
           #  limits:
@@ -101,8 +101,8 @@ spec:
       serviceAccountName: kaytu-aws-describer
       containers:
         - name: kaytu-aws-describer
-          image: "{{ .Values.opengovernance.docker.registry }}/kaytu-aws-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAWS }}"
-          command: ["/kaytu-aws-describer"]
+          image: "{{ .Values.opengovernance.docker.registry }}/og-aws-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAWS }}"
+          command: ["/og-aws-describer"]
           imagePullPolicy: Always
           #resources:
           #  limits:
@@ -142,8 +142,8 @@ spec:
       serviceAccountName: kaytu-azure-describer
       containers:
         - name: kaytu-azure-describer
-          image: "{{ .Values.opengovernance.docker.registry }}/kaytu-azure-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAzure }}"
-          command: ["/kaytu-azure-describer"]
+          image: "{{ .Values.opengovernance.docker.registry }}/og-azure-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAzure }}"
+          command: ["/og-azure-describer"]
           imagePullPolicy: Always
           #resources:
           #  limits:
