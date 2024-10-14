@@ -1,4 +1,3 @@
-
 {{- define "postgres.endpoint" -}}
 {{- if .Values.externalPostgresql.enabled }}
 {{- printf .Values.externalPostgresql.endpoint }}

@@ -18,7 +18,7 @@ spec:
 
       containers:
       - name: frontend-v2
-        image: "{{ .Values.opengovernance.docker.registry }}/kaytu-frontend-v3:{{ .Values.opengovernance.docker.tags.frontendv2 }}"
+        image: "{{ .Values.opengovernance.docker.registry }}/frontend:{{ .Values.opengovernance.docker.tags.frontendv2 }}"
         imagePullPolicy: Always
         ports:
           - containerPort: 7298
