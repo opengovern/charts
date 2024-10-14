@@ -21,7 +21,7 @@ opengovernance:
       integration: v0.427.88
       metadata: v0.427.88
       inventory: v0.427.88
-      compliance: v0.427.91
+      compliance: v0.427.94
       complianceSummarizer: v0.427.88
       complianceReport: v0.427.92
       steampipe: v0.427.92
