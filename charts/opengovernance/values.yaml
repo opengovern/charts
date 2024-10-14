@@ -48,6 +48,9 @@ opengovernance:
         secret-key: "" # TODO: need comment
   frontend:
     muiLicense: xxx
+  telemetry:
+    enabled: false
+    baseUrl: "http://telemetry.kaytu.sh"
   master:
     accessKey: "" # echo "xxx" | base64
     secretKey: "" # echo "xxx" | base64
