@@ -107,12 +107,3 @@ spec:
               value: "http://es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
             - name: PENNYWISE_BASE_URL
               value: "http://pennywise-server-service.{{ .Release.Namespace }}.svc.cluster.local:8080"
-
-            - name: DO_TELEMETRY
-              value: "{{ .Values.kaytu.telemetry.enabled }}"
-            - name: TELEMETRY_WORKSPACE_ID
-              value: "{{ .Release.Namespace }}"
-            - name: TELEMETRY_HOSTNAME
-              value: "{{ .Values.kaytu.domain.app }}"
-            - name: TELEMETRY_BASE_URL
-              value: "{{ .Values.kaytu.telemetry.baseUrl }}"

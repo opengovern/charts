@@ -12,7 +12,7 @@ opengovernance:
       swagger: v0.427.34
       pennywise: v0.4.20-dev
       checkupWorker: v0.427.34
-      analytics: v0.427.35
+      analytics: v0.427.81
       migrator: v0.427.69
       describeScheduler: v0.427.66
       describeWorkerAWS: local-v0.58.4
@@ -21,8 +21,8 @@ opengovernance:
       integration: v0.427.59
       metadata: v0.427.34
       inventory: v0.427.35
-      compliance: v0.427.82
-      complianceSummarizer: v0.427.35
+      compliance: v0.427.86
+      complianceSummarizer: v0.427.86
       complianceReport: v0.427.35
       steampipe: v0.427.44
       esSink: v0.427.34
@@ -519,9 +519,6 @@ postgresql:
           secretKeyRef:
             name: postgres-secret
             key: alertingServiceUserPassword
-telemetry:
-    enabled: true
-    baseUrl: http://telemetry.opengovernance.io
 externalOpensearch:
   enabled: false
   endpoint: "https://opensearch.example.com"
