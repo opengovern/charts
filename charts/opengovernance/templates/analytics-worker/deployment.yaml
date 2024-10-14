@@ -107,3 +107,12 @@ spec:
               value: "http://es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
             - name: PENNYWISE_BASE_URL
               value: "http://pennywise-server-service.{{ .Release.Namespace }}.svc.cluster.local:8080"
+
+            - name: DO_TELEMETRY
+              value: "{{ .Values.opengovernance.telemetry.enabled }}"
+            - name: TELEMETRY_WORKSPACE_ID
+              value: "{{ .Release.Namespace }}"
+            - name: TELEMETRY_HOSTNAME
+              value: "{{ .Values.global.domain }}"
+            - name: TELEMETRY_BASE_URL
+              value: "{{ .Values.opengovernance.telemetry.baseUrl }}"
