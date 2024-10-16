@@ -12,10 +12,10 @@ opengovernance:
       swagger: v0.427.97
       pennywise: v0.4.20-dev
       checkupWorker: v0.427.97
-      analytics: v0.427.97
+      analytics: v0.427.104
       migrator: v0.427.97
-      describeScheduler: v0.427.97
-      describeWorkerAWS: local-v0.58.12
+      describeScheduler: v0.427.102
+      describeWorkerAWS: local-v0.58.18
       describeWorkerAzure: local-v0.36.6
       onboard: v0.427.97
       integration: v0.427.99
@@ -23,10 +23,10 @@ opengovernance:
       inventory: v0.427.97
       compliance: v0.427.100
       complianceSummarizer: v0.427.97
-      complianceReport: v0.427.97
-      steampipe: v0.427.97
-      esSink: v0.427.97
-      queryRunnerWorker: v0.427.97
+      complianceReport: v0.427.104
+      steampipe: v0.427.104
+      esSink: v0.427.106
+      queryRunnerWorker: v0.427.104
       demoImport: v0.427.97
       psqlImport: v0.427.97
   apikey:
