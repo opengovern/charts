@@ -19,6 +19,7 @@ opengovernance:
       describeWorkerAzure: local-v0.36.6
       onboard: v0.427.97
       integration: v0.427.99
+      integrationV2: v0.428.0-dev.0
       metadata: v0.427.97
       inventory: v0.427.97
       compliance: v0.427.100
