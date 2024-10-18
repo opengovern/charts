@@ -6,29 +6,29 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      workspace: v0.427.97
+      workspace: v0.427.108
       frontendv2: v0.6.0-dev
-      auth: v0.427.97
-      swagger: v0.427.97
+      auth: v0.427.108
+      swagger: v0.427.108
       pennywise: v0.4.20-dev
-      checkupWorker: v0.427.97
-      analytics: v0.427.104
-      migrator: v0.427.97
-      describeScheduler: v0.427.102
+      checkupWorker: v0.427.108
+      analytics: v0.427.108
+      migrator: v0.427.108
+      describeScheduler: v0.427.108
       describeWorkerAWS: local-v0.58.18
       describeWorkerAzure: local-v0.36.6
-      onboard: v0.427.97
-      integration: v0.427.99
-      metadata: v0.427.97
-      inventory: v0.427.97
-      compliance: v0.427.100
-      complianceSummarizer: v0.427.97
-      complianceReport: v0.427.104
-      steampipe: v0.427.104
-      esSink: v0.427.106
-      queryRunnerWorker: v0.427.104
-      demoImport: v0.427.97
-      psqlImport: v0.427.97
+      onboard: v0.427.108
+      integration: v0.427.108
+      metadata: v0.427.108
+      inventory: v0.427.108
+      compliance: v0.427.108
+      complianceSummarizer: v0.427.108
+      complianceReport: v0.427.108
+      steampipe: v0.427.108
+      esSink: v0.427.108
+      queryRunnerWorker: v0.427.108
+      demoImport: v0.427.108
+      psqlImport: v0.427.108
   apikey:
     public: ""
     private: ""
