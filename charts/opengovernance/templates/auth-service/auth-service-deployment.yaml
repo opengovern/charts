@@ -40,7 +40,7 @@ spec:
           command: [ "/auth-service" ]
           imagePullPolicy: Always
           env:
-            - name: KAYTU_HOST
+            - name: PLATFORM_HOST
               value: {{ .Values.global.domain }}
             - name: POSTGRESQL_HOST
               value: "{{ include "postgres.endpoint" . }}"
@@ -73,11 +73,11 @@ spec:
               value: "http://{{ .Release.Name }}-dex.{{ .Release.Namespace }}.svc.cluster.local:5556/dex"
             - name: DEX_AUTH_PUBLIC_CLIENT_ID
               value: public-client
-            - name: KAYTU_KEY_ENABLED
+            - name: PLATFORM_KEY_ENABLED
               value: "{{ .Values.opengovernance.apikey.enabled }}"
-            - name: KAYTU_PUBLIC_KEY
+            - name: PLATFORM_PUBLIC_KEY
               value: "{{ .Values.opengovernance.apikey.public }}"
-            - name: KAYTU_PRIVATE_KEY
+            - name: PLATFORM_PRIVATE_KEY
               value: "{{ .Values.opengovernance.apikey.private }}"
             - name: GRPC_TLS_CERT_PATH
               value: /etc/certs/tls.crt
