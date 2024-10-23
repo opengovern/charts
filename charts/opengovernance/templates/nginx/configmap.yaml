@@ -14,7 +14,7 @@ data:
       server {
         listen 80;
 
-        auth_request /kaytu/auth/api/v1/check;
+        auth_request /auth/api/v1/check;
         auth_request_set $X_Platform_WorkspaceID $upstream_http_X_Platform_WorkspaceID;
         auth_request_set $X_Platform_WorkspaceName $upstream_http_X_Platform_WorkspaceName;
         auth_request_set $X_Platform_UserId $upstream_http_X_Platform_UserId;
@@ -25,6 +25,16 @@ data:
 
 
         location /main/integration {
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
           rewrite ^/main/integration(.*) $1 break;
 
           proxy_pass http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000;
@@ -44,6 +54,16 @@ data:
         }
 
         location /main/integrationv2 {
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
           rewrite ^/main/integrationv2(.*) $1 break;
 
           proxy_pass http://integration-v2-service.{{ .Release.Namespace }}.svc.cluster.local:8000;
@@ -63,6 +83,17 @@ data:
         }
 
         location /main/onboard {
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
+
           rewrite ^/main/onboard(.*) $1 break;
 
           proxy_pass http://onboard-service.{{ .Release.Namespace }}.svc.cluster.local:6251;
@@ -82,6 +113,17 @@ data:
         }
 
         location /main/inventory {
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
+
           rewrite ^/main/inventory(.*) $1 break;
 
           proxy_pass http://inventory-service.{{ .Release.Namespace }}.svc.cluster.local:7251;
@@ -101,6 +143,17 @@ data:
         }
 
         location /main/metadata {
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
+
           rewrite ^/main/metadata(.*) $1 break;
 
           proxy_pass http://metadata-service.{{ .Release.Namespace }}.svc.cluster.local:6251;
@@ -120,6 +173,17 @@ data:
         }
 
         location /main/compliance {
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
+
           rewrite ^/main/compliance(.*) $1 break;
 
           proxy_pass http://compliance-service.{{ .Release.Namespace }}.svc.cluster.local:7251;
@@ -139,6 +203,17 @@ data:
         }
 
         location /main/schedule {
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
+
           rewrite ^/main/schedule(.*) $1 break;
 
           proxy_pass http://describe-scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251;
@@ -158,6 +233,17 @@ data:
         }
 
         location /main/auth {
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
+
           rewrite ^/main/auth(.*) $1 break;
 
           proxy_pass http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251;
@@ -177,6 +263,17 @@ data:
         }
 
         location /main/workspace/api/v3/configured/status {
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
+
           auth_request off;
           proxy_set_header X-Platform-WorkspaceID "";
           proxy_set_header X-Platform-WorkspaceName "";
@@ -199,7 +296,18 @@ data:
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
 
-        location /kaytu/auth/api/v1/check {
+        location /auth/api/v1/check {
+            if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
+
             internal;
             auth_request off;
             proxy_set_header X-Platform-WorkspaceID "";
@@ -208,7 +316,7 @@ data:
             proxy_set_header X-Platform-UserRole "";
             proxy_set_header X-Platform-UserConnectionsScope "";
 
-            rewrite ^/kaytu/auth/api/v1/check$ /api/v1/check break;
+            rewrite ^/auth/api/v1/check$ /api/v1/check break;
 
             proxy_pass http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251;
             proxy_pass_request_body off;
@@ -224,53 +332,20 @@ data:
             proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
 
-        location /kaytu/auth/api/v3/setup/check {
-            auth_request off;
-            proxy_set_header X-Platform-WorkspaceID "";
-            proxy_set_header X-Platform-WorkspaceName "";
-            proxy_set_header X-Platform-UserId "";
-            proxy_set_header X-Platform-UserRole "";
-            proxy_set_header X-Platform-UserConnectionsScope "";
-
-            rewrite ^/kaytu/auth/api/v3/setup/check$ /api/v3/setup/check break;
-
-            proxy_pass http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251;
-            proxy_ssl_verify off;
-            proxy_set_header X-Original-URI $request_uri;
-            proxy_set_header X-Original-Method $request_method;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-            proxy_set_header X-Forwarded-Host $host;
-            proxy_set_header X-Forwarded-Port $server_port;
-
-            proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
-        }
-
-        location /kaytu/auth/api/v3/setup {
-            auth_request off;
-            proxy_set_header X-Platform-WorkspaceID "";
-            proxy_set_header X-Platform-WorkspaceName "";
-            proxy_set_header X-Platform-UserId "";
-            proxy_set_header X-Platform-UserRole "";
-            proxy_set_header X-Platform-UserConnectionsScope "";
-
-            rewrite ^/kaytu/auth/api/v3/setup$ /api/v3/setup break;
-
-            proxy_pass http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251;
-            proxy_ssl_verify off;
-            proxy_set_header X-Original-URI $request_uri;
-            proxy_set_header X-Original-Method $request_method;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-            proxy_set_header X-Forwarded-Host $host;
-            proxy_set_header X-Forwarded-Port $server_port;
-
-            proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
-        }
 
         location /kaytu/auth {
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
+
+
           rewrite ^/kaytu/auth(.*) $1 break;
 
           proxy_pass http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251;
@@ -291,6 +366,17 @@ data:
 
 
         location /swagger {
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
+
           auth_request off;
 
           proxy_pass http://swagger-ui.{{ .Release.Namespace }}.svc.cluster.local:7255;
@@ -305,6 +391,17 @@ data:
         }
 
         location /dex {
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
+
           auth_request off;
           proxy_set_header X-Platform-WorkspaceID "";
           proxy_set_header X-Platform-WorkspaceName "";
@@ -325,6 +422,17 @@ data:
         }
 
         location / {
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' '*';
+            add_header 'Access-Control-Allow-Headers' '*';
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204; break;
+          }
+
           auth_request off;
           proxy_set_header X-Platform-WorkspaceID "";
           proxy_set_header X-Platform-WorkspaceName "";
