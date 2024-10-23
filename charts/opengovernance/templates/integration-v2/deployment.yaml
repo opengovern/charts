@@ -35,14 +35,14 @@ spec:
         - name: INTEGRATION_POSTGRES__PORT
           value: "{{ include "postgres.port" . }}"
         - name: INTEGRATION_POSTGRES__DB
-          value: "onboard"
+          value: "integration"
         - name: INTEGRATION_POSTGRES__USERNAME
-          value: "onboard_service"
+          value: "integration_service"
         - name: INTEGRATION_POSTGRES__PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgres-secret
-              key: onboardServiceUserPassword
+              key: integrationServiceUserPassword
         - name: INTEGRATION_POSTGRES__SSLMODE
           value: "{{ include "postgres.sslMode" . }}"
         - name: INTEGRATION_HTTP__ADDRESS

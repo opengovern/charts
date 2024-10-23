@@ -31,11 +31,6 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: authServiceUserPassword
-        - name: POSTGRES_SUBSCRIPTION_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: subscriptionUserPassword
         - name: POSTGRES_PENNYWISE_DB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -83,11 +78,6 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: metadataServiceUserPassword
-        - name: POSTGRES_REPORTER_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: reporterServiceUserPassword
         - name: POSTGRES_MIGRATOR_DB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -103,11 +93,11 @@ spec:
               secretKeyRef:
                 name: postgres-secret
                 key: steampipeUserPassword
-        - name: POSTGRES_ALERTING_DB_PASSWORD
+        - name: POSTGRES_INTEGRATION_DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgres-secret
-              key: alertingServiceUserPassword
+              key: integrationServiceUserPassword
 
         command: ["/bin/bash", "-c"]
         args:
@@ -126,9 +116,6 @@ spec:
 
             authDatabaseName="auth"
             authUserName="auth_service"
-
-            subscriptionDatabaseName="subscription"
-            subscriptionUserName="subscription_service"
 
             informationDatabaseName="information"
             informationUserName="information_service"
@@ -166,8 +153,6 @@ spec:
             reporterDatabaseName="reporter"
             reporterUserName="reporter_service"
 
-            alertingDatabaseName="alerting"
-            alertingUserName="alerting_service"
 
             echo "$dt - Running: psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_PASSWORD" ...";
 

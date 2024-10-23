@@ -7,7 +7,7 @@ data:
   nginx.conf: |
     events {}
     http {
-      log_format main '$remote_addr - $remote_user [$time_local] "$request" "$X_Kaytu_WorkspaceID" "$X_Kaytu_WorkspaceName" "$X_Kaytu_UserId" "$X_Kaytu_UserRole" "$X_Kaytu_UserConnectionsScope" '
+      log_format main '$remote_addr - $remote_user [$time_local] "$request" "$X_Platform_WorkspaceID" "$X_Platform_WorkspaceName" "$X_Platform_UserId" "$X_Platform_UserRole" "$X_Platform_UserConnectionsScope" '
                 '$status $body_bytes_sent "$http_referer" '
                 '"$http_user_agent" "$http_x_forwarded_for"';
 
@@ -15,11 +15,11 @@ data:
         listen 80;
 
         auth_request /kaytu/auth/api/v1/check;
-        auth_request_set $X_Kaytu_WorkspaceID $upstream_http_X_Kaytu_WorkspaceID;
-        auth_request_set $X_Kaytu_WorkspaceName $upstream_http_X_Kaytu_WorkspaceName;
-        auth_request_set $X_Kaytu_UserId $upstream_http_X_Kaytu_UserId;
-        auth_request_set $X_Kaytu_UserRole $upstream_http_X_Kaytu_UserRole;
-        auth_request_set $X_Kaytu_UserConnectionsScope $upstream_http_X_Kaytu_UserConnectionsScope;
+        auth_request_set $X_Platform_WorkspaceID $upstream_http_X_Platform_WorkspaceID;
+        auth_request_set $X_Platform_WorkspaceName $upstream_http_X_Platform_WorkspaceName;
+        auth_request_set $X_Platform_UserId $upstream_http_X_Platform_UserId;
+        auth_request_set $X_Platform_UserRole $upstream_http_X_Platform_UserRole;
+        auth_request_set $X_Platform_UserConnectionsScope $upstream_http_X_Platform_UserConnectionsScope;
 
         access_log /var/log/nginx/access.log main;
 
@@ -34,12 +34,12 @@ data:
           proxy_set_header X-Forwarded-Proto $scheme;
           proxy_set_header X-Forwarded-Host $host;
           proxy_set_header X-Forwarded-Port $server_port;
-          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
-          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
-          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
-          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
-          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
-          
+          proxy_set_header X-Platform-WorkspaceID $X_Platform_WorkspaceID;
+          proxy_set_header X-Platform-WorkspaceName $X_Platform_WorkspaceName;
+          proxy_set_header X-Platform-UserId $X_Platform_UserId;
+          proxy_set_header X-Platform-UserRole $X_Platform_UserRole;
+          proxy_set_header X-Platform-UserConnectionsScope $X_Platform_UserConnectionsScope;
+
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
 
@@ -53,11 +53,11 @@ data:
           proxy_set_header X-Forwarded-Proto $scheme;
           proxy_set_header X-Forwarded-Host $host;
           proxy_set_header X-Forwarded-Port $server_port;
-          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
-          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
-          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
-          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
-          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+          proxy_set_header X-Platform-WorkspaceID $X_Platform_WorkspaceID;
+          proxy_set_header X-Platform-WorkspaceName $X_Platform_WorkspaceName;
+          proxy_set_header X-Platform-UserId $X_Platform_UserId;
+          proxy_set_header X-Platform-UserRole $X_Platform_UserRole;
+          proxy_set_header X-Platform-UserConnectionsScope $X_Platform_UserConnectionsScope;
 
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
@@ -72,11 +72,11 @@ data:
           proxy_set_header X-Forwarded-Proto $scheme;
           proxy_set_header X-Forwarded-Host $host;
           proxy_set_header X-Forwarded-Port $server_port;
-          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
-          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
-          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
-          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
-          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+          proxy_set_header X-Platform-WorkspaceID $X_Platform_WorkspaceID;
+          proxy_set_header X-Platform-WorkspaceName $X_Platform_WorkspaceName;
+          proxy_set_header X-Platform-UserId $X_Platform_UserId;
+          proxy_set_header X-Platform-UserRole $X_Platform_UserRole;
+          proxy_set_header X-Platform-UserConnectionsScope $X_Platform_UserConnectionsScope;
 
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
@@ -91,11 +91,11 @@ data:
           proxy_set_header X-Forwarded-Proto $scheme;
           proxy_set_header X-Forwarded-Host $host;
           proxy_set_header X-Forwarded-Port $server_port;
-          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
-          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
-          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
-          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
-          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+          proxy_set_header X-Platform-WorkspaceID $X_Platform_WorkspaceID;
+          proxy_set_header X-Platform-WorkspaceName $X_Platform_WorkspaceName;
+          proxy_set_header X-Platform-UserId $X_Platform_UserId;
+          proxy_set_header X-Platform-UserRole $X_Platform_UserRole;
+          proxy_set_header X-Platform-UserConnectionsScope $X_Platform_UserConnectionsScope;
 
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
@@ -110,11 +110,11 @@ data:
           proxy_set_header X-Forwarded-Proto $scheme;
           proxy_set_header X-Forwarded-Host $host;
           proxy_set_header X-Forwarded-Port $server_port;
-          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
-          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
-          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
-          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
-          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+          proxy_set_header X-Platform-WorkspaceID $X_Platform_WorkspaceID;
+          proxy_set_header X-Platform-WorkspaceName $X_Platform_WorkspaceName;
+          proxy_set_header X-Platform-UserId $X_Platform_UserId;
+          proxy_set_header X-Platform-UserRole $X_Platform_UserRole;
+          proxy_set_header X-Platform-UserConnectionsScope $X_Platform_UserConnectionsScope;
 
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
@@ -129,11 +129,11 @@ data:
           proxy_set_header X-Forwarded-Proto $scheme;
           proxy_set_header X-Forwarded-Host $host;
           proxy_set_header X-Forwarded-Port $server_port;
-          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
-          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
-          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
-          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
-          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+          proxy_set_header X-Platform-WorkspaceID $X_Platform_WorkspaceID;
+          proxy_set_header X-Platform-WorkspaceName $X_Platform_WorkspaceName;
+          proxy_set_header X-Platform-UserId $X_Platform_UserId;
+          proxy_set_header X-Platform-UserRole $X_Platform_UserRole;
+          proxy_set_header X-Platform-UserConnectionsScope $X_Platform_UserConnectionsScope;
 
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
@@ -148,11 +148,11 @@ data:
           proxy_set_header X-Forwarded-Proto $scheme;
           proxy_set_header X-Forwarded-Host $host;
           proxy_set_header X-Forwarded-Port $server_port;
-          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
-          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
-          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
-          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
-          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+          proxy_set_header X-Platform-WorkspaceID $X_Platform_WorkspaceID;
+          proxy_set_header X-Platform-WorkspaceName $X_Platform_WorkspaceName;
+          proxy_set_header X-Platform-UserId $X_Platform_UserId;
+          proxy_set_header X-Platform-UserRole $X_Platform_UserRole;
+          proxy_set_header X-Platform-UserConnectionsScope $X_Platform_UserConnectionsScope;
 
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
@@ -167,22 +167,22 @@ data:
           proxy_set_header X-Forwarded-Proto $scheme;
           proxy_set_header X-Forwarded-Host $host;
           proxy_set_header X-Forwarded-Port $server_port;
-          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
-          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
-          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
-          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
-          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+          proxy_set_header X-Platform-WorkspaceID $X_Platform_WorkspaceID;
+          proxy_set_header X-Platform-WorkspaceName $X_Platform_WorkspaceName;
+          proxy_set_header X-Platform-UserId $X_Platform_UserId;
+          proxy_set_header X-Platform-UserRole $X_Platform_UserRole;
+          proxy_set_header X-Platform-UserConnectionsScope $X_Platform_UserConnectionsScope;
 
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
 
         location /main/workspace/api/v3/configured/status {
           auth_request off;
-          proxy_set_header X-Kaytu-WorkspaceID "";
-          proxy_set_header X-Kaytu-WorkspaceName "";
-          proxy_set_header X-Kaytu-UserId "";
-          proxy_set_header X-Kaytu-UserRole "";
-          proxy_set_header X-Kaytu-UserConnectionsScope "";
+          proxy_set_header X-Platform-WorkspaceID "";
+          proxy_set_header X-Platform-WorkspaceName "";
+          proxy_set_header X-Platform-UserId "";
+          proxy_set_header X-Platform-UserRole "";
+          proxy_set_header X-Platform-UserConnectionsScope "";
 
           rewrite ^/main/workspace(.*) $1 break;
 
@@ -199,33 +199,14 @@ data:
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
 
-        location /main/workspace {
-          rewrite ^/main/workspace(.*) $1 break;
-
-          proxy_pass http://workspace-service.{{ .Release.Namespace }}.svc.cluster.local:8351;
-          proxy_ssl_verify off;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_set_header X-Forwarded-Host $host;
-          proxy_set_header X-Forwarded-Port $server_port;
-          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
-          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
-          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
-          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
-          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
-
-          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
-        }
-
         location /kaytu/auth/api/v1/check {
             internal;
             auth_request off;
-            proxy_set_header X-Kaytu-WorkspaceID "";
-            proxy_set_header X-Kaytu-WorkspaceName "";
-            proxy_set_header X-Kaytu-UserId "";
-            proxy_set_header X-Kaytu-UserRole "";
-            proxy_set_header X-Kaytu-UserConnectionsScope "";
+            proxy_set_header X-Platform-WorkspaceID "";
+            proxy_set_header X-Platform-WorkspaceName "";
+            proxy_set_header X-Platform-UserId "";
+            proxy_set_header X-Platform-UserRole "";
+            proxy_set_header X-Platform-UserConnectionsScope "";
 
             rewrite ^/kaytu/auth/api/v1/check$ /api/v1/check break;
 
@@ -245,11 +226,11 @@ data:
 
         location /kaytu/auth/api/v3/setup/check {
             auth_request off;
-            proxy_set_header X-Kaytu-WorkspaceID "";
-            proxy_set_header X-Kaytu-WorkspaceName "";
-            proxy_set_header X-Kaytu-UserId "";
-            proxy_set_header X-Kaytu-UserRole "";
-            proxy_set_header X-Kaytu-UserConnectionsScope "";
+            proxy_set_header X-Platform-WorkspaceID "";
+            proxy_set_header X-Platform-WorkspaceName "";
+            proxy_set_header X-Platform-UserId "";
+            proxy_set_header X-Platform-UserRole "";
+            proxy_set_header X-Platform-UserConnectionsScope "";
 
             rewrite ^/kaytu/auth/api/v3/setup/check$ /api/v3/setup/check break;
 
@@ -268,11 +249,11 @@ data:
 
         location /kaytu/auth/api/v3/setup {
             auth_request off;
-            proxy_set_header X-Kaytu-WorkspaceID "";
-            proxy_set_header X-Kaytu-WorkspaceName "";
-            proxy_set_header X-Kaytu-UserId "";
-            proxy_set_header X-Kaytu-UserRole "";
-            proxy_set_header X-Kaytu-UserConnectionsScope "";
+            proxy_set_header X-Platform-WorkspaceID "";
+            proxy_set_header X-Platform-WorkspaceName "";
+            proxy_set_header X-Platform-UserId "";
+            proxy_set_header X-Platform-UserRole "";
+            proxy_set_header X-Platform-UserConnectionsScope "";
 
             rewrite ^/kaytu/auth/api/v3/setup$ /api/v3/setup break;
 
@@ -299,33 +280,15 @@ data:
           proxy_set_header X-Forwarded-Proto $scheme;
           proxy_set_header X-Forwarded-Host $host;
           proxy_set_header X-Forwarded-Port $server_port;
-          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
-          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
-          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
-          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
-          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
+          proxy_set_header X-Platform-WorkspaceID $X_Platform_WorkspaceID;
+          proxy_set_header X-Platform-WorkspaceName $X_Platform_WorkspaceName;
+          proxy_set_header X-Platform-UserId $X_Platform_UserId;
+          proxy_set_header X-Platform-UserRole $X_Platform_UserRole;
+          proxy_set_header X-Platform-UserConnectionsScope $X_Platform_UserConnectionsScope;
 
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
 
-        location /kaytu/workspace {
-          rewrite ^/kaytu/workspace(.*) $1 break;
-
-          proxy_pass http://workspace-service.{{ .Release.Namespace }}.svc.cluster.local:8351;
-          proxy_ssl_verify off;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_set_header X-Forwarded-Host $host;
-          proxy_set_header X-Forwarded-Port $server_port;
-          proxy_set_header X-Kaytu-WorkspaceID $X_Kaytu_WorkspaceID;
-          proxy_set_header X-Kaytu-WorkspaceName $X_Kaytu_WorkspaceName;
-          proxy_set_header X-Kaytu-UserId $X_Kaytu_UserId;
-          proxy_set_header X-Kaytu-UserRole $X_Kaytu_UserRole;
-          proxy_set_header X-Kaytu-UserConnectionsScope $X_Kaytu_UserConnectionsScope;
-
-          proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
-        }
 
         location /swagger {
           auth_request off;
@@ -343,11 +306,11 @@ data:
 
         location /dex {
           auth_request off;
-          proxy_set_header X-Kaytu-WorkspaceID "";
-          proxy_set_header X-Kaytu-WorkspaceName "";
-          proxy_set_header X-Kaytu-UserId "";
-          proxy_set_header X-Kaytu-UserRole "";
-          proxy_set_header X-Kaytu-UserConnectionsScope "";
+          proxy_set_header X-Platform-WorkspaceID "";
+          proxy_set_header X-Platform-WorkspaceName "";
+          proxy_set_header X-Platform-UserId "";
+          proxy_set_header X-Platform-UserRole "";
+          proxy_set_header X-Platform-UserConnectionsScope "";
 
 
           proxy_pass http://{{.Release.Name}}-dex.{{ .Release.Namespace }}.svc.cluster.local:5556;
@@ -363,11 +326,11 @@ data:
 
         location / {
           auth_request off;
-          proxy_set_header X-Kaytu-WorkspaceID "";
-          proxy_set_header X-Kaytu-WorkspaceName "";
-          proxy_set_header X-Kaytu-UserId "";
-          proxy_set_header X-Kaytu-UserRole "";
-          proxy_set_header X-Kaytu-UserConnectionsScope "";
+          proxy_set_header X-Platform-WorkspaceID "";
+          proxy_set_header X-Platform-WorkspaceName "";
+          proxy_set_header X-Platform-UserId "";
+          proxy_set_header X-Platform-UserRole "";
+          proxy_set_header X-Platform-UserConnectionsScope "";
 
           proxy_pass http://frontend-v2-svc.{{ .Release.Namespace }}.svc.cluster.local:7298;
           proxy_ssl_verify off;

@@ -6,30 +6,29 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      workspace: v0.427.97
       frontendv2: v0.6.0-dev
-      auth: v0.427.97
-      swagger: v0.427.97
+      auth: v0.430.15-dev.1
+      swagger: v0.430.15-dev.1
       pennywise: v0.4.20-dev
-      checkupWorker: v0.427.97
-      analytics: v0.427.104
-      migrator: v0.427.97
-      describeScheduler: v0.427.102
-      describeWorkerAWS: local-v0.58.18
-      describeWorkerAzure: local-v0.36.6
-      onboard: v0.427.97
-      integration: v0.427.99
-      integrationV2: v0.428.0-dev.0
-      metadata: v0.427.97
-      inventory: v0.427.97
-      compliance: v0.427.100
-      complianceSummarizer: v0.427.97
-      complianceReport: v0.427.104
-      steampipe: v0.427.104
-      esSink: v0.427.106
-      queryRunnerWorker: v0.427.104
-      demoImport: v0.427.97
-      psqlImport: v0.427.97
+      checkupWorker: v0.430.15-dev.1
+      analytics: v0.430.15-dev.1
+      migrator: v0.430.15-dev.1
+      describeScheduler: v0.430.15-dev.1
+      describeWorkerAWS: local-v0.59.0
+      describeWorkerAzure: local-v0.37.0
+      onboard: v0.430.15-dev.1
+      integration: v0.430.15-dev.1
+      integrationV2: v0.430.15-dev.1
+      metadata: v0.430.15-dev.1
+      inventory: v0.430.15-dev.1
+      compliance: v0.430.15-dev.1
+      complianceSummarizer: v0.430.15-dev.1
+      complianceReport: v0.430.15-dev.1
+      steampipe: v0.430.15-dev.1
+      esSink: v0.430.15-dev.1
+      queryRunnerWorker: v0.430.15-dev.1
+      demoImport: v0.430.15-dev.1
+      psqlImport: v0.430.15-dev.1
   apikey:
     public: ""
     private: ""
@@ -234,6 +233,9 @@ postgresql:
 
           alertingDatabaseName="alerting"
           alertingUserName="alerting_service"
+          
+          integrationDatabaseName="integration"
+          integrationUserName="integration_service"
 
           echo "$dt - Running: psql -v ON_ERROR_STOP=1 --username postgres --dbname postgres ...";
 
@@ -369,6 +371,15 @@ postgresql:
           CREATE EXTENSION "uuid-ossp" WITH SCHEMA public;
           CREATE EXTENSION citext;
           GRANT ALL ON SCHEMA public TO $alertingUserName;
+          
+          CREATE DATABASE $integrationDatabaseName;
+          CREATE USER $integrationUserName WITH PASSWORD '$POSTGRES_INTEGRATION_DB_PASSWORD';
+          GRANT ALL PRIVILEGES ON DATABASE "$integrationDatabaseName" to $integrationUserName;
+
+          \c "$integrationDatabaseName"
+          CREATE EXTENSION "uuid-ossp" WITH SCHEMA public;
+          CREATE EXTENSION citext;
+          GRANT ALL ON SCHEMA public TO $integrationUserName;
 
           CREATE DATABASE $migratorDatabaseName;
           CREATE USER $migratorUserName WITH PASSWORD '$POSTGRES_MIGRATOR_DB_PASSWORD';
@@ -381,6 +392,9 @@ postgresql:
           GRANT pg_read_all_data TO $workspaceUserName;
           GRANT pg_write_all_data TO $workspaceUserName;
           GRANT ALL ON SCHEMA public TO $workspaceUserName;
+          GRANT pg_read_all_data TO $metadataUserName;
+          GRANT pg_write_all_data TO $metadataUserName;
+          GRANT ALL ON SCHEMA public TO $metadataUserName;
           GRANT pg_read_all_data TO $complianceUserName;
           GRANT pg_write_all_data TO $complianceUserName;
           GRANT ALL ON SCHEMA public TO $complianceUserName;
@@ -523,6 +537,11 @@ postgresql:
           secretKeyRef:
             name: postgres-secret
             key: alertingServiceUserPassword
+      - name: POSTGRES_INTEGRATION_DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: postgres-secret
+            key: integrationServiceUserPassword
 externalOpensearch:
   enabled: false
   endpoint: "https://opensearch.example.com"
@@ -603,8 +622,6 @@ nats:
 vault-helm: {}
 aws:
   accountID: "xxx"
-  iam:
-    subscriptionServiceRoleArn: "arn:aws:iam::xxx:role/xxx"
   firehose:
     region: us-east-2
     usageMetersStreamName: "xxx"

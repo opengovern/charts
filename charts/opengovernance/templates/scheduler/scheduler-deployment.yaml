@@ -97,6 +97,8 @@ spec:
           value: "http://compliance-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
         - name: ONBOARD_BASE_URL
           value: "http://onboard-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+        - name: INTEGRATION_BASE_URL
+          value: "http://integration-v2-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
         - name: ESSINK_BASEURL
           value: "http://es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
         - name: AUTH_GRPC_URI
