@@ -697,8 +697,6 @@ data:
 
   metadata.json: |
     [
-      {"key": "workspace_id", "type": "string", "value": "{{ .Release.Namespace }}"},
-      {"key": "workspace_name", "type": "string", "value": "{{ .Values.opengovernance.workspace.name }}"},
       {"key": "workspace_date_time_format", "type": "string", "value": "1900-01-02"},
       {"key": "workspace_debug_mode", "type": "bool", "value": "FALSE"},
       {"key": "workspace_time_window", "type": "string", "value": "30d"},

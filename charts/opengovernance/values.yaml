@@ -1,5 +1,11 @@
 global:
-  domain: kaytu.app.domain
+  domain: og.app.domain
+  debugMode: true
+  size: lg
+  masterAccessKey: ""
+  masterSecretKey: ""
+  chart:
+    version: 0.1.16
 
 opengovernance:
   replicaCount: 1
@@ -7,45 +13,32 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       frontendv2: v0.9.0-dev
-      auth: v0.431.0-dev.0
-      swagger: v0.430.15-dev.1
+      auth: v0.432.4-dev.0
+      swagger: v0.432.4-dev.0
       pennywise: v0.4.20-dev
-      checkupWorker: v0.430.15-dev.1
-      analytics: v0.430.15-dev.1
-      migrator: v0.430.15-dev.1
-      describeScheduler: v0.430.15-dev.1
-      describeWorkerAWS: local-v0.59.0
-      describeWorkerAzure: local-v0.37.0
-      onboard: v0.430.15-dev.1
-      integration: v0.430.15-dev.1
-      integrationV2: v0.430.15-dev.1
-      metadata: v0.430.15-dev.1
-      inventory: v0.430.15-dev.1
-      compliance: v0.430.15-dev.1
-      complianceSummarizer: v0.430.15-dev.1
-      complianceReport: v0.430.15-dev.1
-      steampipe: v0.430.15-dev.1
-      esSink: v0.430.15-dev.1
-      queryRunnerWorker: v0.430.15-dev.1
-      demoImport: v0.430.15-dev.1
-      psqlImport: v0.430.15-dev.1
+      checkupWorker: v0.432.4-dev.0
+      analytics: v0.432.4-dev.0
+      migrator: v0.432.4-dev.0
+      describeScheduler: v0.431.1-dev.0
+      describeWorkerAWS: local-v0.59.2
+      describeWorkerAzure: local-v0.37.2
+      onboard: v0.432.4-dev.0
+      integration: v0.432.4-dev.0
+      integrationV2: v0.432.4-dev.0
+      metadata: v0.432.4-dev.0
+      inventory: v0.432.4-dev.0
+      compliance: v0.432.4-dev.0
+      complianceSummarizer: v0.432.4-dev.0
+      complianceReport: v0.432.4-dev.0
+      steampipe: v0.432.4-dev.0
+      esSink: v0.432.4-dev.0
+      queryRunnerWorker: v0.432.4-dev.0
+      demoImport: v0.432.4-dev.0
+      psqlImport: v0.432.4-dev.0
   apikey:
     public: ""
     private: ""
     enabled: false
-  workspace:
-    name: dev-cluster
-    size: lg
-    masterAccessKey: ""
-    masterSecretKey: ""
-    chart:
-      version: 0.1.16
-    kaytuChartLocation: "./kaytu"
-    aws:
-      master-secret: "" # TODO: need comment
-      keyMap:
-        access-key: "" # TODO: need comment
-        secret-key: "" # TODO: need comment
   frontend:
     muiLicense: xxx
   telemetry:
@@ -419,6 +412,11 @@ postgresql:
           GRANT ALL ON SCHEMA public TO $migratorUserName;
           GRANT pg_read_all_data TO $steampipeUserName;
           \connect "$inventoryDatabaseName";
+          GRANT pg_read_all_data TO $migratorUserName;
+          GRANT pg_write_all_data TO $migratorUserName;
+          GRANT ALL ON SCHEMA public TO $migratorUserName;
+          GRANT pg_read_all_data TO $steampipeUserName;
+          \connect "$integrationDatabaseName";
           GRANT pg_read_all_data TO $migratorUserName;
           GRANT pg_write_all_data TO $migratorUserName;
           GRANT ALL ON SCHEMA public TO $migratorUserName;

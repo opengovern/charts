@@ -58,7 +58,7 @@ spec:
         - name: METADATA_OPENGOVERNANCE_NAMESPACE
           value: "{{ .Release.Namespace }}"
         - name: METADATA_OPENGOVERNANCE_VERSION
-          value: "{{ .Values.opengovernance.workspace.chart.version }}"
+          value: "{{ .Values.global.chart.version }}"
         - name: METADATA_PRIMARY_DOMAIN_URL
           value: "{{ .Values.global.domain }}"
         - name: METADATA_DEX_GRPC_ADDR

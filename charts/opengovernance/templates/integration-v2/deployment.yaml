@@ -69,3 +69,5 @@ spec:
           value: "http://{{ .Release.Name }}-vault-internal.{{.Release.Namespace}}.svc.cluster.local:8200"
         - name: INTEGRATION_VAULT__KEY_ID
           value: {{ .Values.opengovernance.vault.keyID }}
+        - name: INTEGRATION_METADATA__BASE_URL
+          value: "http://metadata-service.{{ .Release.Namespace }}.svc.cluster.local:6251"

@@ -89,9 +89,9 @@ spec:
           value: {{ .Values.opengovernance.vault.keyID }}
 
         - name: ONBOARD_MASTER_ACCESS_KEY
-          value: {{ .Values.opengovernance.workspace.masterAccessKey }}
+          value: {{ .Values.global.masterAccessKey }}
         - name: ONBOARD_MASTER_SECRET_KEY
-          value: {{ .Values.opengovernance.workspace.masterSecretKey }}
+          value: {{ .Values.global.masterSecretKey }}
         - name: ONBOARD_JAEGER_AGENT_HOST
           valueFrom:
             fieldRef:

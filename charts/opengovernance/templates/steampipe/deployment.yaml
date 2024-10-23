@@ -23,19 +23,19 @@ spec:
         command: ["steampipe", "service", "start", "--database-listen", "network", "--database-port", "9193", "--database-password", "abcd", "--foreground"]
         imagePullPolicy: Always
         resources:
-{{- if eq (.Values.opengovernance.workspace.size | toString) "xs" }}
+{{- if eq (.Values.global.size | toString) "xs" }}
           requests:
             cpu: 100m
             memory: 100Mi
-{{- else if eq (.Values.opengovernance.workspace.size | toString) "sm" }}
+{{- else if eq (.Values.global.size | toString) "sm" }}
           requests:
             cpu: 200m
             memory: 4Gi
-{{- else if eq (.Values.opengovernance.workspace.size | toString) "md" }}
+{{- else if eq (.Values.global.size | toString) "md" }}
           requests:
             cpu: 500m
             memory: 4Gi
-{{- else if eq (.Values.opengovernance.workspace.size | toString) "lg" }}
+{{- else if eq (.Values.global.size | toString) "lg" }}
           requests:
             cpu: 100m
             memory: 1Gi
