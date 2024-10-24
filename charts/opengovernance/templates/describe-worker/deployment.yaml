@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kaytu-aws-describer
+  name: og-aws-describer
   namespace: {{ .Release.Namespace }}
   labels:
-    app: kaytu-aws-describer
+    app: og-aws-describer
 spec:
   minReadySeconds: 10
   {{- if eq .Values.keda.enabled true }}
@@ -14,15 +14,15 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      app: kaytu-aws-describer
+      app: og-aws-describer
   template:
     metadata:
       labels:
-        app: kaytu-aws-describer
+        app: og-aws-describer
     spec:
-      serviceAccountName: kaytu-aws-describer
+      serviceAccountName: og-aws-describer
       containers:
-        - name: kaytu-aws-describer
+        - name: og-aws-describer
           image: "{{ .Values.opengovernance.docker.registry }}/og-aws-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAWS }}"
           command: ["/og-aws-describer"]
           imagePullPolicy: Always
@@ -40,10 +40,10 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kaytu-azure-describer
+  name: og-azure-describer
   namespace: {{ .Release.Namespace }}
   labels:
-    app: kaytu-azure-describer
+    app: og-azure-describer
 spec:
   minReadySeconds: 10
   {{- if eq .Values.keda.enabled true }}
@@ -53,15 +53,15 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      app: kaytu-azure-describer
+      app: og-azure-describer
   template:
     metadata:
       labels:
-        app: kaytu-azure-describer
+        app: og-azure-describer
     spec:
-      serviceAccountName: kaytu-azure-describer
+      serviceAccountName: og-azure-describer
       containers:
-        - name: kaytu-azure-describer
+        - name: og-azure-describer
           image: "{{ .Values.opengovernance.docker.registry }}/og-azure-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAzure }}"
           command: ["/og-azure-describer"]
           imagePullPolicy: Always
@@ -79,10 +79,10 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kaytu-aws-describer-manuals
+  name: og-aws-describer-manuals
   namespace: {{ .Release.Namespace }}
   labels:
-    app: kaytu-aws-describer-manuals
+    app: og-aws-describer-manuals
 spec:
   minReadySeconds: 10
   {{- if eq .Values.keda.enabled true }}
@@ -92,15 +92,15 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      app: kaytu-aws-describer-manuals
+      app: og-aws-describer-manuals
   template:
     metadata:
       labels:
-        app: kaytu-aws-describer-manuals
+        app: og-aws-describer-manuals
     spec:
-      serviceAccountName: kaytu-aws-describer
+      serviceAccountName: og-aws-describer
       containers:
-        - name: kaytu-aws-describer
+        - name: og-aws-describer
           image: "{{ .Values.opengovernance.docker.registry }}/og-aws-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAWS }}"
           command: ["/og-aws-describer"]
           imagePullPolicy: Always
@@ -120,10 +120,10 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kaytu-azure-describer-manuals
+  name: og-azure-describer-manuals
   namespace: {{ .Release.Namespace }}
   labels:
-    app: kaytu-azure-describer-manuals
+    app: og-azure-describer-manuals
 spec:
   minReadySeconds: 10
   {{- if eq .Values.keda.enabled true }}
@@ -133,15 +133,15 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      app: kaytu-azure-describer-manuals
+      app: og-azure-describer-manuals
   template:
     metadata:
       labels:
-        app: kaytu-azure-describer-manuals
+        app: og-azure-describer-manuals
     spec:
-      serviceAccountName: kaytu-azure-describer
+      serviceAccountName: og-azure-describer
       containers:
-        - name: kaytu-azure-describer
+        - name: og-azure-describer
           image: "{{ .Values.opengovernance.docker.registry }}/og-azure-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAzure }}"
           command: ["/og-azure-describer"]
           imagePullPolicy: Always

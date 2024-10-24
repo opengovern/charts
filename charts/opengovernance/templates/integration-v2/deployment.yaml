@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: integration-service
+  name: integration-v2-service
   namespace: {{ .Release.Namespace }}
   labels:
-    app: integration-service
+    app: integration-v2-service
 spec:
   minReadySeconds: 10
   replicas: {{ .Values.opengovernance.replicaCount }}
   selector:
     matchLabels:
-      app: integration-service
+      app: integration-v2-service
   template:
     metadata:
       labels:
-        app: integration-service
+        app: integration-v2-service
     spec:
       serviceAccountName: integration
       containers:
-      - name: integration-service
-        image: "{{ .Values.opengovernance.docker.registry }}/integration:{{ .Values.opengovernance.docker.tags.integration }}"
-        command: ["/integration-service"]
+      - name: integration-v2-service
+        image: "{{ .Values.opengovernance.docker.registry }}/integration-v2:{{ .Values.opengovernance.docker.tags.integrationV2 }}"
+        command: ["/integration-v2-service"]
         imagePullPolicy: Always
         #resources:
         #  limits:
@@ -35,25 +35,18 @@ spec:
         - name: INTEGRATION_POSTGRES__PORT
           value: "{{ include "postgres.port" . }}"
         - name: INTEGRATION_POSTGRES__DB
-          value: "onboard"
+          value: "integration"
         - name: INTEGRATION_POSTGRES__USERNAME
-          value: "onboard_service"
+          value: "integration_service"
         - name: INTEGRATION_POSTGRES__PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgres-secret
-              key: onboardServiceUserPassword
+              key: integrationServiceUserPassword
         - name: INTEGRATION_POSTGRES__SSLMODE
           value: "{{ include "postgres.sslMode" . }}"
         - name: INTEGRATION_HTTP__ADDRESS
           value: "0.0.0.0:8000"
-        - name: INTEGRATION_INVENTORY__BASE_URL
-          value: "http://inventory-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
-        - name: INTEGRATION_DESCRIBE__BASE_URL
-          value: "http://describe-scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251"
-        - name: INTEGRATION_METADATA__BASE_URL
-          value: "http://metadata-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
-
         - name: INTEGRATION_VAULT__PROVIDER
           value: {{ .Values.opengovernance.vault.provider }}
         - name: INTEGRATION_VAULT__AWS__REGION
@@ -76,16 +69,5 @@ spec:
           value: "http://{{ .Release.Name }}-vault-internal.{{.Release.Namespace}}.svc.cluster.local:8200"
         - name: INTEGRATION_VAULT__KEY_ID
           value: {{ .Values.opengovernance.vault.keyID }}
-
-        - name: INTEGRATION_MASTER_ACCESS_KEY
-          value: ""
-        - name: INTEGRATION_MASTER_SECRET_KEY
-          value: ""
-        - name: INTEGRATION_JAEGER_AGENT_HOST
-          valueFrom:
-            fieldRef:
-              fieldPath: status.hostIP
-        - name: INTEGRATION_JAEGER_SERVICE_NAME
-          value: "integration-service"
-        - name: INTEGRATION_JAEGER_SAMPLE_RATE
-          value: "0.005"
+        - name: INTEGRATION_METADATA__BASE_URL
+          value: "http://metadata-service.{{ .Release.Namespace }}.svc.cluster.local:6251"

@@ -31,11 +31,6 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: authServiceUserPassword
-        - name: POSTGRES_SUBSCRIPTION_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: subscriptionUserPassword
         - name: POSTGRES_PENNYWISE_DB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -83,11 +78,6 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: metadataServiceUserPassword
-        - name: POSTGRES_REPORTER_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: reporterServiceUserPassword
         - name: POSTGRES_MIGRATOR_DB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -103,11 +93,11 @@ spec:
               secretKeyRef:
                 name: postgres-secret
                 key: steampipeUserPassword
-        - name: POSTGRES_ALERTING_DB_PASSWORD
+        - name: POSTGRES_INTEGRATION_DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgres-secret
-              key: alertingServiceUserPassword
+              key: integrationServiceUserPassword
 
         command: ["/bin/bash", "-c"]
         args:
@@ -126,9 +116,6 @@ spec:
 
             authDatabaseName="auth"
             authUserName="auth_service"
-
-            subscriptionDatabaseName="subscription"
-            subscriptionUserName="subscription_service"
 
             informationDatabaseName="information"
             informationUserName="information_service"
@@ -166,8 +153,8 @@ spec:
             reporterDatabaseName="reporter"
             reporterUserName="reporter_service"
 
-            alertingDatabaseName="alerting"
-            alertingUserName="alerting_service"
+            integrationDatabaseName="integration"
+            integrationUserName="integration_service"
 
             echo "$dt - Running: psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_PASSWORD" ...";
 
@@ -299,6 +286,19 @@ spec:
             CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
             CREATE EXTENSION IF NOT EXISTS citext;
 
+            SELECT 'CREATE DATABASE $integrationDatabaseName'
+            WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$integrationDatabaseName')\gexec
+            SELECT 'ALTER ROLE $integrationUserName WITH PASSWORD ''$POSTGRES_INTEGRATION_DB_PASSWORD'''
+            WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$integrationUserName')\gexec
+            SELECT 'CREATE USER $integrationUserName WITH PASSWORD ''$POSTGRES_INTEGRATION_DB_PASSWORD'''
+            WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$integrationUserName')\gexec
+            GRANT ALL PRIVILEGES ON DATABASE "$integrationDatabaseName" to $integrationUserName;
+
+            \c $integrationDatabaseName
+            GRANT ALL ON SCHEMA public TO $integrationUserName;
+            CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+            CREATE EXTENSION IF NOT EXISTS citext;
+
             SELECT 'CREATE DATABASE $authDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$authDatabaseName')\gexec
             SELECT 'ALTER ROLE $authUserName WITH PASSWORD ''$POSTGRES_AUTH_DB_PASSWORD''' 
@@ -357,6 +357,9 @@ spec:
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$steampipeUserName')\gexec
 
             \connect "$complianceDatabaseName";
+            GRANT pg_read_all_data TO $migratorUserName;
+            GRANT pg_write_all_data TO $migratorUserName;
+            \connect "$integrationDatabaseName";
             GRANT pg_read_all_data TO $migratorUserName;
             GRANT pg_write_all_data TO $migratorUserName;
             \connect "$metadataDatabaseName";

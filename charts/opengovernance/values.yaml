@@ -1,51 +1,40 @@
 global:
-  domain: kaytu.app.domain
+  domain: og.app.domain
+  debugMode: false
+  size: lg
 
 opengovernance:
   replicaCount: 1
   docker:
     registry: ghcr.io/opengovern
     tags:
-      workspace: v0.427.108
-      frontendv2: v0.6.0-dev
-      auth: v0.427.108
-      swagger: v0.427.108
+      frontendv2: v0.12.0-dev
+      auth: v0.428.0
+      swagger: v0.428.0
       pennywise: v0.4.20-dev
-      checkupWorker: v0.427.108
-      analytics: v0.427.108
-      migrator: v0.427.108
-      describeScheduler: v0.427.108
-      describeWorkerAWS: local-v0.58.18
-      describeWorkerAzure: local-v0.36.6
-      onboard: v0.427.108
-      integration: v0.427.108
-      metadata: v0.427.108
-      inventory: v0.427.108
-      compliance: v0.427.108
-      complianceSummarizer: v0.427.108
-      complianceReport: v0.427.108
-      steampipe: v0.427.108
-      esSink: v0.427.108
-      queryRunnerWorker: v0.427.108
-      demoImport: v0.427.108
-      psqlImport: v0.427.108
+      checkupWorker: v0.428.0
+      analytics: v0.428.0
+      migrator: v0.433.5-dev.0
+      describeScheduler: v0.428.0
+      describeWorkerAWS: local-v0.59.4
+      describeWorkerAzure: local-v0.37.4
+      onboard: v0.428.0
+      integration: v0.428.0
+      integrationV2: v0.428.0
+      metadata: v0.428.0
+      inventory: v0.428.0
+      compliance: v0.428.0
+      complianceSummarizer: v0.428.0
+      complianceReport: v0.428.0
+      steampipe: v0.428.0
+      esSink: v0.428.0
+      queryRunnerWorker: v0.428.0
+      demoImport: v0.428.0
+      psqlImport: v0.428.0
   apikey:
     public: ""
     private: ""
     enabled: false
-  workspace:
-    name: dev-cluster
-    size: lg
-    masterAccessKey: ""
-    masterSecretKey: ""
-    chart:
-      version: 0.1.16
-    kaytuChartLocation: "./kaytu"
-    aws:
-      master-secret: "" # TODO: need comment
-      keyMap:
-        access-key: "" # TODO: need comment
-        secret-key: "" # TODO: need comment
   frontend:
     muiLicense: xxx
   telemetry:
@@ -84,24 +73,6 @@ dex:
     grpc:
       addr: 'localhost:5557'
       reflection: true
-    staticClients:
-      # WARNING: Do not change the 'id' field for the private client. It is required for proper authentication configuration.
-      # Modifying this value may break client authentication.
-      - id: public-client
-        name: 'Public Client'
-        redirectURIs:
-          - 'https://DOMAIN_NAME_PLACEHOLDER_DO_NOT_CHANGE/callback'
-          - 'http://DOMAIN_NAME_PLACEHOLDER_DO_NOT_CHANGE/callback'
-          - 'http://localhost:3000/callback'
-          - 'http://localhost:8080/callback'
-        public: true
-      # WARNING: Do not change the 'id' field for the private client. It is required for proper authentication configuration.
-      # Modifying this value may break client authentication.
-      - id: private-client
-        name: 'Private Client'
-        redirectURIs:
-          - 'https://DOMAIN_NAME_PLACEHOLDER_DO_NOT_CHANGE/callback'
-        secret: "secret" # private client secret
     enablePasswordDB: true
     connectors: []
     expiry:
@@ -118,7 +89,7 @@ dex:
     storage:
       type: postgres
       config:
-        host: "kaytu-postgresql-primary.kaytu.svc.cluster.local" # postgresql host
+        host: "opengovernance-postgresql-primary.opengovernance.svc.cluster.local" # postgresql host
         port: 5432
         database: dex
         user: dex_service
@@ -233,6 +204,9 @@ postgresql:
 
           alertingDatabaseName="alerting"
           alertingUserName="alerting_service"
+          
+          integrationDatabaseName="integration"
+          integrationUserName="integration_service"
 
           echo "$dt - Running: psql -v ON_ERROR_STOP=1 --username postgres --dbname postgres ...";
 
@@ -368,6 +342,15 @@ postgresql:
           CREATE EXTENSION "uuid-ossp" WITH SCHEMA public;
           CREATE EXTENSION citext;
           GRANT ALL ON SCHEMA public TO $alertingUserName;
+          
+          CREATE DATABASE $integrationDatabaseName;
+          CREATE USER $integrationUserName WITH PASSWORD '$POSTGRES_INTEGRATION_DB_PASSWORD';
+          GRANT ALL PRIVILEGES ON DATABASE "$integrationDatabaseName" to $integrationUserName;
+
+          \c "$integrationDatabaseName"
+          CREATE EXTENSION "uuid-ossp" WITH SCHEMA public;
+          CREATE EXTENSION citext;
+          GRANT ALL ON SCHEMA public TO $integrationUserName;
 
           CREATE DATABASE $migratorDatabaseName;
           CREATE USER $migratorUserName WITH PASSWORD '$POSTGRES_MIGRATOR_DB_PASSWORD';
@@ -380,6 +363,9 @@ postgresql:
           GRANT pg_read_all_data TO $workspaceUserName;
           GRANT pg_write_all_data TO $workspaceUserName;
           GRANT ALL ON SCHEMA public TO $workspaceUserName;
+          GRANT pg_read_all_data TO $metadataUserName;
+          GRANT pg_write_all_data TO $metadataUserName;
+          GRANT ALL ON SCHEMA public TO $metadataUserName;
           GRANT pg_read_all_data TO $complianceUserName;
           GRANT pg_write_all_data TO $complianceUserName;
           GRANT ALL ON SCHEMA public TO $complianceUserName;
@@ -404,6 +390,11 @@ postgresql:
           GRANT ALL ON SCHEMA public TO $migratorUserName;
           GRANT pg_read_all_data TO $steampipeUserName;
           \connect "$inventoryDatabaseName";
+          GRANT pg_read_all_data TO $migratorUserName;
+          GRANT pg_write_all_data TO $migratorUserName;
+          GRANT ALL ON SCHEMA public TO $migratorUserName;
+          GRANT pg_read_all_data TO $steampipeUserName;
+          \connect "$integrationDatabaseName";
           GRANT pg_read_all_data TO $migratorUserName;
           GRANT pg_write_all_data TO $migratorUserName;
           GRANT ALL ON SCHEMA public TO $migratorUserName;
@@ -522,6 +513,11 @@ postgresql:
           secretKeyRef:
             name: postgres-secret
             key: alertingServiceUserPassword
+      - name: POSTGRES_INTEGRATION_DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: postgres-secret
+            key: integrationServiceUserPassword
 externalOpensearch:
   enabled: false
   endpoint: "https://opensearch.example.com"
@@ -602,8 +598,6 @@ nats:
 vault-helm: {}
 aws:
   accountID: "xxx"
-  iam:
-    subscriptionServiceRoleArn: "arn:aws:iam::xxx:role/xxx"
   firehose:
     region: us-east-2
     usageMetersStreamName: "xxx"

@@ -14,11 +14,7 @@ spec:
   pollingInterval: 30
   cooldownPeriod:  300
   minReplicaCount: 0
-{{- if eq (.Values.opengovernance.workspace.size | toString) "lg" }}
   maxReplicaCount: 1
-{{- else }}
-  maxReplicaCount: 1
-{{- end }}
   fallback:
     failureThreshold: 1
     replicas: 1
@@ -47,11 +43,7 @@ spec:
   pollingInterval: 5
   cooldownPeriod:  300
   minReplicaCount: 0
-{{- if eq (.Values.opengovernance.workspace.size | toString) "lg" }}
   maxReplicaCount: 1
-{{- else }}
-  maxReplicaCount: 1
-{{- end }}
   fallback:
     failureThreshold: 1
     replicas: 1

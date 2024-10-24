@@ -2,7 +2,7 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: kaytu-aws-describer-scaled-object
+  name: og-aws-describer-scaled-object
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": post-install,post-upgrade
@@ -10,7 +10,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: kaytu-aws-describer
+    name: og-aws-describer
   pollingInterval: 30
   cooldownPeriod:  300
   minReplicaCount: 0
@@ -23,7 +23,7 @@ spec:
       metadata:
         natsServerMonitoringEndpoint: "{{ .Release.Namespace }}-nats-headless.{{ .Release.Namespace }}.svc.cluster.local:8222"
         account: "$G"
-        stream: "kaytu_aws_describer"
+        stream: "og_aws_describer"
         consumer: "aws-describer-service"
         lagThreshold: "20"
         useHttps: "false"
@@ -31,7 +31,7 @@ spec:
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: kaytu-azure-describer-scaled-object
+  name: og-azure-describer-scaled-object
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": post-install,post-upgrade
@@ -39,7 +39,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: kaytu-azure-describer
+    name: og-azure-describer
   pollingInterval: 30
   cooldownPeriod:  300
   minReplicaCount: 0
@@ -52,7 +52,7 @@ spec:
       metadata:
         natsServerMonitoringEndpoint: "{{ .Release.Namespace }}-nats-headless.{{ .Release.Namespace }}.svc.cluster.local:8222"
         account: "$G"
-        stream: "kaytu_azure_describer"
+        stream: "og_azure_describer"
         consumer: "azure-describer-service"
         lagThreshold: "20"
         useHttps: "false"
@@ -60,7 +60,7 @@ spec:
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: kaytu-aws-describer-manuals-scaled-object
+  name: og-aws-describer-manuals-scaled-object
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": post-install,post-upgrade
@@ -68,7 +68,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: kaytu-aws-describer-manuals
+    name: og-aws-describer-manuals
   pollingInterval: 5
   cooldownPeriod:  300
   minReplicaCount: 0
@@ -81,7 +81,7 @@ spec:
       metadata:
         natsServerMonitoringEndpoint: "{{ .Release.Namespace }}-nats-headless.{{ .Release.Namespace }}.svc.cluster.local:8222"
         account: "$G"
-        stream: "kaytu_aws_describer"
+        stream: "og_aws_describer"
         consumer: "aws-describer-manuals-service"
         lagThreshold: "20"
         useHttps: "false"
@@ -89,7 +89,7 @@ spec:
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: kaytu-azure-describer-manuals-scaled-object
+  name: og-azure-describer-manuals-scaled-object
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": post-install,post-upgrade
@@ -97,7 +97,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: kaytu-azure-describer-manuals
+    name: og-azure-describer-manuals
   pollingInterval: 5
   cooldownPeriod:  300
   minReplicaCount: 0
@@ -110,7 +110,7 @@ spec:
       metadata:
         natsServerMonitoringEndpoint: "{{ .Release.Namespace }}-nats-headless.{{ .Release.Namespace }}.svc.cluster.local:8222"
         account: "$G"
-        stream: "kaytu_azure_describer"
+        stream: "og_azure_describer"
         consumer: "azure-describer-manuals-service"
         lagThreshold: "20"
         useHttps: "false"

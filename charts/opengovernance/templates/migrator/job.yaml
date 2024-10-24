@@ -94,6 +94,10 @@ spec:
               value: "admin@opengovernance.io"
             - name: DEFAULT_DEX_USER_PASSWORD
               value: "password"
+            - name: DEX_PUBLIC_CLIENT_REDIRECT_URIS
+              value: "https://{{ .Values.global.domain }}/callback,http://{{ .Values.global.domain }}/callback,http://localhost:3000/callback,http://localhost:8080/callback"
+            - name: DEX_PRIVATE_CLIENT_REDIRECT_URIS
+              value: "https://{{ .Values.global.domain }}/callback"
 
           volumeMounts:
             - name: elasticsearch-index-config
@@ -697,8 +701,6 @@ data:
 
   metadata.json: |
     [
-      {"key": "workspace_id", "type": "string", "value": "{{ .Release.Namespace }}"},
-      {"key": "workspace_name", "type": "string", "value": "{{ .Values.opengovernance.workspace.name }}"},
       {"key": "workspace_date_time_format", "type": "string", "value": "1900-01-02"},
       {"key": "workspace_debug_mode", "type": "bool", "value": "FALSE"},
       {"key": "workspace_time_window", "type": "string", "value": "30d"},
