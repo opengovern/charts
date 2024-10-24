@@ -2,37 +2,33 @@ global:
   domain: og.app.domain
   debugMode: true
   size: lg
-  masterAccessKey: ""
-  masterSecretKey: ""
-  chart:
-    version: 0.1.16
 
 opengovernance:
   replicaCount: 1
   docker:
     registry: ghcr.io/opengovern
     tags:
-      frontendv2: v0.9.0-dev
-      auth: v0.432.4-dev.0
+      frontendv2: v0.12.0-dev
+      auth: v0.433.4-dev.0
       swagger: v0.432.4-dev.0
       pennywise: v0.4.20-dev
       checkupWorker: v0.432.4-dev.0
-      analytics: v0.432.4-dev.0
-      migrator: v0.432.4-dev.0
-      describeScheduler: v0.431.1-dev.0
+      analytics: v0.432.6-dev.0
+      migrator: v0.432.7-dev.0
+      describeScheduler: v0.432.6-dev.0
       describeWorkerAWS: local-v0.59.2
       describeWorkerAzure: local-v0.37.2
-      onboard: v0.432.4-dev.0
-      integration: v0.432.4-dev.0
-      integrationV2: v0.432.4-dev.0
-      metadata: v0.432.4-dev.0
+      onboard: v0.432.6-dev.0
+      integration: v0.432.6-dev.0
+      integrationV2: v0.432.6-dev.0
+      metadata: v0.433.2-dev.0
       inventory: v0.432.4-dev.0
-      compliance: v0.432.4-dev.0
+      compliance: v0.432.6-dev.0
       complianceSummarizer: v0.432.4-dev.0
       complianceReport: v0.432.4-dev.0
       steampipe: v0.432.4-dev.0
       esSink: v0.432.4-dev.0
-      queryRunnerWorker: v0.432.4-dev.0
+      queryRunnerWorker: v0.432.6-dev.0
       demoImport: v0.432.4-dev.0
       psqlImport: v0.432.4-dev.0
   apikey:
@@ -77,24 +73,6 @@ dex:
     grpc:
       addr: 'localhost:5557'
       reflection: true
-    staticClients:
-      # WARNING: Do not change the 'id' field for the private client. It is required for proper authentication configuration.
-      # Modifying this value may break client authentication.
-      - id: public-client
-        name: 'Public Client'
-        redirectURIs:
-          - 'https://DOMAIN_NAME_PLACEHOLDER_DO_NOT_CHANGE/callback'
-          - 'http://DOMAIN_NAME_PLACEHOLDER_DO_NOT_CHANGE/callback'
-          - 'http://localhost:3000/callback'
-          - 'http://localhost:8080/callback'
-        public: true
-      # WARNING: Do not change the 'id' field for the private client. It is required for proper authentication configuration.
-      # Modifying this value may break client authentication.
-      - id: private-client
-        name: 'Private Client'
-        redirectURIs:
-          - 'https://DOMAIN_NAME_PLACEHOLDER_DO_NOT_CHANGE/callback'
-        secret: "secret" # private client secret
     enablePasswordDB: true
     connectors: []
     expiry:
@@ -111,7 +89,7 @@ dex:
     storage:
       type: postgres
       config:
-        host: "kaytu-postgresql-primary.kaytu.svc.cluster.local" # postgresql host
+        host: "opengovernance-postgresql-primary.opengovernance.svc.cluster.local" # postgresql host
         port: 5432
         database: dex
         user: dex_service

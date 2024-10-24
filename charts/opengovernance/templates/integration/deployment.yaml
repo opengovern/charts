@@ -78,9 +78,9 @@ spec:
           value: {{ .Values.opengovernance.vault.keyID }}
 
         - name: INTEGRATION_MASTER_ACCESS_KEY
-          value: {{ .Values.global.masterAccessKey }}
+          value: ""
         - name: INTEGRATION_MASTER_SECRET_KEY
-          value: {{ .Values.global.masterSecretKey }}
+          value: ""
         - name: INTEGRATION_JAEGER_AGENT_HOST
           valueFrom:
             fieldRef:

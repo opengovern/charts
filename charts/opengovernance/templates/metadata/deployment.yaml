@@ -57,14 +57,12 @@ spec:
           value: "http://inventory-service.%NAMESPACE%.svc.cluster.local:7251"
         - name: METADATA_OPENGOVERNANCE_NAMESPACE
           value: "{{ .Release.Namespace }}"
-        - name: METADATA_OPENGOVERNANCE_VERSION
-          value: "{{ .Values.global.chart.version }}"
         - name: METADATA_PRIMARY_DOMAIN_URL
           value: "{{ .Values.global.domain }}"
         - name: METADATA_DEX_GRPC_ADDR
           value: "opengovernance-dex.{{ .Release.Namespace }}.svc.cluster.local:5557"
         - name: METADATA_SAMPLEDATA_INTEGRATIONS_CHECK
-          value: "79302008-5d35-4a83-914c-20ecd80f4228,e6cb0afa-e624-4ca7-8b47-fa9988831137,1c2a6b18-ac87-4f5e-a472-1e26f8704f29,c00bb650-f448-41b7-8ccc-bcd6184f78c3"
+          value: "545a3e48-559d-4f1c-a446-27882bf77d68,f36afd2f-cd85-47c6-9eff-be8213289d28,218317b1-6f26-4ad0-91a7-40f17311d5b3,49d89218-1109-4b86-a7a4-edb55aa658dd,79302008-5d35-4a83-914c-20ecd80f4228,e6cb0afa-e624-4ca7-8b47-fa9988831137,1c2a6b18-ac87-4f5e-a472-1e26f8704f29,c00bb650-f448-41b7-8ccc-bcd6184f78c3"
         - name: METADATA_VAULT__PROVIDER
           value: {{ .Values.opengovernance.vault.provider }}
         - name: METADATA_VAULT__AWS__REGION
