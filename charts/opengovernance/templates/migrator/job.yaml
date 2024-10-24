@@ -95,9 +95,9 @@ spec:
             - name: DEFAULT_DEX_USER_PASSWORD
               value: "password"
             - name: DEX_PUBLIC_CLIENT_REDIRECT_URIS
-              value: "https://DOMAIN_NAME_PLACEHOLDER_DO_NOT_CHANGE/callback,http://DOMAIN_NAME_PLACEHOLDER_DO_NOT_CHANGE/callback,http://localhost:3000/callback,http://localhost:8080/callback"
+              value: "https://{{ .Values.global.domain }}/callback,http://{{ .Values.global.domain }}/callback,http://localhost:3000/callback,http://localhost:8080/callback"
             - name: DEX_PRIVATE_CLIENT_REDIRECT_URIS
-              value: "https://DOMAIN_NAME_PLACEHOLDER_DO_NOT_CHANGE/callback"
+              value: "https://{{ .Values.global.domain }}/callback"
 
           volumeMounts:
             - name: elasticsearch-index-config

@@ -9,28 +9,28 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       frontendv2: v0.12.0-dev
-      auth: v0.433.5-dev.0
-      swagger: v0.432.4-dev.0
+      auth: v0.428.0
+      swagger: v0.428.0
       pennywise: v0.4.20-dev
-      checkupWorker: v0.432.4-dev.0
-      analytics: v0.432.6-dev.0
-      migrator: v0.432.7-dev.0
-      describeScheduler: v0.432.6-dev.0
-      describeWorkerAWS: local-v0.59.2
-      describeWorkerAzure: local-v0.37.2
-      onboard: v0.432.6-dev.0
-      integration: v0.432.6-dev.0
-      integrationV2: v0.432.6-dev.0
-      metadata: v0.433.2-dev.0
-      inventory: v0.432.4-dev.0
-      compliance: v0.432.6-dev.0
-      complianceSummarizer: v0.432.4-dev.0
-      complianceReport: v0.432.4-dev.0
-      steampipe: v0.432.4-dev.0
-      esSink: v0.432.4-dev.0
-      queryRunnerWorker: v0.432.6-dev.0
-      demoImport: v0.432.4-dev.0
-      psqlImport: v0.432.4-dev.0
+      checkupWorker: v0.428.0
+      analytics: v0.428.0
+      migrator: v0.433.5-dev.0
+      describeScheduler: v0.428.0
+      describeWorkerAWS: local-v0.59.4
+      describeWorkerAzure: local-v0.37.4
+      onboard: v0.428.0
+      integration: v0.428.0
+      integrationV2: v0.428.0
+      metadata: v0.428.0
+      inventory: v0.428.0
+      compliance: v0.428.0
+      complianceSummarizer: v0.428.0
+      complianceReport: v0.428.0
+      steampipe: v0.428.0
+      esSink: v0.428.0
+      queryRunnerWorker: v0.428.0
+      demoImport: v0.428.0
+      psqlImport: v0.428.0
   apikey:
     public: ""
     private: ""

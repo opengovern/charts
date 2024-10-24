@@ -36,8 +36,8 @@ spec:
       serviceAccountName: auth-service
       containers:
         - name: auth-service
-          image: "{{ .Values.opengovernance.docker.registry }}/auth-v2-service:{{ .Values.opengovernance.docker.tags.auth }}"
-          command: [ "/auth-v2-service" ]
+          image: "{{ .Values.opengovernance.docker.registry }}/auth-service:{{ .Values.opengovernance.docker.tags.auth }}"
+          command: [ "/auth-service" ]
           imagePullPolicy: Always
           env:
             - name: PLATFORM_HOST
