@@ -28,9 +28,9 @@ data:
       password = ""
     }
 
-  kaytu.spc: |
-    connection "kaytu" {
-      plugin = "local/kaytu"
+  opengovernance.spc: |
+    connection "opengovernance" {
+      plugin = "local/opengovernance"
       addresses = []
       username = ""
       password = ""
