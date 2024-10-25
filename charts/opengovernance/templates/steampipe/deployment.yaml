@@ -72,8 +72,8 @@ spec:
             mountPath: /home/steampipe/.steampipe/config/azuread.spc
             subPath: azuread.spc
           - name: steampipe-spc
-            mountPath: /home/steampipe/.steampipe/config/kaytu.spc
-            subPath: kaytu.spc
+            mountPath: /home/steampipe/.steampipe/config/opengovernance.spc
+            subPath: opengovernance.spc
       volumes:
         - name: steampipe-spc
           configMap:
