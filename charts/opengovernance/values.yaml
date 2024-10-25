@@ -9,12 +9,12 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       frontendv2: v0.17.0-dev
-      auth: v0.435.0-dev.1
+      auth: v0.429.0
       swagger: v0.428.0
       pennywise: v0.4.20-dev
       checkupWorker: v0.428.0
-      analytics: v0.428.0
-      migrator: v0.437.0-dev.0
+      analytics: v0.429.0
+      migrator: v0.429.0
       describeScheduler: v0.428.0
       describeWorkerAWS: local-v0.59.4
       describeWorkerAzure: local-v0.37.4
@@ -24,10 +24,10 @@ opengovernance:
       inventory: v0.428.0
       compliance: v0.428.0
       complianceSummarizer: v0.428.0
-      complianceReport: v0.428.0
-      steampipe: v0.428.0
+      complianceReport: v0.429.0
+      steampipe: v0.429.0
       esSink: v0.428.0
-      queryRunnerWorker: v0.428.0
+      queryRunnerWorker: v0.429.0
       demoImport: v0.428.0
       psqlImport: v0.428.0
   apikey:
