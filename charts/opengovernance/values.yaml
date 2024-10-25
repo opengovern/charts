@@ -8,13 +8,13 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      frontendv2: v0.12.0-dev
-      auth: v0.428.0
+      frontendv2: v0.17.0-dev
+      auth: v0.435.0-dev.1
       swagger: v0.428.0
       pennywise: v0.4.20-dev
       checkupWorker: v0.428.0
       analytics: v0.428.0
-      migrator: v0.428.2
+      migrator: v0.437.0-dev.0
       describeScheduler: v0.428.0
       describeWorkerAWS: local-v0.59.4
       describeWorkerAzure: local-v0.37.4
