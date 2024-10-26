@@ -99,3 +99,5 @@ spec:
               value: "{{ .Release.Name }}-dex.{{ .Release.Namespace }}.svc.cluster.local:5557"
             - name: WORKSPACE_NAME
               value: "main"
+            - name: DEX_CALLBACK_URL
+              value: "https://{{ .Values.global.domain }}/callback,http://{{ .Values.global.domain }}/callback,http://localhost:3000/callback,http://localhost:8080/callback"
