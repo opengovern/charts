@@ -100,4 +100,4 @@ spec:
             - name: WORKSPACE_NAME
               value: "main"
             - name: DEX_CALLBACK_URL
-              value: "https://{{ .Values.global.domain }}/callback,http://{{ .Values.global.domain }}/callback,http://localhost:3000/callback,http://localhost:8080/callback"
+              value: "https://{{ .Values.global.domain }}/dex/callback,http://{{ .Values.global.domain }}/dex/callback,http://localhost:3000/dex/callback,http://localhost:8080/dex/callback"
