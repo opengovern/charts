@@ -8,8 +8,8 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      frontendv2: v0.18.2-dev
-      auth: v0.440.0-dev.0
+      frontendv2: v0.18.3-dev
+      auth: v0.443.0-dev.0
       swagger: v0.428.0
       pennywise: v0.4.20-dev
       checkupWorker: v0.428.0
@@ -67,7 +67,7 @@ dex:
   image:
     repository: ghcr.io/opengovern/dex-login
     pullPolicy: Always
-    tag: v0.442.1-dev.0
+    tag: v0.443.0-dev.0
   config:
     grpc:
       addr: 'localhost:5557'

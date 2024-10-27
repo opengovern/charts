@@ -101,3 +101,5 @@ spec:
               value: "main"
             - name: DEX_CALLBACK_URL
               value: "https://{{ .Values.global.domain }}/dex/callback,http://{{ .Values.global.domain }}/dex/callback,http://localhost:3000/dex/callback,http://localhost:8080/dex/callback"
+            - name: NAMESPACE
+              value: "{{ .Release.Namespace }}"
