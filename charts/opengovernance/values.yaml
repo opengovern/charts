@@ -8,8 +8,8 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      frontendv2: v0.21.0-dev
-      auth: v0.444.2-dev.0
+      frontendv2: v0.22.0-dev
+      auth: v0.446.0-dev.0
       swagger: v0.444.1-dev.8
       pennywise: v0.4.20-dev
       checkupWorker: v0.444.1-dev.8
