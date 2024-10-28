@@ -45,7 +45,7 @@ opengovernance:
     policyARN: "xxx"
     accountID: "xxx"
     oidcProvider: "oidc.eks.us-east-2.amazonaws.com/id/xxx"
-    masterRoleARN: "arn:aws:iam::xxx:role/KaytuOpenSearchAdmin"
+    masterRoleARN: "arn:aws:iam::xxx:role/OpenGovernanceOpenSearchAdmin"
     securityGroupID: "sg-xxx"
     subnetID: "subnet-xxx"
   vault:
