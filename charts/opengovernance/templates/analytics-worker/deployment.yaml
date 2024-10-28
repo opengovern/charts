@@ -103,6 +103,8 @@ spec:
               value: "http://describe-scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251"
             - name: INVENTORY_BASEURL
               value: "http://inventory-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
+            - name: METADATA_BASEURL
+              value: "http://metadata-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
             - name: ESSINK_BASEURL
               value: "http://es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
             - name: PENNYWISE_BASE_URL
