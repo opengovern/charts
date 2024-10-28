@@ -59,7 +59,7 @@
         "connectionID": {
           "type": "keyword"
         },
-        "kaytuResourceID": {
+        "opengovernanceResourceID": {
           "type": "keyword"
         },
         "evaluatedAt":  {

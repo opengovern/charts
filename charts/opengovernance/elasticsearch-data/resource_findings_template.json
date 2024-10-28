@@ -58,7 +58,7 @@
         "es_index":  {
           "type": "keyword"
         },
-        "kaytuResourceID": {
+        "opengovernanceResourceID": {
           "type": "keyword"
         },
         "resourceType": {
@@ -86,7 +86,7 @@
             "connectionID": {
               "type": "keyword"
             },
-            "kaytuResourceID": {
+            "opengovernanceResourceID": {
               "type": "keyword"
             },
             "evaluatedAt":  {

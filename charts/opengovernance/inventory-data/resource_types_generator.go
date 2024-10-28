@@ -110,8 +110,8 @@ func main() {
 	b.WriteString(fmt.Sprintf(`
 package %[1]s
 import (
-	"github.com/kaytu-io/kaytu-%[1]s-describer/%[1]s/describer"
-	"github.com/kaytu-io/kaytu-util/pkg/source"
+	"github.com/opengovern/og-%[1]s-describer/%[1]s/describer"
+	"github.com/opengovern/og-util/pkg/source"
 )
 var resourceTypes = map[string]ResourceType{
 `, *provider))
@@ -161,7 +161,7 @@ var resourceTypes = map[string]ResourceType{
 package steampipe
 
 import (
-	"github.com/kaytu-io/kaytu-%[1]s-describer/pkg/kaytu-es-sdk"
+	"github.com/opengovern/og-%[1]s-describer/pkg/opengovernance-es-sdk"
 )
 
 var %[1]sMap = map[string]string{
@@ -174,7 +174,7 @@ var %[1]sMap = map[string]string{
 var %sDescriptionMap = map[string]interface{}{
 `, upperProvider))
 	for _, resourceType := range resourceTypes {
-		b.WriteString(fmt.Sprintf("  \"%s\": kaytu.%s{},\n", resourceType.ResourceName, resourceType.Model))
+		b.WriteString(fmt.Sprintf("  \"%s\": opengovernance.%s{},\n", resourceType.ResourceName, resourceType.Model))
 	}
 	b.WriteString(fmt.Sprintf(`}
 

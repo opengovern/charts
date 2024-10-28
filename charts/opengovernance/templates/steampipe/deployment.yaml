@@ -59,6 +59,8 @@ spec:
             value: "50"
           - name: STEAMPIPE_CACHE
             value: "false"
+          - name: METADATA_BASEURL
+            value: "http://metadata-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
         volumeMounts:
 #          - name: steampipe-content
 #            mountPath: /home/steampipe/.steampipe/

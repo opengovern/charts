@@ -8,28 +8,28 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      frontendv2: v0.17.0-dev
-      auth: v0.429.0
-      swagger: v0.428.0
+      frontendv2: v0.23.0-dev
+      auth: v0.433.0
+      swagger: v0.433.0
       pennywise: v0.4.20-dev
-      checkupWorker: v0.428.0
-      analytics: v0.429.0
-      migrator: v0.429.0
-      describeScheduler: v0.428.0
-      describeWorkerAWS: local-v0.59.4
-      describeWorkerAzure: local-v0.37.4
-      onboard: v0.428.0
-      integration: v0.428.0
-      metadata: v0.428.4
-      inventory: v0.428.0
-      compliance: v0.428.0
-      complianceSummarizer: v0.428.0
-      complianceReport: v0.429.0
-      steampipe: v0.429.0
-      esSink: v0.428.0
-      queryRunnerWorker: v0.429.0
-      demoImport: v0.428.0
-      psqlImport: v0.428.0
+      checkupWorker: v0.433.0
+      analytics: v0.433.0
+      migrator: v0.433.0
+      describeScheduler: v0.433.0
+      describeWorkerAWS: local-v0.59.11
+      describeWorkerAzure: local-v0.37.11
+      onboard: v0.433.0
+      integration: v0.433.0
+      metadata: v0.433.0
+      inventory: v0.433.0
+      compliance: v0.433.0
+      complianceSummarizer: v0.433.0
+      complianceReport: v0.433.0
+      steampipe: v0.433.0
+      esSink: v0.433.0
+      queryRunnerWorker: v0.433.0
+      demoImport: v0.433.0
+      psqlImport: v0.433.0
   apikey:
     public: ""
     private: ""
@@ -45,7 +45,7 @@ opengovernance:
     policyARN: "xxx"
     accountID: "xxx"
     oidcProvider: "oidc.eks.us-east-2.amazonaws.com/id/xxx"
-    masterRoleARN: "arn:aws:iam::xxx:role/KaytuOpenSearchAdmin"
+    masterRoleARN: "arn:aws:iam::xxx:role/OpenGovernanceOpenSearchAdmin"
     securityGroupID: "sg-xxx"
     subnetID: "subnet-xxx"
   vault:
@@ -67,7 +67,7 @@ dex:
   image:
     repository: ghcr.io/opengovern/dex-login
     pullPolicy: Always
-    tag: v0.427.93
+    tag: v0.431.0
   config:
     grpc:
       addr: 'localhost:5557'
