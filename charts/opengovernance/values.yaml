@@ -9,27 +9,27 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       frontendv2: v0.22.0-dev
-      auth: v0.446.0-dev.0
-      swagger: v0.444.1-dev.8
+      auth: v0.432.0
+      swagger: v0.431.0
       pennywise: v0.4.20-dev
-      checkupWorker: v0.444.1-dev.8
-      analytics: v0.445.0-dev.0
-      migrator: v0.444.1-dev.8
-      describeScheduler: v0.444.1-dev.8
-      describeWorkerAWS: local-v0.59.4
-      describeWorkerAzure: local-v0.37.4
-      onboard: v0.444.1-dev.8
-      integration: v0.444.1-dev.8
-      metadata: v0.444.1-dev.8
-      inventory: v0.444.1-dev.8
-      compliance: v0.444.1-dev.8
-      complianceSummarizer: v0.444.1-dev.8
-      complianceReport: v0.445.0-dev.0
-      steampipe: v0.445.0-dev.0
-      esSink: v0.444.1-dev.8
-      queryRunnerWorker: v0.445.0-dev.0
-      demoImport: v0.444.1-dev.8
-      psqlImport: v0.444.1-dev.8
+      checkupWorker: v0.431.0
+      analytics: v0.432.0
+      migrator: v0.432.0
+      describeScheduler: v0.432.0
+      describeWorkerAWS: local-v0.59.11
+      describeWorkerAzure: local-v0.37.11
+      onboard: v0.432.0
+      integration: v0.432.0
+      metadata: v0.432.0
+      inventory: v0.432.0
+      compliance: v0.432.0
+      complianceSummarizer: v0.431.0
+      complianceReport: v0.432.0
+      steampipe: v0.432.0
+      esSink: v0.431.0
+      queryRunnerWorker: v0.432.0
+      demoImport: v0.431.0
+      psqlImport: v0.431.0
   apikey:
     public: ""
     private: ""
@@ -67,7 +67,7 @@ dex:
   image:
     repository: ghcr.io/opengovern/dex-login
     pullPolicy: Always
-    tag: v0.444.1-dev.0
+    tag: v0.431.0
   config:
     grpc:
       addr: 'localhost:5557'
