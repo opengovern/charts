@@ -39,15 +39,6 @@ opengovernance:
   telemetry:
     enabled: true
     baseUrl: "http://telemetry.opengovernance.io"
-  master:
-    accessKey: "" # echo "xxx" | base64
-    secretKey: "" # echo "xxx" | base64
-    policyARN: "xxx"
-    accountID: "xxx"
-    oidcProvider: "oidc.eks.us-east-2.amazonaws.com/id/xxx"
-    masterRoleARN: "arn:aws:iam::xxx:role/OpenGovernanceOpenSearchAdmin"
-    securityGroupID: "sg-xxx"
-    subnetID: "subnet-xxx"
   vault:
     provider: hashicorp-vault
     aws:
@@ -597,21 +588,8 @@ nats:
 vault-helm: {}
 aws:
   accountID: "xxx"
-  firehose:
-    region: us-east-2
-    usageMetersStreamName: "xxx"
-  describer:
-    accessRoleArn: "arn:aws:iam::xxx:role/xxx"
-azure:
-  eventhubConnection: ""
-  serviceBusConnection: ""
 github:
   token: ""
-lambda: "https://xxx.execute-api.us-east-2.amazonaws.com/dev/describer"
-storage:
-  className: ""
-flux:
-  namespace: flux-system
 keda:
   enabled: true
 populateWithSampleData:
