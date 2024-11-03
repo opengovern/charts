@@ -8,7 +8,7 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      frontendv2: v0.23.0-dev
+      frontendv2: v0.23.2-dev
       auth: v0.433.0
       swagger: v0.433.0
       pennywise: v0.4.20-dev
@@ -406,7 +406,7 @@ postgresql:
         memory: '8Gi'
         cpu: '4'
       requests:
-        memory: "3Gi"
+        memory: "2Gi"
         cpu: "2"
     # These passwords are random generated
     # Do not change them
@@ -523,7 +523,7 @@ opensearch:
   requests:
     cpu: "500m"
     memory: "4Gi"
-  replicas: 3
+  replicas: 1
   extraEnvs:
     - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
       value: myStrongPassword@123!
