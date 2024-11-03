@@ -37,7 +37,7 @@ spec:
           value: "{{ include "postgres.endpoint" . }}"
 
         - name: MIGRATOR_JOB_QUEUE_NAME
-          value: "migrator-jobs-queue"
+          value: "post-install-configurations-queue"
 
         - name: POSTGRESQL_PORT
           value: "{{ include "postgres.port" . }}"
