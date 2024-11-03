@@ -1,6 +1,6 @@
 global:
   domain: og.app.domain
-  debugMode: false
+  debugMode: true
   size: lg
 
 opengovernance:
@@ -9,27 +9,27 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       frontendv2: v0.23.2-dev
-      auth: v0.433.0
-      swagger: v0.433.0
+      auth: v0.433.6-feat-integrations-service.1
+      swagger: v0.433.6-feat-integrations-service.1
       pennywise: v0.4.20-dev
-      checkupWorker: v0.433.0
-      analytics: v0.433.0
-      migrator: v0.433.0
-      describeScheduler: v0.433.0
-      describeWorkerAWS: local-v0.59.11
-      describeWorkerAzure: local-v0.37.11
-      onboard: v0.433.0
-      integration: v0.433.0
-      metadata: v0.433.0
-      inventory: v0.433.0
-      compliance: v0.433.0
-      complianceSummarizer: v0.433.0
-      complianceReport: v0.433.0
-      steampipe: v0.433.0
-      esSink: v0.433.0
-      queryRunnerWorker: v0.433.0
-      demoImport: v0.433.0
-      psqlImport: v0.433.0
+      checkupWorker: v0.433.6-feat-integrations-service.1
+      analytics: v0.433.6-feat-integrations-service.1
+      migrator: v0.433.6-feat-integrations-service.1
+      describeScheduler: v0.433.6-feat-integrations-service.1
+      describeWorkerAWS: local-v0.60.2-dev.0
+      describeWorkerAzure: local-v0.38.3-dev.0
+      onboard: v0.433.6-feat-integrations-service.1
+      integration: v0.433.6-feat-integrations-service.1
+      metadata: v0.433.6-feat-integrations-service.1
+      inventory: v0.433.6-feat-integrations-service.1
+      compliance: v0.433.6-feat-integrations-service.1
+      complianceSummarizer: v0.433.6-feat-integrations-service.1
+      complianceReport: v0.433.6-feat-integrations-service.1
+      steampipe: v0.433.6-feat-integrations-service.1
+      esSink: v0.433.6-feat-integrations-service.1
+      queryRunnerWorker: v0.433.6-feat-integrations-service.1
+      demoImport: v0.433.6-feat-integrations-service.1
+      psqlImport: v0.433.6-feat-integrations-service.1
   apikey:
     public: ""
     private: ""

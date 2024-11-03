@@ -60,6 +60,8 @@ spec:
           value: "http://onboard-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
         - name: INVENTORY_BASEURL
           value: "http://inventory-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
+        - name: INTEGRATION_BASE_URL
+          value: "http://integration-v2-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
         - name: METADATA_BASEURL
           value: "http://metadata-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
         - name: JAEGER_AGENT_HOST
