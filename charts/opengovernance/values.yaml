@@ -20,7 +20,7 @@ opengovernance:
       describeWorkerAzure: local-v0.38.3-dev.0
       onboard: v0.433.6-feat-integrations-service.1
       integration: v0.434.5-feat-integrations-service.0
-      integrationV2: v0.434.5-feat-integrations-service.0
+      integrationV2: v0.434.7-feat-integrations-service.0
       metadata: v0.434.5-feat-integrations-service.0
       inventory: v0.434.5-feat-integrations-service.0
       compliance: v0.434.5-feat-integrations-service.0
