@@ -1520,4 +1520,4 @@ metadata:
   name: inventory-data-config
   namespace: {{ .Release.Namespace }}
 data:
-  {{- (.Files.Glob "inventory-data/*").AsConfig | nindent 2 }}
+  {{- (.Files.Glob "migrator-data/inventory-data/*").AsConfig | nindent 2 }}

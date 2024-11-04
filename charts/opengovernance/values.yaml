@@ -113,6 +113,13 @@ postgresql:
       auth:
         postgresPassword: "postgres"
   primary:
+    extraVolumeMounts:
+      - name: psql-init-data-config
+        mountPath: /psql-init-data-config
+    extraVolumes:
+      - name: psql-init-data-config
+        configMap:
+          name: psql-init-data-config
     persistence:
       size: 20Gi
     configuration: |
