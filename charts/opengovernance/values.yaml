@@ -14,15 +14,16 @@ opengovernance:
       pennywise: v0.4.20-dev
       checkupWorker: v0.433.6-feat-integrations-service.1
       analytics: v0.433.6-feat-integrations-service.1
-      migrator: v0.433.6-feat-integrations-service.1
-      describeScheduler: v0.433.6-feat-integrations-service.1
+      migrator: v0.434.5-feat-integrations-service.0
+      describeScheduler: v0.434.5-feat-integrations-service.0
       describeWorkerAWS: local-v0.60.2-dev.0
       describeWorkerAzure: local-v0.38.3-dev.0
       onboard: v0.433.6-feat-integrations-service.1
-      integration: v0.433.6-feat-integrations-service.1
-      metadata: v0.433.6-feat-integrations-service.1
-      inventory: v0.433.6-feat-integrations-service.1
-      compliance: v0.433.6-feat-integrations-service.1
+      integration: v0.434.5-feat-integrations-service.0
+      integrationV2: v0.434.5-feat-integrations-service.0
+      metadata: v0.434.5-feat-integrations-service.0
+      inventory: v0.434.5-feat-integrations-service.0
+      compliance: v0.434.5-feat-integrations-service.0
       complianceSummarizer: v0.433.6-feat-integrations-service.1
       complianceReport: v0.433.6-feat-integrations-service.1
       steampipe: v0.433.6-feat-integrations-service.1
