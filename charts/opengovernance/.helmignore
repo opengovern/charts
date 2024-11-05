@@ -12,7 +12,6 @@
 .svn/
 # Common backup files
 *.swp
-*.bak
 *.tmp
 *.orig
 *~

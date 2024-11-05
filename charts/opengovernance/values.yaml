@@ -14,7 +14,7 @@ opengovernance:
       pennywise: v0.4.20-dev
       checkupWorker: v0.433.0
       analytics: v0.433.0
-      migrator: v0.452.0-dev.0
+      migrator: v0.453.0-dev.0
       describeScheduler: v0.433.0
       describeWorkerAWS: local-v0.59.11
       describeWorkerAzure: local-v0.37.11
@@ -147,7 +147,11 @@ postgresql:
         primary_init_script.sh: |
           #!/bin/bash
           set -e
-
+           for object in $(ls *)
+            do
+              echo $object
+            done
+            echo "bb";
           dt=$(date '+%d/%m/%Y %H:%M:%S');
           echo "$dt - Running init script the 1st time Primary PostgreSql container is created...";
 
@@ -206,6 +210,18 @@ postgresql:
           integrationUserName="integration_service"
 
           echo "$dt - Running: psql -v ON_ERROR_STOP=1 --username postgres --dbname postgres ...";
+          echo "auth";
+          pg_restore -h localhost -p 5432 -U postgres -d $authDatabaseName -v "psql-init-data-config/$authDatabaseName.bak";
+          echo "auth done";
+          echo "workspace";
+         
+          pg_restore -h localhost -p 5432 -U postgres -d $workspaceDatabaseName -v "psql-init-data-config/$workspaceDatabaseName.bak";
+          pg_restore -h localhost -p 5432 -U postgres -d $onboardDatabaseName -v "psql-init-data-config/$onboardDatabaseName.bak";
+          pg_restore -h localhost -p 5432 -U postgres -d $inventoryDatabaseName -v "psql-init-data-config/$inventoryDatabaseName.bak";
+          pg_restore -h localhost -p 5432 -U postgres -d $complianceDatabaseName -v "psql-init-data-config/$complianceDatabaseName.bak";
+          pg_restore -h localhost -p 5432 -U postgres -d $metadataDatabaseName -v "psql-init-data-config/$metadataDatabaseName.bak";
+          pg_restore -h localhost -p 5432 -U postgres -d $dexDatabaseName -v "psql-init-data-config/$dexDatabaseName.bak";
+          
 
           PGPASSWORD="postgres" psql -v ON_ERROR_STOP=1 --username "postgres" --dbname "postgres" <<-EOSQL
 
@@ -407,6 +423,12 @@ postgresql:
           
           EOSQL
 
+        
+          
+
+        
+
+
           echo "$dt - Init script is completed";
     resources:
       limits:
@@ -600,7 +622,7 @@ github:
 keda:
   enabled: true
 populateWithSampleData:
-  enabled: true
+  enabled: false
   fileURL: "https://opengovernance.nyc3.cdn.digitaloceanspaces.com/demo-data/v3.0/demo_data.tar.gz.enc"
 migratorJob:
   enabled: true
