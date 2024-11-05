@@ -217,7 +217,7 @@ postgresql:
          
           pg_restore -h localhost -p 5432 -U postgres -d $workspaceDatabaseName -v "psql-init-data-config/$workspaceDatabaseName.bak";
           pg_restore -h localhost -p 5432 -U postgres -d $onboardDatabaseName -v "psql-init-data-config/$onboardDatabaseName.bak";
-          pg_restore -h localhost -p 5432 -U postgres -d $inventoryDatabaseName -v "psql-init-data-config/$inventoryDatabaseName.bak";
+          # pg_restore -h localhost -p 5432 -U postgres -d $inventoryDatabaseName -v "psql-init-data-config/$inventoryDatabaseName.bak";
           pg_restore -h localhost -p 5432 -U postgres -d $complianceDatabaseName -v "psql-init-data-config/$complianceDatabaseName.bak";
           pg_restore -h localhost -p 5432 -U postgres -d $metadataDatabaseName -v "psql-init-data-config/$metadataDatabaseName.bak";
           pg_restore -h localhost -p 5432 -U postgres -d $dexDatabaseName -v "psql-init-data-config/$dexDatabaseName.bak";

@@ -4,4 +4,8 @@ metadata:
   name: psql-init-data-config
   namespace: {{ .Release.Namespace }}
 data:
-  {{- (.Files.Glob "migrator-data/bak-files/*").AsConfig | nindent 2 }}
+  {{- $files := .Files.Glob "migrator-data/bak-files/*" }}
+ {{- range $path, $file := $files }}
+  {{ base $path }}: |-
+    {{ $files.Get $path | b64enc }}
+  {{- end }}
