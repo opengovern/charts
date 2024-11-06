@@ -62,8 +62,8 @@ spec:
       serviceAccountName: og-azure-describer
       containers:
         - name: og-azure-describer
-          image: "{{ .Values.opengovernance.docker.registry }}/og-azure-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAzure }}"
-          command: ["/og-azure-describer"]
+          image: "{{ .Values.opengovernance.docker.registry }}/og-describer-azure:{{ .Values.opengovernance.docker.tags.describeWorkerAzure }}"
+          command: ["/og-describer-azure"]
           imagePullPolicy: Always
           #resources:
           #  limits:
@@ -74,6 +74,8 @@ spec:
           #    memory: 300Mi
           env:
             - name: AZURE_DESCRIBER_NATS__URL
+              value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
+            - name: NATS_URL
               value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
 ---
 apiVersion: apps/v1
@@ -142,8 +144,8 @@ spec:
       serviceAccountName: og-azure-describer
       containers:
         - name: og-azure-describer
-          image: "{{ .Values.opengovernance.docker.registry }}/og-azure-describer:{{ .Values.opengovernance.docker.tags.describeWorkerAzure }}"
-          command: ["/og-azure-describer"]
+          image: "{{ .Values.opengovernance.docker.registry }}/og-describer-azure:{{ .Values.opengovernance.docker.tags.describeWorkerAzure }}"
+          command: ["/og-describer-azure"]
           imagePullPolicy: Always
           #resources:
           #  limits:
@@ -154,6 +156,8 @@ spec:
           #    memory: 300Mi
           env:
             - name: AZURE_DESCRIBER_NATS__URL
+              value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
+            - name: NATS_URL
               value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
             - name: MANUAL_TRIGGERS
               value: "true"
