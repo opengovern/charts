@@ -15,14 +15,14 @@ opengovernance:
       checkupWorker: v0.434.14-feat-integrations-service.1
       analytics: v0.434.17-feat-integrations-service.1
       migrator: v0.434.14-feat-integrations-service.1
-      describeScheduler: v0.434.14-feat-integrations-service.1
+      describeScheduler: v0.434.19-feat-integrations-service.0
       describeWorkerAWS: local-v0.60.2-dev.0
       describeWorkerAzure: local-v0.0.35
       onboard: v0.434.14-feat-integrations-service.1
       integration: v0.434.14-feat-integrations-service.1
       integrationV2: v0.434.16-feat-integrations-service.0
       metadata: v0.434.14-feat-integrations-service.1
-      inventory: v0.434.14-feat-integrations-service.1
+      inventory: v0.434.19-feat-integrations-service.0
       compliance: v0.434.14-feat-integrations-service.1
       complianceSummarizer: v0.434.14-feat-integrations-service.1
       complianceReport: v0.434.17-feat-integrations-service.1

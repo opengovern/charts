@@ -46,7 +46,7 @@
         }
       ],
       "properties": {
-        "source_id": {
+        "integration_id": {
           "type": "keyword"
         },
         "service_name": {
