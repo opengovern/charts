@@ -8,13 +8,13 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      frontendv2: v0.23.2-dev
+      ui: v0.23.6-dev
       auth: v0.433.0
       swagger: v0.433.0
       pennywise: v0.4.20-dev
       checkupWorker: v0.433.0
       analytics: v0.433.0
-      migrator: v0.453.0-dev.0
+      migrator: v0.454.0-dev.0
       describeScheduler: v0.433.0
       describeWorkerAWS: local-v0.59.11
       describeWorkerAzure: local-v0.37.11
@@ -34,7 +34,7 @@ opengovernance:
     public: ""
     private: ""
     enabled: false
-  frontend:
+  ui:
     muiLicense: xxx
   telemetry:
     enabled: true
@@ -103,9 +103,9 @@ postgresql:
   readReplicas:
     replicaCount: 1
   image:
-    registry: docker.io
-    repository: bitnami/postgresql
-    tag: 14
+    repository: ghcr.io/opengovern/postgres
+    pullPolicy: Always
+    tag: v0.431.0
     pullPolicy: Always
     debug: false
   global:
@@ -113,13 +113,6 @@ postgresql:
       auth:
         postgresPassword: "postgres"
   primary:
-    extraVolumeMounts:
-      - name: psql-init-data-config
-        mountPath: /psql-init-data-config
-    extraVolumes:
-      - name: psql-init-data-config
-        configMap:
-          name: psql-init-data-config
     persistence:
       size: 20Gi
     configuration: |
@@ -147,11 +140,7 @@ postgresql:
         primary_init_script.sh: |
           #!/bin/bash
           set -e
-           for object in $(ls *)
-            do
-              echo $object
-            done
-            echo "bb";
+          
           dt=$(date '+%d/%m/%Y %H:%M:%S');
           echo "$dt - Running init script the 1st time Primary PostgreSql container is created...";
 
@@ -210,18 +199,8 @@ postgresql:
           integrationUserName="integration_service"
 
           echo "$dt - Running: psql -v ON_ERROR_STOP=1 --username postgres --dbname postgres ...";
-          echo "auth";
-          pg_restore -h localhost -p 5432 -U postgres -d $authDatabaseName -v "psql-init-data-config/$authDatabaseName.bak";
-          echo "auth done";
-          echo "workspace";
-         
-          pg_restore -h localhost -p 5432 -U postgres -d $workspaceDatabaseName -v "psql-init-data-config/$workspaceDatabaseName.bak";
-          pg_restore -h localhost -p 5432 -U postgres -d $onboardDatabaseName -v "psql-init-data-config/$onboardDatabaseName.bak";
-          # pg_restore -h localhost -p 5432 -U postgres -d $inventoryDatabaseName -v "psql-init-data-config/$inventoryDatabaseName.bak";
-          pg_restore -h localhost -p 5432 -U postgres -d $complianceDatabaseName -v "psql-init-data-config/$complianceDatabaseName.bak";
-          pg_restore -h localhost -p 5432 -U postgres -d $metadataDatabaseName -v "psql-init-data-config/$metadataDatabaseName.bak";
-          pg_restore -h localhost -p 5432 -U postgres -d $dexDatabaseName -v "psql-init-data-config/$dexDatabaseName.bak";
-          
+        
+      
 
           PGPASSWORD="postgres" psql -v ON_ERROR_STOP=1 --username "postgres" --dbname "postgres" <<-EOSQL
 

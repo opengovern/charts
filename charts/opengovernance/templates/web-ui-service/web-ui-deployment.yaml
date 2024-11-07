@@ -1,38 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-v2
+  name: ui
   namespace: {{ .Release.Namespace }}
   labels:
-    app: frontend-v2
+    app: ui
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frontend-v2
+      app: ui
   template:
     metadata:
       labels:
-        app: frontend-v2
+        app: ui
     spec:
 
       containers:
-      - name: frontend-v2
-        image: "{{ .Values.opengovernance.docker.registry }}/frontend:{{ .Values.opengovernance.docker.tags.frontendv2 }}"
+      - name: ui
+        image: "{{ .Values.opengovernance.docker.registry }}/web-ui:{{ .Values.opengovernance.docker.tags.ui }}"
         imagePullPolicy: Always
         ports:
           - containerPort: 7298
         envFrom:
           - configMapRef:
-              name: frontend-v2-env
+              name: ui-env
         volumeMounts:
           - mountPath: /usr/share/nginx/html/.env
-            name: frontend-v2-env
+            name: ui-env
             subPath: .env
       volumes:
-        - name: frontend-v2-env
+        - name: ui-env
           configMap:
-            name: frontend-v2-env
+            name: ui-env
             items:
               - key: .env
                 path: .env
@@ -41,21 +41,21 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: frontend-v2-env
+  name: ui-env
   namespace: {{ .Release.Namespace }}
   labels:
-    app: frontend-v2
+    app: ui
 data:
   .env: |
     NODE_ENV=production
     REACT_APP_NODE_ENV=prod
-    REACT_APP_MUI_LICENSE={{ .Values.opengovernance.frontend.muiLicense }}
+    REACT_APP_MUI_LICENSE={{ .Values.opengovernance.ui.muiLicense }}
     REACT_APP_DOMAIN: "https://{{ .Values.global.domain }}"
     REACT_APP_BASE_URL="https://{{ .Values.global.domain }}"
     REACT_APP_AUTH_BASE_URL="https://{{ .Values.global.domain }}"
   NODE_ENV: production
   REACT_APP_NODE_ENV: prod
-  REACT_APP_MUI_LICENSE: {{ .Values.opengovernance.frontend.muiLicense }}
+  REACT_APP_MUI_LICENSE: {{ .Values.opengovernance.ui.muiLicense }}
   REACT_APP_DOMAIN: "https://{{ .Values.global.domain }}"
   REACT_APP_BASE_URL: "https://{{ .Values.global.domain }}"
   REACT_APP_AUTH_BASE_URL: "https://{{ .Values.global.domain }}"
