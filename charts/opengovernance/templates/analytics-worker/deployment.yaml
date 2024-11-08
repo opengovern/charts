@@ -97,8 +97,8 @@ spec:
               value: "all"
             - name: PROMETHEUS_PUSH_ADDRESS
               value: "prom-system-prometheus-pushgateway.prom-system.svc.cluster.local:9091"
-            - name: ONBOARD_BASEURL
-              value: "http://onboard-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+            - name: INTEGRATION_BASEURL
+              value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
             - name: SCHEDULER_BASEURL
               value: "http://describe-scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251"
             - name: INVENTORY_BASEURL

@@ -1,7 +1,7 @@
 {
   "index_patterns": [
-    "analytics_connector_summary",
-    "rc_analytics_connector_summary"
+    "analytics_integration_type_summary",
+    "rc_analytics_integration_type_summary"
   ],
   "template": {
     "mappings": {
@@ -57,7 +57,7 @@
           "type": "keyword"
         },
 
-        "connectors": {
+        "integration_types": {
           "type": "object",
           "enabled": false
         },
@@ -82,6 +82,6 @@
     }
   },
   "_meta": {
-    "description": "Analytics Connector Summary Index"
+    "description": "Analytics Integration Type Summary Index"
   }
 }

@@ -61,8 +61,8 @@ spec:
           value: "0.0.0.0:7251"
         - name: SCHEDULER_BASE_URL
           value: "http://describe-scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251"
-        - name: ONBOARD_BASE_URL
-          value: "http://onboard-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+        - name: INTEGRATION_BASE_URL
+          value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
         - name: COMPLIANCE_BASE_URL
           value: "http://compliance-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
         - name: METADATA_BASE_URL

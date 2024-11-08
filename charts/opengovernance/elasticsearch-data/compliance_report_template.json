@@ -57,10 +57,10 @@
         "describedAt": {
           "type": "long"
         },
-        "provider": {
+        "integrationType": {
           "type": "keyword"
         },
-        "sourceID": {
+        "integrationID": {
           "type": "keyword"
         },
         "group": {

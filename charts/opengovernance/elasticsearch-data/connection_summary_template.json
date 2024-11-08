@@ -46,7 +46,7 @@
         "integration_id": {
           "type": "keyword"
         },
-        "source_type": {
+        "integration_type": {
           "type": "keyword"
         },
         "source_job_id": {

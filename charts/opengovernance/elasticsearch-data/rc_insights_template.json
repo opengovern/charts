@@ -57,10 +57,10 @@
         "integration_id": {
           "type": "keyword"
         },
-        "provider": {
+        "integration_type": {
           "type": "keyword"
         },
-        "account_id": {
+        "provider_id": {
           "type": "keyword"
         },
         "query": {
