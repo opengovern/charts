@@ -412,7 +412,7 @@ data:
           proxy_set_header X-Platform-UserRole "";
           proxy_set_header X-Platform-UserConnectionsScope "";
 
-          proxy_pass http://ui-svc.{{ .Release.Namespace }}.svc.cluster.local:7298;
+          proxy_pass http://web-ui-svc.{{ .Release.Namespace }}.svc.cluster.local:7298;
           proxy_ssl_verify off;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

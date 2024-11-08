@@ -8,13 +8,13 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      ui: v0.23.6-dev
+      webUI: v0.23.6-dev
       auth: v0.433.0
       swagger: v0.433.0
       pennywise: v0.4.20-dev
       checkupWorker: v0.433.0
       analytics: v0.433.0
-      migrator: v0.455.0-dev.0
+      migrator: v0.456.0-dev.0
       describeScheduler: v0.433.0
       describeWorkerAWS: local-v0.59.11
       describeWorkerAzure: local-v0.37.11
@@ -22,7 +22,7 @@ opengovernance:
       integration: v0.433.0
       metadata: v0.433.0
       inventory: v0.433.0
-      compliance: v0.433.0
+      compliance: v0.456.0-dev.0
       complianceSummarizer: v0.433.0
       complianceReport: v0.433.0
       steampipe: v0.433.0
@@ -34,7 +34,7 @@ opengovernance:
     public: ""
     private: ""
     enabled: false
-  ui:
+  webUI:
     muiLicense: xxx
   telemetry:
     enabled: true
