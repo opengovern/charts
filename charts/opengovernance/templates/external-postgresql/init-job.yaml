@@ -48,11 +48,6 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: describeSchedulerUserPassword
-        - name : POSTGRES_ONBOARD_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: onboardServiceUserPassword
         - name : POSTGRES_POLICY_DB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -135,9 +130,6 @@ spec:
             assistantDatabaseName="assistant"
             assistantUserName="assistant_service"
 
-            onboardDatabaseName="onboard"
-            onboardUserName="onboard_service"
-
             policyDatabaseName="policy"
             policyUserName="policy_service"
 
@@ -218,19 +210,6 @@ spec:
 
             \c $describeDatabaseName
             GRANT ALL ON SCHEMA public TO $describeUserName;
-            CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
-            CREATE EXTENSION IF NOT EXISTS citext;
-
-            SELECT 'CREATE DATABASE $onboardDatabaseName'
-            WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$onboardDatabaseName')\gexec
-            SELECT 'ALTER ROLE $onboardUserName WITH PASSWORD ''$POSTGRES_ONBOARD_DB_PASSWORD''' 
-            WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$onboardUserName')\gexec
-            SELECT 'CREATE USER $onboardUserName WITH PASSWORD ''$POSTGRES_ONBOARD_DB_PASSWORD''' 
-            WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$onboardUserName')\gexec
-            GRANT ALL PRIVILEGES ON DATABASE "$onboardDatabaseName" to $onboardUserName;
-
-            \c $onboardDatabaseName
-            GRANT ALL ON SCHEMA public TO $onboardUserName;
             CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
             CREATE EXTENSION IF NOT EXISTS citext;
 
@@ -365,10 +344,6 @@ spec:
             \connect "$metadataDatabaseName";
             GRANT pg_read_all_data TO $migratorUserName;
             GRANT pg_write_all_data TO $migratorUserName;
-            \connect "$onboardDatabaseName";
-            GRANT pg_read_all_data TO $migratorUserName;
-            GRANT pg_write_all_data TO $migratorUserName;
-            GRANT pg_read_all_data TO $steampipeUserName;
             \connect "$inventoryDatabaseName";
             GRANT pg_read_all_data TO $migratorUserName;
             GRANT pg_write_all_data TO $migratorUserName;

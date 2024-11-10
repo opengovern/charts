@@ -83,7 +83,7 @@ spec:
                   name: postgres-secret
                   key: steampipeUserPassword
             - name: STEAMPIPE_DB
-              value: "onboard"
+              value: "integration"
 
             - name: NATS_URL
               value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
