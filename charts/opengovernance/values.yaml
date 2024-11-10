@@ -13,7 +13,7 @@ opengovernance:
       swagger: v0.434.14
       pennywise: v0.4.20-dev
       checkupWorker: v0.434.14
-      analytics: v0.434.14
+      analytics: v0.434.17
       migrator: v0.434.14
       describeScheduler: v0.434.14
       describeWorkerAWS: local-v0.0.9
@@ -25,10 +25,10 @@ opengovernance:
       inventory: v0.434.14
       compliance: v0.434.14
       complianceSummarizer: v0.434.14
-      complianceReport: v0.434.14
-      steampipe: v0.434.14
+      complianceReport: v0.434.17
+      steampipe: v0.434.17
       esSink: v0.434.14
-      queryRunnerWorker: v0.434.14
+      queryRunnerWorker: v0.434.17
       demoImport: v0.434.15
       psqlImport: v0.434.15
   apikey:
