@@ -47,8 +47,6 @@ spec:
           value: "{{ include "postgres.sslMode" . }}"
         - name: METADATA_HTTP__ADDRESS
           value: "0.0.0.0:6251"
-        - name: METADATA_ONBOARD__BASE_URL
-          value: "http://onboard-service.%NAMESPACE%.svc.cluster.local:6251"
         - name: METADATA_INTEGRATION__BASE_URL
           value: "http://integration-service.%NAMESPACE%.svc.cluster.local:8000"
         - name: METADATA_SCHEDULER__BASE_URL

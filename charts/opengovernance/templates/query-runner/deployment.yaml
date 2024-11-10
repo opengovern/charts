@@ -53,8 +53,6 @@ spec:
             - name: NATS_URL
               value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
 {{- include "elastic.envs" . | indent 12 }}
-            - name: ONBOARD_BASEURL
-              value: "http://onboard-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
             - name: COMPLIANCE_BASEURL
               value: "http://compliance-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
             - name: SCHEDULER_BASEURL
