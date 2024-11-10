@@ -45,8 +45,8 @@ spec:
                   fieldPath: metadata.name
             - name: PROMETHEUS_PUSH_ADDRESS
               value: "prom-system-prometheus-pushgateway.prom-system.svc.cluster.local:9091"
-            - name: ONBOARD_BASE_URL
-              value: "http://onboard-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+            - name: INTEGRATION_BASE_URL
+              value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
             - name: JAEGER_AGENT_HOST
               valueFrom:
                 fieldRef:

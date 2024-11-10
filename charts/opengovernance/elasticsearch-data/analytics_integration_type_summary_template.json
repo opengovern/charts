@@ -1,24 +1,14 @@
 {
   "index_patterns": [
-    "insights"
+    "analytics_integration_type_summary",
+    "rc_analytics_integration_type_summary"
   ],
   "template": {
-    "settings": {
-      "index": {
-        "max_inner_result_window": 20000,
-        "number_of_shards": 9,
-        "mapping":{
-            "total_fields": {
-                "limit": "10000"
-            }
-        }
-      }
-    },
     "mappings": {
       "_source": {
         "enabled": true
       },
-      "dynamic": false,
+      "dynamic": true,
       "dynamic_templates": [
         {
           "strings_as_keyword": {
@@ -48,43 +38,50 @@
         }
       ],
       "properties": {
-        "job_id": {
+        "evaluated_at": {
           "type": "long"
         },
-        "insight_id": {
-          "type": "long"
-        },
-        "source_id": {
+        "metric_id": {
           "type": "keyword"
         },
-        "provider": {
+        "metric_name": {
           "type": "keyword"
         },
-        "account_id": {
+        "date": {
           "type": "keyword"
         },
-        "query": {
+        "month": {
           "type": "keyword"
         },
-        "description": {
+        "year": {
           "type": "keyword"
         },
-        "schedule_uuid": {
-          "type": "keyword"
+
+        "integration_types": {
+          "type": "object",
+          "enabled": false
         },
-        "executed_at": {
-          "type": "long"
-        },
-        "result": {
-          "type": "long"
-        },
-        "resource_type": {
-          "type": "keyword"
+
+        "resource_collections": {
+          "type": "object",
+          "enabled": false
+        }
+      }
+    },
+    "settings": {
+      "index":{
+        "max_inner_result_window": 20000,
+        "refresh_interval": "60s",
+        "number_of_shards": 9,
+        "mapping":{
+          "total_fields": {
+            "limit": "10000"
+          }
         }
       }
     }
   },
   "_meta": {
-    "description": "Insight index"
+    "description": "Analytics Integration Type Summary Index"
   }
 }

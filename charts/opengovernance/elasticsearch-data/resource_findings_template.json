@@ -70,7 +70,7 @@
         "resourceLocation":  {
           "type": "keyword"
         },
-        "connector": {
+        "integrationType": {
             "type": "keyword"
         },
         "findings": {
@@ -83,7 +83,7 @@
             "controlID":  {
               "type": "keyword"
             },
-            "connectionID": {
+            "integrationID": {
               "type": "keyword"
             },
             "opengovernanceResourceID": {

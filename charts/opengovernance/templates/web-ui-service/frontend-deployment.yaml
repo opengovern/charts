@@ -1,38 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-v2
+  name: web-ui
   namespace: {{ .Release.Namespace }}
   labels:
-    app: frontend-v2
+    app: web-ui
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frontend-v2
+      app: web-ui
   template:
     metadata:
       labels:
-        app: frontend-v2
+        app: web-ui
     spec:
 
       containers:
-      - name: frontend-v2
-        image: "{{ .Values.opengovernance.docker.registry }}/frontend:{{ .Values.opengovernance.docker.tags.frontendv2 }}"
+      - name: web-ui
+        image: "{{ .Values.opengovernance.docker.registry }}/web-ui:{{ .Values.opengovernance.docker.tags.webui }}"
         imagePullPolicy: Always
         ports:
           - containerPort: 7298
         envFrom:
           - configMapRef:
-              name: frontend-v2-env
+              name: web-ui-env
         volumeMounts:
           - mountPath: /usr/share/nginx/html/.env
-            name: frontend-v2-env
+            name: web-ui-env
             subPath: .env
       volumes:
-        - name: frontend-v2-env
+        - name: web-ui-env
           configMap:
-            name: frontend-v2-env
+            name: web-ui-env
             items:
               - key: .env
                 path: .env
@@ -41,10 +41,10 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: frontend-v2-env
+  name: web-ui-env
   namespace: {{ .Release.Namespace }}
   labels:
-    app: frontend-v2
+    app: web-ui
 data:
   .env: |
     NODE_ENV=production

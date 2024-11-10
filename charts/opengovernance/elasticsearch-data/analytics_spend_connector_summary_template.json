@@ -1,6 +1,6 @@
 {
   "index_patterns": [
-    "analytics_spend_connector_summary"
+    "analytics_spend_integration_type_summary"
   ],
   "template": {
     "mappings": {
@@ -68,7 +68,7 @@
           "type": "double"
         },
 
-        "connectors": {
+        "integration_types": {
           "type": "object",
           "enabled": false
         }

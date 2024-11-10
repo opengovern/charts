@@ -51,7 +51,7 @@
         "serviceName": {
           "type": "keyword"
         },
-        "provider": {
+        "integrationType": {
           "type": "keyword"
         },
         "reportJobID": {

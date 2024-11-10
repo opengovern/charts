@@ -57,7 +57,7 @@
           "type": "keyword"
         },
 
-        "connections": {
+        "integrations": {
           "type": "object",
           "enabled": false
         },

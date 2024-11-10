@@ -55,7 +55,7 @@
         "summarizer_job_id": {
           "type": "long"
         },
-        "source_id": {
+        "integration_id": {
           "type": "keyword"
         },
         "source_type": {

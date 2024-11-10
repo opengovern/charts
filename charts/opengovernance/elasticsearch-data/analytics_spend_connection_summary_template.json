@@ -68,7 +68,7 @@
           "type": "double"
         },
 
-        "connections": {
+        "integrations": {
           "type": "object",
           "enabled": false
         }

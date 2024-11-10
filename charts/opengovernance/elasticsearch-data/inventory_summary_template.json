@@ -63,40 +63,25 @@
         "resource_id": {
           "type": "keyword"
         },
-        "name": {
+        "resource_name": {
           "type": "keyword"
         },
-        "source_type": {
+        "integration_type": {
           "type": "keyword"
         },
         "resource_type": {
           "type": "keyword"
         },
-        "service_name": {
+        "platform_id": {
           "type": "keyword"
         },
-        "category": {
+        "integration_id": {
           "type": "keyword"
         },
-        "resource_group": {
+        "described_by": {
           "type": "keyword"
         },
-        "location": {
-          "type": "keyword"
-        },
-        "source_id": {
-          "type": "keyword"
-        },
-        "resource_job_id": {
-          "type": "long"
-        },
-        "source_job_id": {
-          "type": "long"
-        },
-        "schedule_job_id": {
-          "type": "long"
-        },
-        "created_at": {
+        "described_at": {
           "type": "long"
         },
         "is_common": {

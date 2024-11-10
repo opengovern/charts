@@ -35,14 +35,11 @@ spec:
         - name: INTEGRATION_POSTGRES__PORT
           value: "{{ include "postgres.port" . }}"
         - name: INTEGRATION_POSTGRES__DB
-          value: "onboard"
+          value: "integration"
         - name: INTEGRATION_POSTGRES__USERNAME
-          value: "onboard_service"
+          value: "postgres"
         - name: INTEGRATION_POSTGRES__PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: onboardServiceUserPassword
+          value: "postgres"
         - name: INTEGRATION_POSTGRES__SSLMODE
           value: "{{ include "postgres.sslMode" . }}"
         - name: INTEGRATION_HTTP__ADDRESS
@@ -53,6 +50,17 @@ spec:
           value: "http://describe-scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251"
         - name: INTEGRATION_METADATA__BASE_URL
           value: "http://metadata-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+
+        - name: INTEGRATION_STEAMPIPE__HOST
+          value: steampipe-service.{{ .Release.Namespace }}.svc.cluster.local
+        - name: INTEGRATION_STEAMPIPE__PORT
+          value: "9193"
+        - name: INTEGRATION_STEAMPIPE__USERNAME
+          value: "steampipe"
+        - name: INTEGRATION_STEAMPIPE__PASSWORD
+          value: "abcd"
+        - name: INTEGRATION_STEAMPIPE__DB
+          value: "steampipe"
 
         - name: INTEGRATION_VAULT__PROVIDER
           value: {{ .Values.opengovernance.vault.provider }}

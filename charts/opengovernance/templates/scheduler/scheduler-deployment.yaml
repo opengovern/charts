@@ -69,10 +69,6 @@ spec:
           value: "12"
         - name: COMPLIANCE_INTERVAL_HOURS
           value: "24"
-        - name: EVENT_HUB_CONNECTION_STRING
-          value: "{{ .Values.azure.eventhubConnection }}"
-        - name: SERVICE_BUS_CONNECTION_STRING
-          value: "{{ .Values.azure.serviceBusConnection }}"
         - name: SERVERLESS_PROVIDER
           value: "local"
         - name: COMPLIANCEINTERVALHOURS
@@ -84,7 +80,7 @@ spec:
         - name: ANALYTICS_INTERVAL_HOURS
           value: "4"
         - name: CHECKUP_INTERVAL_HOURS
-          value: "24"
+          value: "2"
         - name: MUST_SUMMARIZE_INTERVAL_HOURS
           value: "4"
         - name: WORKSPACE_BASE_URL
@@ -98,14 +94,12 @@ spec:
         - name: ONBOARD_BASE_URL
           value: "http://onboard-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
         - name: INTEGRATION_BASE_URL
-          value: "http://integration-v2-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
+          value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
         - name: ESSINK_BASEURL
           value: "http://es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
         - name: AUTH_GRPC_URI
           value: "auth-service.{{ .Release.Namespace }}.svc.cluster.local:50051"
 {{- include "elastic.envs" . | indent 8 }}
-        - name: LAMBDA_FUNCS_BASE_URL
-          value: "{{ .Values.lambda }}"
         - name: DESCRIBE_JOB_ENDPOINT_LOCAL
           value: "describe-scheduler.{{ .Release.Namespace }}.svc.cluster.local:5252"
         - name: DESCRIBE_DELIVER_ENDPOINT_LOCAL
@@ -145,9 +139,6 @@ spec:
           value: "true"
         - name: OPERATION_MODE_CONFIG
           value: "scheduler"
-        - name: FLUX_SYSTEM_NAMESPACE
-          value: "{{ .Values.flux.namespace }}"
-
         - name: JAEGER_SERVICE_NAME
           value: "describe-scheduler"
         - name: JAEGER_AGENT_HOST
