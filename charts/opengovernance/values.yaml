@@ -8,28 +8,29 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      frontendv2: v0.23.2-dev
-      auth: v0.434.20-feat-integrations-service.0
-      swagger: v0.434.20-feat-integrations-service.0
+      webui: v0.26.0-dev
+      auth: v0.434.14
+      swagger: v0.434.14
       pennywise: v0.4.20-dev
-      checkupWorker: v0.434.33-feat-integrations-service.0
-      analytics: v0.434.33-feat-integrations-service.0
-      migrator: v0.434.33-feat-integrations-service.0
-      describeScheduler: v0.434.33-feat-integrations-service.0
-      describeWorkerAWS: local-v0.60.2-dev.0
-      describeWorkerAzure: local-v0.0.36
-      onboard: v0.434.33-feat-integrations-service.0
-      integration: v0.434.33-feat-integrations-service.0
-      metadata: v0.434.33-feat-integrations-service.0
-      inventory: v0.434.33-feat-integrations-service.0
-      compliance: v0.434.33-feat-integrations-service.0
-      complianceSummarizer: v0.434.33-feat-integrations-service.0
-      complianceReport: v0.434.33-feat-integrations-service.0
-      steampipe: v0.434.33-feat-integrations-service.0
-      esSink: v0.434.20-feat-integrations-service.0
-      queryRunnerWorker: v0.434.33-feat-integrations-service.0
-      demoImport: v0.434.33-feat-integrations-service.0
-      psqlImport: v0.434.33-feat-integrations-service.0
+      checkupWorker: v0.434.14
+      analytics: v0.434.14
+      migrator: v0.434.14
+      describeScheduler: v0.434.14
+      describeWorkerAWS: local-v0.0.9
+      describeWorkerAzure: local-v0.0.47
+      describeWorkerEntraid: local-v0.0.15
+      onboard: v0.434.14
+      integration: v0.434.14
+      metadata: v0.434.14
+      inventory: v0.434.14
+      compliance: v0.434.14
+      complianceSummarizer: v0.434.14
+      complianceReport: v0.434.14
+      steampipe: v0.434.14
+      esSink: v0.434.14
+      queryRunnerWorker: v0.434.14
+      demoImport: v0.434.15
+      psqlImport: v0.434.15
   apikey:
     public: ""
     private: ""

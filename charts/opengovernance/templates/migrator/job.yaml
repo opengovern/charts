@@ -100,38 +100,38 @@ spec:
               mountPath: /elasticsearch-index-config
             - name: inventory-data-config
               mountPath: /inventory-data-config
-            - name: migrator-workspace-config
-              mountPath: /workspace-migration/onboard.json
-              subPath: onboard.json
-            - name: migrator-workspace-config
-              mountPath: /workspace-migration/metadata.json
+            - name: migrator-config
+              mountPath: /integrations/integration_types.json
+              subPath: integration_types.json
+            - name: migrator-config
+              mountPath: /metadata-migration/metadata.json
               subPath: metadata.json
-            - name: migrator-workspace-config
-              mountPath: /workspace-migration/query_parameters.json
+            - name: migrator-config
+              mountPath: /metadata-migration/query_parameters.json
               subPath: query_parameters.json
-            - name: migrator-workspace-config
-              mountPath: /workspace-migration/chat_prompt.txt
+            - name: migrator-config
+              mountPath: /metadata-migration/chat_prompt.txt
               subPath: chat_prompt.txt
-            - name: migrator-workspace-config
-              mountPath: /workspace-migration/main_prompt.txt
+            - name: migrator-config
+              mountPath: /metadata-migration/main_prompt.txt
               subPath: main_prompt.txt
-            - name: migrator-workspace-config
-              mountPath: /workspace-migration/assets_chat_prompt.txt
+            - name: migrator-config
+              mountPath: /metadata-migration/assets_chat_prompt.txt
               subPath: assets_chat_prompt.txt
-            - name: migrator-workspace-config
-              mountPath: /workspace-migration/assets_main_prompt.txt
+            - name: migrator-config
+              mountPath: /metadata-migration/assets_main_prompt.txt
               subPath: assets_main_prompt.txt
-            - name: migrator-workspace-config
-              mountPath: /workspace-migration/score_chat_prompt.txt
+            - name: migrator-config
+              mountPath: /metadata-migration/score_chat_prompt.txt
               subPath: score_chat_prompt.txt
-            - name: migrator-workspace-config
-              mountPath: /workspace-migration/score_main_prompt.txt
+            - name: migrator-config
+              mountPath: /metadata-migration/score_main_prompt.txt
               subPath: score_main_prompt.txt
-            - name: migrator-workspace-config
-              mountPath: /workspace-migration/compliance_chat_prompt.txt
+            - name: migrator-config
+              mountPath: /metadata-migration/compliance_chat_prompt.txt
               subPath: compliance_chat_prompt.txt
-            - name: migrator-workspace-config
-              mountPath: /workspace-migration/compliance_main_prompt.txt
+            - name: migrator-config
+              mountPath: /metadata-migration/compliance_main_prompt.txt
               subPath: compliance_main_prompt.txt
       volumes:
         - name: elasticsearch-index-config
@@ -140,9 +140,9 @@ spec:
         - name: inventory-data-config
           configMap:
             name: inventory-data-config
-        - name: migrator-workspace-config
+        - name: migrator-config
           configMap:
-            name: migrator-workspace-config
+            name: migrator-config
   backoffLimit: 5
 {{- end }}
 {{- end }}
@@ -150,13 +150,14 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: migrator-workspace-config
+  name: migrator-config
   namespace: {{ .Release.Namespace }}
 data:
   integration_types.json: |
     [
       {
         "id":1,
+        "integration_type": "aws_cloud_account",
         "name":"AWS",
         "label":"Amazon Web Services (AWS)",
         "tier":"Community",
@@ -168,6 +169,7 @@ data:
       },
       {
         "id":2,
+        "integration_type": "azure_subscription",
         "name":"Azure",
         "label":"Microsoft Azure",
         "tier":"Community",
@@ -179,6 +181,7 @@ data:
       },
       {
         "id":3,
+        "integration_type": "entraid_directory",
         "name":"EntraID",
         "label":"Microsoft EntraID (previously AzureAD)",
         "tier":"Community",

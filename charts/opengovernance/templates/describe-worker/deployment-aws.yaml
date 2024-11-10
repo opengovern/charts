@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: og-describer-aws
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: og-describer-aws
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: og-describer-aws
+spec:
+  minReadySeconds: 10
+  {{- if eq .Values.keda.enabled true }}
+  replicas: 1
+  {{- else }}
+  replicas: 0
+  {{- end }}
+  selector:
+    matchLabels:
+      app: og-describer-aws
+  template:
+    metadata:
+      labels:
+        app: og-describer-aws
+    spec:
+      serviceAccountName: og-describer-aws
+      containers:
+        - name: og-describer-aws
+          image: "{{ .Values.opengovernance.docker.registry }}/og-describer-aws:{{ .Values.opengovernance.docker.tags.describeWorkerAWS }}"
+          command: ["/og-describer-aws"]
+          imagePullPolicy: Always
+          #resources:
+          #  limits:
+          #    cpu: 500m
+          #    memory: 1Gi
+          #  requests:
+          #    cpu: 100m
+          #    memory: 300Mi
+          env:
+            - name: NATS_URL
+              value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: og-describer-aws-manuals
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: og-describer-aws-manuals
+spec:
+  minReadySeconds: 10
+  {{- if eq .Values.keda.enabled true }}
+  replicas: 0
+  {{- else }}
+  replicas: 0
+  {{- end }}
+  selector:
+    matchLabels:
+      app: og-describer-aws-manuals
+  template:
+    metadata:
+      labels:
+        app: og-describer-aws-manuals
+    spec:
+      serviceAccountName: og-describer-aws
+      containers:
+        - name: og-describer-aws
+          image: "{{ .Values.opengovernance.docker.registry }}/og-describer-aws:{{ .Values.opengovernance.docker.tags.describeWorkerAWS }}"
+          command: ["/og-describer-aws"]
+          imagePullPolicy: Always
+          #resources:
+          #  limits:
+          #    cpu: 500m
+          #    memory: 1Gi
+          #  requests:
+          #    cpu: 100m
+          #    memory: 300Mi
+          env:
+            - name: NATS_URL
+              value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
+            - name: MANUAL_TRIGGERS
+              value: "true"

@@ -38,8 +38,8 @@ spec:
 
             - name: INVENTORY_BASEURL
               value: "http://inventory-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
-            - name: ONBOARD_BASEURL
-              value: "http://onboard-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+            - name: INTEGRATION_BASEURL
+              value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
             - name: ESSINK_BASEURL
               value: "http://es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
             - name: PROMETHEUS_PUSH_ADDRESS
@@ -85,8 +85,8 @@ spec:
 
             - name: INVENTORY_BASEURL
               value: "http://inventory-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
-            - name: ONBOARD_BASEURL
-              value: "http://onboard-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+            - name: INTEGRATION_BASEURL
+              value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
             - name: ESSINK_BASEURL
               value: "http://es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
             - name: PROMETHEUS_PUSH_ADDRESS
