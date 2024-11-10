@@ -18,11 +18,7 @@ spec:
 
       containers:
       - name: web-ui
-<<<<<<<< HEAD:charts/opengovernance/templates/web-ui-service/frontend-deployment.yaml
         image: "{{ .Values.opengovernance.docker.registry }}/web-ui:{{ .Values.opengovernance.docker.tags.webui }}"
-========
-        image: "{{ .Values.opengovernance.docker.registry }}/web-ui:{{ .Values.opengovernance.docker.tags.ui }}"
->>>>>>>> dev:charts/opengovernance/templates/web-ui-service/web-ui-deployment.yaml
         imagePullPolicy: Always
         ports:
           - containerPort: 7298
@@ -45,28 +41,21 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-<<<<<<<< HEAD:charts/opengovernance/templates/web-ui-service/frontend-deployment.yaml
   name: web-ui-env
   namespace: {{ .Release.Namespace }}
   labels:
     app: web-ui
-========
-  name: ui-env
-  namespace: {{ .Release.Namespace }}
-  labels:
-    app: ui
->>>>>>>> dev:charts/opengovernance/templates/web-ui-service/web-ui-deployment.yaml
 data:
   .env: |
     NODE_ENV=production
     REACT_APP_NODE_ENV=prod
-    REACT_APP_MUI_LICENSE={{ .Values.opengovernance.webUI.muiLicense }}
+    REACT_APP_MUI_LICENSE={{ .Values.opengovernance.frontend.muiLicense }}
     REACT_APP_DOMAIN: "https://{{ .Values.global.domain }}"
     REACT_APP_BASE_URL="https://{{ .Values.global.domain }}"
     REACT_APP_AUTH_BASE_URL="https://{{ .Values.global.domain }}"
   NODE_ENV: production
   REACT_APP_NODE_ENV: prod
-  REACT_APP_MUI_LICENSE: {{ .Values.opengovernance.webUI.muiLicense }}
+  REACT_APP_MUI_LICENSE: {{ .Values.opengovernance.frontend.muiLicense }}
   REACT_APP_DOMAIN: "https://{{ .Values.global.domain }}"
   REACT_APP_BASE_URL: "https://{{ .Values.global.domain }}"
   REACT_APP_AUTH_BASE_URL: "https://{{ .Values.global.domain }}"
