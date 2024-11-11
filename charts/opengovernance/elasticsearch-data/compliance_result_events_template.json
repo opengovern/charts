@@ -1,7 +1,6 @@
 {
   "index_patterns": [
-    "findings",
-    "rc_findings"
+    "compliance_result_events"
   ],
   "template": {
     "settings": {
@@ -50,6 +49,9 @@
         }
       ],
       "properties": {
+        "complianceResultEsID": {
+            "type": "keyword"
+        },
         "benchmarkID": {
           "type": "keyword"
         },
@@ -62,31 +64,28 @@
         "opengovernanceResourceID": {
           "type": "keyword"
         },
+        "resourceID": {
+          "type": "keyword"
+        },
         "evaluatedAt":  {
           "type": "long"
         },
-        "conformanceStatus": {
+        "complianceStatus": {
+          "type": "keyword"
+        },
+        "previousComplianceStatus": {
           "type": "keyword"
         },
         "stateActive": {
           "type": "boolean"
         },
+        "previousStateActive": {
+          "type": "boolean"
+        },
         "severity": {
           "type": "keyword"
         },
-        "evaluator": {
-          "type": "keyword"
-        },
-        "integrationType": {
-          "type": "keyword"
-        },
-        "resourceID": {
-          "type": "keyword"
-        },
-        "resourceName":  {
-          "type": "keyword"
-        },
-        "resourceLocation":  {
+        "connector": {
           "type": "keyword"
         },
         "resourceType": {
@@ -95,32 +94,19 @@
         "reason": {
           "type": "keyword"
         },
-        "costOptimization": {
-          "type": "double"
+        "parentComplianceJobID": {
+          "type": "long"
         },
         "complianceJobID": {
           "type": "long"
         },
-        "parentComplianceJobID": {
-          "type": "long"
-        },
-        "parentBenchmarks": {
-          "type": "keyword"
-        },
         "parentBenchmarkReferences": {
           "type": "keyword"
-        },
-        "lastTransition": {
-            "type": "long"
-        },
-        "history": {
-          "type": "object",
-          "enabled": false
         }
       }
     }
   },
   "_meta": {
-    "description": "Findings index"
+    "description": "ComplianceResultEvents index"
   }
 }

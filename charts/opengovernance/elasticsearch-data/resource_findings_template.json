@@ -73,7 +73,7 @@
         "integrationType": {
             "type": "keyword"
         },
-        "findings": {
+        "complianceResults": {
           "type": "nested",
           "include_in_parent": true,
           "properties": {
@@ -92,7 +92,7 @@
             "evaluatedAt":  {
               "type": "long"
             },
-            "conformanceStatus": {
+            "complianceStatus": {
               "type": "keyword"
             },
             "stateActive": {

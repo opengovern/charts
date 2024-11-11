@@ -83,7 +83,9 @@ escurl PUT '_index_template/insights_template' @insights_template.json
 escurl PUT '_index_template/stack_insights_template' @stack_insights_template.json
 escurl PUT '_index_template/connection_summary_template' @connection_summary_template.json
 escurl PUT '_index_template/provider_summary_template' @provider_summary_template.json
-escurl PUT '_index_template/findings_template' @findings_template.json
+escurl PUT '_index_template/compliance_result_template' @compliance_result_template.json
+escurl PUT '_index_template/compliance_result_event_template' @compliance_result_event_template.json
+escurl PUT '_index_template/resource_findings_template' @resource_findings_template.json
 escurl PUT '_index_template/stack_findings_template' @stack_findings_template.json
 escurl PUT '_index_template/benchmark_summary_template' @benchmark_summary_template.json
 escurl PUT '_index_template/cost_summary_template' @cost_summary_template.json
