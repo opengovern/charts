@@ -8,24 +8,24 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v0.31.0-dev
+      webui: v0.442.0
       auth: v0.440.31
       swagger: v0.435.0
       pennywise: v0.4.20-dev
       checkupWorker: v0.440.39
-      analytics: v0.441.1
-      migrator: v0.441.1
-      describeScheduler: v0.441.1
+      analytics: v0.441.7
+      migrator: v0.441.7
+      describeScheduler: v0.441.7
       describeWorkerAWS: local-v0.0.23
       describeWorkerAzure: local-v0.0.47
       describeWorkerEntraid: local-v0.0.15
       integration: v0.441.1
-      metadata: v0.441.1
-      inventory: v0.441.1
-      compliance: v0.441.1
-      complianceSummarizer: v0.441.1
-      complianceReport: v0.441.1
-      steampipe: v0.441.1
+      metadata: v0.441.7
+      inventory: v0.441.7
+      compliance: v0.442.2
+      complianceSummarizer: v0.442.1
+      complianceReport: v0.441.7
+      steampipe: v0.441.7
       esSink: v0.434.14
       queryRunnerWorker: v0.441.1
       demoImport: v0.434.15
