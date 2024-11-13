@@ -58,7 +58,7 @@
         "EvaluatedAtEpoch":  {
           "type": "long"
         },
-        "Connections": {
+        "Integrations": {
           "type": "object",
           "properties": {
             "BenchmarkResult": {
@@ -80,7 +80,7 @@
                     "SecurityScore": {
                       "type": "double"
                     },
-                    "CostOptimization": {
+                    "CostImpact": {
                       "type": "double"
                     }
                   }
@@ -95,7 +95,7 @@
                 }
               }
             },
-            "Connections": {
+            "Integrations": {
               "type": "object",
               "enabled": false
             }

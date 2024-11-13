@@ -58,7 +58,7 @@
         "es_index":  {
           "type": "keyword"
         },
-        "opengovernanceResourceID": {
+        "platformResourceID": {
           "type": "keyword"
         },
         "resourceType": {
@@ -86,7 +86,7 @@
             "integrationID": {
               "type": "keyword"
             },
-            "opengovernanceResourceID": {
+            "platformResourceID": {
               "type": "keyword"
             },
             "evaluatedAt":  {
@@ -104,16 +104,13 @@
             "evaluator": {
               "type": "keyword"
             },
-            "connector": {
+            "integrationType": {
               "type": "keyword"
             },
             "resourceID": {
               "type": "keyword"
             },
             "resourceName":  {
-              "type": "keyword"
-            },
-            "resourceLocation":  {
               "type": "keyword"
             },
             "resourceType": {
@@ -125,11 +122,17 @@
             "complianceJobID": {
               "type": "long"
             },
-            "parentComplianceJobID": {
+            "runnerID": {
               "type": "long"
             },
-            "parentBenchmarks": {
+            "controlPath": {
               "type": "keyword"
+            },
+            "costImpact": {
+              "type": "double"
+            },
+            "lastUpdatedAt": {
+              "type": "long"
             }
           }
         },

@@ -1,6 +1,7 @@
 {
   "index_patterns": [
-    "compliance_result_events"
+    "compliance_results",
+    "rc_compliance_results"
   ],
   "template": {
     "settings": {
@@ -49,9 +50,6 @@
         }
       ],
       "properties": {
-        "complianceResultEsID": {
-            "type": "keyword"
-        },
         "benchmarkID": {
           "type": "keyword"
         },
@@ -61,31 +59,31 @@
         "integrationID": {
           "type": "keyword"
         },
-        "platformResourceID": {
-          "type": "keyword"
-        },
-        "resourceID": {
-          "type": "keyword"
-        },
         "evaluatedAt":  {
           "type": "long"
         },
         "complianceStatus": {
           "type": "keyword"
         },
-        "previousComplianceStatus": {
-          "type": "keyword"
-        },
         "stateActive": {
-          "type": "boolean"
-        },
-        "previousStateActive": {
           "type": "boolean"
         },
         "severity": {
           "type": "keyword"
         },
+        "evaluator": {
+          "type": "keyword"
+        },
         "integrationType": {
+          "type": "keyword"
+        },
+        "resourceID": {
+          "type": "keyword"
+        },
+        "platformResourceID": {
+          "type": "keyword"
+        },
+        "resourceName":  {
           "type": "keyword"
         },
         "resourceType": {
@@ -94,19 +92,29 @@
         "reason": {
           "type": "keyword"
         },
-        "parentComplianceJobID": {
+        "costImpact": {
+          "type": "double"
+        },
+        "runnerID": {
           "type": "long"
+        },
+        "controlPath": {
+          "type": "keyword"
         },
         "complianceJobID": {
           "type": "long"
         },
-        "parentBenchmarkReferences": {
-          "type": "keyword"
+        "lastUpdatedAt": {
+            "type": "long"
+        },
+        "history": {
+          "type": "object",
+          "enabled": false
         }
       }
     }
   },
   "_meta": {
-    "description": "ComplianceResultEvents index"
+    "description": "Compliance Results index"
   }
 }

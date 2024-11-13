@@ -1,3 +1,4 @@
+{{- if eq .Values.swagger.enabled true }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,3 +25,5 @@ spec:
         env:
         - name: HTTP_ADDRESS
           value: "0.0.0.0:7255"
+---
+{{- end }}

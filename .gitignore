@@ -16,7 +16,7 @@ Desktop.ini
 
 # Backup files
 *~
-
+*.bak
 *.swp
 
 # ==============================
