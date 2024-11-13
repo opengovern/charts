@@ -1,7 +1,7 @@
 {
   "index_patterns": [
-    "findings",
-    "rc_findings"
+    "compliance_results",
+    "rc_compliance_results"
   ],
   "template": {
     "settings": {
@@ -59,13 +59,10 @@
         "integrationID": {
           "type": "keyword"
         },
-        "opengovernanceResourceID": {
-          "type": "keyword"
-        },
         "evaluatedAt":  {
           "type": "long"
         },
-        "conformanceStatus": {
+        "complianceStatus": {
           "type": "keyword"
         },
         "stateActive": {
@@ -83,10 +80,10 @@
         "resourceID": {
           "type": "keyword"
         },
-        "resourceName":  {
+        "platformResourceID": {
           "type": "keyword"
         },
-        "resourceLocation":  {
+        "resourceName":  {
           "type": "keyword"
         },
         "resourceType": {
@@ -95,22 +92,19 @@
         "reason": {
           "type": "keyword"
         },
-        "costOptimization": {
+        "costImpact": {
           "type": "double"
+        },
+        "runnerID": {
+          "type": "long"
+        },
+        "controlPath": {
+          "type": "keyword"
         },
         "complianceJobID": {
           "type": "long"
         },
-        "parentComplianceJobID": {
-          "type": "long"
-        },
-        "parentBenchmarks": {
-          "type": "keyword"
-        },
-        "parentBenchmarkReferences": {
-          "type": "keyword"
-        },
-        "lastTransition": {
+        "lastUpdatedAt": {
             "type": "long"
         },
         "history": {
@@ -121,6 +115,6 @@
     }
   },
   "_meta": {
-    "description": "Findings index"
+    "description": "Compliance Results index"
   }
 }
