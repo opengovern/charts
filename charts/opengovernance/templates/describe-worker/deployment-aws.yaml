@@ -13,9 +13,9 @@ metadata:
 spec:
   minReadySeconds: 10
   {{- if eq .Values.keda.enabled true }}
-  replicas: 1
-  {{- else }}
   replicas: 0
+  {{- else }}
+  replicas: 5
   {{- end }}
   selector:
     matchLabels:
@@ -54,7 +54,7 @@ spec:
   {{- if eq .Values.keda.enabled true }}
   replicas: 0
   {{- else }}
-  replicas: 0
+  replicas: 2
   {{- end }}
   selector:
     matchLabels:
