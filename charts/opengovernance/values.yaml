@@ -14,7 +14,7 @@ opengovernance:
       pennywise: v0.4.20-dev
       checkupWorker: v0.443.8
       analytics: v0.443.8
-      migrator: v0.443.8
+      migrator: v0.445.2
       describeScheduler: v0.443.8
       describeWorkerAWS: local-v0.0.24
       describeWorkerAzure: local-v0.0.53
@@ -105,7 +105,7 @@ postgresql:
   image:
     registry: ghcr.io
     repository: opengovern/postgres
-    tag: v0.445.1
+    tag: v0.445.2
     pullPolicy: Always
     debug: false
   global:
