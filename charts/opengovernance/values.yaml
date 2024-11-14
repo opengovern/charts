@@ -14,7 +14,7 @@ opengovernance:
       pennywise: v0.4.20-dev
       checkupWorker: v0.443.8
       analytics: v0.443.8
-      migrator: v0.445.2
+      migrator: v0.460.1-dev.0
       describeScheduler: v0.443.8
       describeWorkerAWS: local-v0.0.24
       describeWorkerAzure: local-v0.0.53
