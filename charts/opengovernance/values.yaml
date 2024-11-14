@@ -20,10 +20,10 @@ opengovernance:
       describeWorkerAzure: local-v0.0.53
       describeWorkerEntraid: local-v0.0.22
       integration: v0.443.8
-      metadata: v0.443.8
-      inventory: v0.443.8
-      compliance: v0.443.8
-      complianceSummarizer: v0.443.8
+      metadata: v0.444.1
+      inventory: v0.444.1
+      compliance: v0.444.1
+      complianceSummarizer: v0.444.1
       complianceReport: v0.443.8
       steampipe: v0.443.8
       esSink: v0.443.8
@@ -140,7 +140,7 @@ postgresql:
         primary_init_script.sh: |
           #!/bin/bash
           ./init.sh
-         
+
     resources:
       limits:
         memory: '8Gi'
