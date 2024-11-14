@@ -22,11 +22,11 @@ spec:
   template:
     spec:
       restartPolicy: OnFailure
-      serviceAccountName: postInstall
+      serviceAccountName: post-install-configuration
       containers:
-        - name: postInstall
-          image: "{{ .Values.opengovernance.docker.registry }}/migrator:{{ .Values.opengovernance.docker.tags.postInstall }}"
-          command: ["/migrator-worker"]
+        - name: post-install-configuration
+          image: "{{ .Values.opengovernance.docker.registry }}/post-install:{{ .Values.opengovernance.docker.tags.postInstall }}"
+          command: ["/post-install-worker"]
           imagePullPolicy: Always
           resources:
             limits:
