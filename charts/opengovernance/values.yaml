@@ -14,20 +14,21 @@ opengovernance:
       pennywise: v0.4.20-dev
       checkupWorker: v0.443.8
       analytics: v0.443.8
-      migrator: v0.447.0
-      describeScheduler: v0.443.8
+      postInstall: v0.450.1
+      describeScheduler: v0.451.1
       describeWorkerAWS: local-v0.0.24
       describeWorkerAzure: local-v0.0.53
       describeWorkerEntraid: local-v0.0.22
       integration: v0.443.8
       metadata: v0.444.1
-      inventory: v0.444.1
+      inventory: v0.451.1
       compliance: v0.444.1
       complianceSummarizer: v0.444.1
       complianceReport: v0.443.8
       steampipe: v0.443.8
       esSink: v0.443.8
       queryRunnerWorker: v0.443.8
+      queryValidatorWorker: v0.451.2
       demoImport: v0.434.15
       psqlImport: v0.434.15
   apikey:
@@ -330,7 +331,7 @@ keda:
 populateWithSampleData:
   enabled: false
   fileURL: "https://opengovernance.nyc3.cdn.digitaloceanspaces.com/demo-data/v3.0/demo_data.tar.gz.enc"
-migratorJob:
+PostInstallJob:
   enabled: true
 swagger:
   enabled: false
