@@ -11,7 +11,6 @@ opengovernance:
       webui: v0.446.0
       auth: v0.443.8
       swagger: v0.435.0
-      pennywise: v0.4.20-dev
       checkupWorker: v0.443.8
       analytics: v0.443.8
       postInstall: v0.450.1
@@ -168,11 +167,7 @@ postgresql:
           secretKeyRef:
             name: postgres-secret
             key: subscriptionUserPassword
-      - name: POSTGRES_PENNYWISE_DB_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: postgres-secret
-            key: pennywiseUserPassword
+      
       - name: POSTGRES_INFORMATION_DB_PASSWORD
         valueFrom:
           secretKeyRef:
