@@ -12,7 +12,6 @@ opengovernance:
       auth: v0.452.9
       swagger: v0.435.0
       checkupWorker: v0.452.9
-      analytics: v0.452.9
       postInstall: v0.452.9
       describeScheduler: v0.452.14
       describeWorkerAWS: local-v0.0.24
