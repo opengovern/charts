@@ -74,8 +74,6 @@ spec:
               value: "http://metadata-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
             - name: ESSINK_BASEURL
               value: "http://es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
-            - name: PENNYWISE_BASE_URL
-              value: "http://pennywise-server-service.{{ .Release.Namespace }}.svc.cluster.local:8080"
 
             - name: PROMETHEUS_PUSH_ADDRESS
               value: "prom-system-prometheus-pushgateway.prom-system.svc.cluster.local:9091"
@@ -162,8 +160,6 @@ spec:
               value: "http://metadata-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
             - name: ESSINK_BASEURL
               value: "http://es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
-            - name: PENNYWISE_BASE_URL
-              value: "http://pennywise-server-service.{{ .Release.Namespace }}.svc.cluster.local:8080"
 
             - name: PROMETHEUS_PUSH_ADDRESS
               value: "prom-system-prometheus-pushgateway.prom-system.svc.cluster.local:9091"

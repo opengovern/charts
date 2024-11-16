@@ -31,11 +31,7 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: authServiceUserPassword
-        - name: POSTGRES_PENNYWISE_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: pennywiseUserPassword
+
         - name: POSTGRES_INFORMATION_DB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -103,9 +99,6 @@ spec:
             dt=$(date '+%d/%m/%Y %H:%M:%S');
             echo "$dt - Running init script the 1st time Primary PostgreSql container is created...";
 
-            pennywiseDatabaseName="pennywise"
-            pennywiseUserName="pennywise_service"
-
             workspaceDatabaseName="workspace"
             workspaceUserName="workspace_service"
 
@@ -164,17 +157,6 @@ spec:
             GRANT ALL ON SCHEMA public TO $workspaceUserName;
             CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
             
-            SELECT 'CREATE DATABASE $pennywiseDatabaseName'
-            WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$pennywiseDatabaseName')\gexec
-            SELECT 'ALTER ROLE $pennywiseUserName WITH PASSWORD ''$POSTGRES_PENNYWISE_DB_PASSWORD''' 
-            WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$pennywiseUserName')\gexec
-            SELECT 'CREATE USER $pennywiseUserName WITH PASSWORD ''$POSTGRES_PENNYWISE_DB_PASSWORD''' 
-            WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$pennywiseUserName')\gexec
-            GRANT ALL PRIVILEGES ON DATABASE "$pennywiseDatabaseName" to $pennywiseUserName;
-              
-            \c "$pennywiseDatabaseName"
-            GRANT ALL ON SCHEMA public TO $pennywiseUserName;
-            CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
 
             SELECT 'CREATE DATABASE $informationDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$informationDatabaseName')\gexec
