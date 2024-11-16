@@ -47,6 +47,10 @@ spec:
               value: "prom-system-prometheus-pushgateway.prom-system.svc.cluster.local:9091"
             - name: INTEGRATION_BASE_URL
               value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
+            - name: METADATA_BASE_URL
+              value: "http://metadata-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+            - name: AUTH_BASE_URL
+              value: "http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251"
             - name: JAEGER_AGENT_HOST
               valueFrom:
                 fieldRef:
@@ -54,3 +58,12 @@ spec:
 
             - name: JAEGER_SERVICE_NAME
               value: "checkup-worker"
+
+            - name: DO_TELEMETRY
+              value: "{{ .Values.opengovernance.telemetry.enabled }}"
+            - name: TELEMETRY_WORKSPACE_ID
+              value: "{{ .Release.Namespace }}"
+            - name: TELEMETRY_HOSTNAME
+              value: "{{ .Values.global.domain }}"
+            - name: TELEMETRY_BASE_URL
+              value: "{{ .Values.opengovernance.telemetry.baseUrl }}"

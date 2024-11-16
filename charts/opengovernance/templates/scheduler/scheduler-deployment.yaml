@@ -69,6 +69,8 @@ spec:
           value: "12"
         - name: COMPLIANCE_INTERVAL_HOURS
           value: "24"
+        - name: QUERY_VALIDATOR_ENABLED
+          value: "{{ .Values.queryvalidator.enabled }}"
         - name: SERVERLESS_PROVIDER
           value: "local"
         - name: COMPLIANCEINTERVALHOURS
