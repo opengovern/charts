@@ -22,7 +22,6 @@ spec:
   template:
     spec:
       restartPolicy: OnFailure
-      serviceAccountName: post-install
       containers:
         - name: post-install-configuration
           image: "{{ .Values.opengovernance.docker.registry }}/post-install:{{ .Values.opengovernance.docker.tags.postInstall }}"
