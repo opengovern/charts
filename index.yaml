@@ -3,6 +3,33 @@ entries:
   opengovernance:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-11-17T11:07:42.945185206Z"
+    dependencies:
+    - condition: keda.enabled
+      name: keda
+      repository: ""
+      version: 2.15.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: ""
+      version: 15.5.21
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: ""
+      version: 2.22.0
+    - condition: opensearch-dashboards.enabled
+      name: opensearch-dashboards
+      repository: ""
+      version: 2.20.0
+    description: A Helm chart for deploying opengovernance to Kubernetes
+    digest: e4c379f76bd5e1cb2753cb5879082430b1adaec8fdd3d0cdfeddb9f23cb93f0e
+    name: opengovernance
+    type: application
+    urls:
+    - https://github.com/opengovern/charts/releases/download/opengovernance-0.1.148/opengovernance-0.1.148.tgz
+    version: 0.1.148
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-11-16T22:47:51.97379264Z"
     dependencies:
     - condition: keda.enabled
@@ -973,4 +1000,4 @@ entries:
     urls:
     - https://github.com/opengovern/charts/releases/download/opengovernance-0.1.108/opengovernance-0.1.108.tgz
     version: 0.1.108
-generated: "2024-11-16T22:47:51.974026026Z"
+generated: "2024-11-17T11:07:42.945440501Z"
