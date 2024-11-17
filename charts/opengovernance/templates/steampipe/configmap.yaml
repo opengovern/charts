@@ -28,6 +28,14 @@ data:
       password = ""
     }
 
+  github.spc: |
+    connection "github" {
+      plugin = "github"
+      addresses = []
+      username = ""
+      password = ""
+    }
+
   opengovernance.spc: |
     connection "opengovernance" {
       plugin = "local/opengovernance"
