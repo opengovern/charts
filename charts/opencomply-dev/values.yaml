@@ -8,21 +8,21 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v0.464.0
+      webui: v0.466.0
       auth: v0.465.10
       swagger: v0.465.10
       checkupWorker: v0.465.10
       postInstall: v0.465.10
-      describeScheduler: v0.465.10
+      describeScheduler: v0.465.12
       describeWorkerAWS: local-v0.0.25
       describeWorkerAzure: local-v0.0.54
       describeWorkerEntraid: local-v0.0.23
-      describeWorkerGithub: local-v0.0.32
+      describeWorkerGithub: local-v0.0.34
       describeWorkerDigitalocean: local-v0.0.2
-      integration: v0.465.10
-      metadata: v0.465.10
-      inventory: v0.465.10
-      compliance: v0.465.10
+      integration: v0.465.12
+      metadata: v0.465.12
+      inventory: v0.465.12
+      compliance: v0.465.12
       complianceSummarizer: v0.465.10
       complianceReport: v0.465.10
       steampipe: v0.465.10
@@ -59,7 +59,7 @@ dex:
   image:
     repository: ghcr.io/opengovern/dex-login
     pullPolicy: Always
-    tag: v0.447.1
+    tag: v0.465.11
   config:
     grpc:
       addr: 'localhost:5557'
