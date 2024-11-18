@@ -329,4 +329,4 @@ populateWithSampleData:
 swagger:
   enabled: false
 queryvalidator:
-  enabled: true
+  enabled: false
