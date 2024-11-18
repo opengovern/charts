@@ -38,7 +38,7 @@ opengovernance:
     muiLicense: xxx
   telemetry:
     enabled: true
-    baseUrl: "http://telemetry.opengovernance.io"
+    baseUrl: "http://stats.opencomply.io"
   vault:
     provider: hashicorp-vault
     aws:
@@ -322,7 +322,7 @@ aws:
 github:
   token: ""
 keda:
-  enabled: true
+  enabled: false
 populateWithSampleData:
   enabled: false
   fileURL: "https://opengovernance.nyc3.cdn.digitaloceanspaces.com/demo-data/v3.0/demo_data.tar.gz.enc"
