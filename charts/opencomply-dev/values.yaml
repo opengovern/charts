@@ -12,19 +12,19 @@ opengovernance:
       auth: v0.462.4
       swagger: v0.462.4
       checkupWorker: v0.462.4
-      postInstall: v0.462.4
-      describeScheduler: v0.462.4
+      postInstall: v0.463.1
+      describeScheduler: v0.463.1
       describeWorkerAWS: local-v0.0.25
       describeWorkerAzure: local-v0.0.54
       describeWorkerEntraid: local-v0.0.23
       describeWorkerGithub: local-v0.0.32
       describeWorkerDigitalocean: local-v0.0.2
-      integration: v0.462.4
-      metadata: v0.462.4
-      inventory: v0.462.4
-      compliance: v0.462.4
+      integration: v0.463.1
+      metadata: v0.463.1
+      inventory: v0.463.1
+      compliance: v0.463.1
       complianceSummarizer: v0.462.4
-      complianceReport: v0.462.4
+      complianceReport: v0.463.1
       steampipe: v0.462.4
       esSink: v0.462.4
       queryRunnerWorker: v0.462.4
