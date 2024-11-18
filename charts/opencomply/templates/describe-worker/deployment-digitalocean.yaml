@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: og-describer-azure
+  name: og-describer-digitalocean
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: og-describer-azure
+  name: og-describer-digitalocean
   namespace: {{ .Release.Namespace }}
   labels:
-    app: og-describer-azure
+    app: og-describer-digitalocean
 spec:
   minReadySeconds: 10
   {{- if eq .Values.keda.enabled true }}
@@ -19,17 +19,17 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      app: og-describer-azure
+      app: og-describer-digitalocean
   template:
     metadata:
       labels:
-        app: og-describer-azure
+        app: og-describer-digitalocean
     spec:
-      serviceAccountName: og-describer-azure
+      serviceAccountName: og-describer-digitalocean
       containers:
-        - name: og-describer-azure
-          image: "{{ .Values.opengovernance.docker.registry }}/og-describer-azure:{{ .Values.opengovernance.docker.tags.describeWorkerAzure }}"
-          command: ["/og-describer-azure"]
+        - name: og-describer-digitalocean
+          image: "{{ .Values.opengovernance.docker.registry }}/og-describer-digitalocean:{{ .Values.opengovernance.docker.tags.describeWorkerDigitalocean }}"
+          command: ["/og-describer-digitalocean"]
           imagePullPolicy: Always
           #resources:
           #  limits:
@@ -45,10 +45,10 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: og-describer-azure-manuals
+  name: og-describer-digitalocean-manuals
   namespace: {{ .Release.Namespace }}
   labels:
-    app: og-describer-azure-manuals
+    app: og-describer-digitalocean-manuals
 spec:
   minReadySeconds: 10
   {{- if eq .Values.keda.enabled true }}
@@ -58,17 +58,17 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      app: og-describer-azure-manuals
+      app: og-describer-digitalocean-manuals
   template:
     metadata:
       labels:
-        app: og-describer-azure-manuals
+        app: og-describer-digitalocean-manuals
     spec:
-      serviceAccountName: og-describer-azure
+      serviceAccountName: og-describer-digitalocean
       containers:
-        - name: og-describer-azure
-          image: "{{ .Values.opengovernance.docker.registry }}/og-describer-azure:{{ .Values.opengovernance.docker.tags.describeWorkerAzure }}"
-          command: ["/og-describer-azure"]
+        - name: og-describer-digitalocean
+          image: "{{ .Values.opengovernance.docker.registry }}/og-describer-digitalocean:{{ .Values.opengovernance.docker.tags.describeWorkerDigitalocean }}"
+          command: ["/og-describer-digitalocean"]
           imagePullPolicy: Always
           #resources:
           #  limits:

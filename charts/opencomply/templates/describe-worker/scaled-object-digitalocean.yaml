@@ -2,7 +2,7 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: og-describer-aws-scaled-object
+  name: og-describer-digitalocean-scaled-object
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": post-install,post-upgrade
@@ -11,7 +11,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: og-describer-aws
+    name: og-describer-digitalocean
   pollingInterval: 30
   cooldownPeriod:  300
   minReplicaCount: 0
@@ -24,15 +24,15 @@ spec:
       metadata:
         natsServerMonitoringEndpoint: "{{ .Release.Namespace }}-nats-headless.{{ .Release.Namespace }}.svc.cluster.local:8222"
         account: "$G"
-        stream: "og_describer_aws"
-        consumer: "describer-aws-service"
+        stream: "og_describer_digitalocean_team"
+        consumer: "describer-digitalocean-team-service"
         lagThreshold: "20"
         useHttps: "false"
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: og-describer-aws-manuals-scaled-object
+  name: og-describer-digitalocean-manuals-scaled-object
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": post-install,post-upgrade
@@ -41,7 +41,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: og-describer-aws-manuals
+    name: og-describer-digitalocean-manuals
   pollingInterval: 5
   cooldownPeriod:  300
   minReplicaCount: 0
@@ -54,8 +54,8 @@ spec:
       metadata:
         natsServerMonitoringEndpoint: "{{ .Release.Namespace }}-nats-headless.{{ .Release.Namespace }}.svc.cluster.local:8222"
         account: "$G"
-        stream: "og_describer_aws"
-        consumer: "describer-aws-manuals-service"
+        stream: "og_describer_digitalocean_team"
+        consumer: "describer-digitalocean-team-manuals-service"
         lagThreshold: "20"
         useHttps: "false"
 ---
