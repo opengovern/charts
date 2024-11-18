@@ -9,26 +9,26 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       webui: v0.464.0
-      auth: v0.465.4
-      swagger: v0.465.4
-      checkupWorker: v0.465.4
-      postInstall: v0.465.4
-      describeScheduler: v0.465.4
+      auth: v0.465.10
+      swagger: v0.465.10
+      checkupWorker: v0.465.10
+      postInstall: v0.465.10
+      describeScheduler: v0.465.10
       describeWorkerAWS: local-v0.0.25
       describeWorkerAzure: local-v0.0.54
       describeWorkerEntraid: local-v0.0.23
       describeWorkerGithub: local-v0.0.32
       describeWorkerDigitalocean: local-v0.0.2
-      integration: v0.465.8
-      metadata: v0.465.4
-      inventory: v0.465.4
-      compliance: v0.465.4
-      complianceSummarizer: v0.465.4
-      complianceReport: v0.465.4
-      steampipe: v0.465.4
-      esSink: v0.465.4
-      queryRunnerWorker: v0.465.4
-      queryValidatorWorker: v0.465.4
+      integration: v0.465.10
+      metadata: v0.465.10
+      inventory: v0.465.10
+      compliance: v0.465.10
+      complianceSummarizer: v0.465.10
+      complianceReport: v0.465.10
+      steampipe: v0.465.10
+      esSink: v0.465.10
+      queryRunnerWorker: v0.465.10
+      queryValidatorWorker: v0.465.10
       demoImport: v0.434.15
       psqlImport: v0.434.15
   apikey:
