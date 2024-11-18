@@ -1,6 +1,6 @@
 {
     "index_patterns": [
-        "aws_*"
+        "digitalocean_*"
     ],
     "template": {
         "settings": {
@@ -47,6 +47,6 @@
     ],
     "version": 1,
     "_meta": {
-        "description": "AWS resources indices"
+        "description": "DigitalOcean resources indices"
     }
 }

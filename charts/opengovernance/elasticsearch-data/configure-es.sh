@@ -38,6 +38,7 @@ sleep 10
 escurl PUT '_component_template/resource_component_template' @resource_component_template.json
 escurl PUT '_index_template/azure_resource_index_template' @azure_resource_index_template.json
 escurl PUT '_index_template/aws_resource_index_template' @aws_resource_index_template.json
+escurl PUT '_index_template/digitalocean_resource_index_template' @digitalocean_resource_index_template.json
 escurl PUT '_index_template/aws_iam_policy_index_template' @aws_iam_policy_index_template.json
 escurl PUT '_index_template/aws_iam_credentialreport_index_template' @aws_iam_credentialreport_index_template.json
 escurl PUT '_index_template/aws_lambda_function_index_template' @aws_lambda_function_index_template.json
