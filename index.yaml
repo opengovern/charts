@@ -1,6 +1,89 @@
 apiVersion: v1
 entries:
+  opencomply:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-11-18T05:06:52.224227191Z"
+    dependencies:
+    - condition: keda.enabled
+      name: keda
+      repository: ""
+      version: 2.15.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: ""
+      version: 15.5.21
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: ""
+      version: 2.22.0
+    - condition: opensearch-dashboards.enabled
+      name: opensearch-dashboards
+      repository: ""
+      version: 2.20.0
+    description: A Helm chart for deploying opencomply to Kubernetes
+    digest: 90355a5b909529b1e6ecb8d8858c794d256479513e955c9c8a875e78b7dfba3c
+    name: opencomply
+    type: application
+    urls:
+    - https://github.com/opengovern/charts/releases/download/opencomply-0.1.157/opencomply-0.1.157.tgz
+    version: 0.1.157
+  opencomply-dev:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-11-18T05:06:52.349169428Z"
+    dependencies:
+    - condition: keda.enabled
+      name: keda
+      repository: ""
+      version: 2.15.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: ""
+      version: 15.5.21
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: ""
+      version: 2.22.0
+    - condition: opensearch-dashboards.enabled
+      name: opensearch-dashboards
+      repository: ""
+      version: 2.20.0
+    description: A Helm chart for deploying opencomply-dev to Kubernetes
+    digest: 3ff6f0b755aa5891002fa09508d15904650939ce6e4947e2d107a82a1af9a94a
+    name: opencomply-dev
+    type: application
+    urls:
+    - https://github.com/opengovern/charts/releases/download/opencomply-dev-0.1.157/opencomply-dev-0.1.157.tgz
+    version: 0.1.157
   opengovernance:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-11-18T05:06:52.601595466Z"
+    dependencies:
+    - condition: keda.enabled
+      name: keda
+      repository: ""
+      version: 2.15.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: ""
+      version: 15.5.21
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: ""
+      version: 2.22.0
+    - condition: opensearch-dashboards.enabled
+      name: opensearch-dashboards
+      repository: ""
+      version: 2.20.0
+    description: A Helm chart for deploying opengovernance to Kubernetes
+    digest: acd304c7249d20254a8d4a994c5601629b46f229840e319506f38dfd95d8f799
+    name: opengovernance
+    type: application
+    urls:
+    - https://github.com/opengovern/charts/releases/download/opengovernance-0.1.159/opengovernance-0.1.159.tgz
+    version: 0.1.159
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2024-11-18T05:03:07.811528469Z"
@@ -1216,4 +1299,4 @@ entries:
     urls:
     - https://github.com/opengovern/charts/releases/download/opengovernance-0.1.108/opengovernance-0.1.108.tgz
     version: 0.1.108
-generated: "2024-11-18T05:03:07.811966144Z"
+generated: "2024-11-18T05:06:52.601867987Z"
