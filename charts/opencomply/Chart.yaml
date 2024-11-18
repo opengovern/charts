@@ -1,6 +1,6 @@
 apiVersion: v2
-name: opengovernance
-description: A Helm chart for deploying opengovernance to Kubernetes
+name: opencomply
+description: A Helm chart for deploying opencomply to Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
 #
