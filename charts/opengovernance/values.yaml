@@ -23,7 +23,7 @@ opengovernance:
       inventory: v0.460.0
       compliance: v0.458.1
       complianceSummarizer: v0.460.0
-      complianceReport: v0.460.0
+      complianceReport: v0.458.1
       steampipe: v0.458.1
       esSink: v0.458.1
       queryRunnerWorker: v0.458.1
@@ -38,7 +38,7 @@ opengovernance:
     muiLicense: xxx
   telemetry:
     enabled: true
-    baseUrl: "http://telemetry.opengovernance.io"
+    baseUrl: "http://stats.opencomply.io"
   vault:
     provider: hashicorp-vault
     aws:
@@ -329,4 +329,4 @@ populateWithSampleData:
 swagger:
   enabled: false
 queryvalidator:
-  enabled: true
+  enabled: false
