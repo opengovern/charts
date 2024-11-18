@@ -200,9 +200,10 @@ data:
       },
       {
         "id":6,
+        "integration_type": "github_account",
         "name":"GitHubCloud",
         "label":"GitHub Cloud",
-        "tier":"Enterprise",
+        "tier":"Community",
         "tags": { "usage": ["DevOps", "Code Security"] },
         "auto_onboard_support":true,
         "short_description":"Gain visibility into Repositories, Deployments, PRs and more.",

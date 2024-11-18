@@ -1,6 +1,6 @@
 global:
   domain: og.app.domain
-  debugMode: false
+  debugMode: true
   size: lg
 
 opengovernance:
@@ -9,25 +9,25 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       webui: v0.458.2
-      auth: v0.458.1
+      auth: v0.460.1
       swagger: v0.458.1
-      checkupWorker: v0.458.1
-      postInstall: v0.460.0
-      describeScheduler: v0.460.0
+      checkupWorker: v0.461.1
+      postInstall: v0.460.1
+      describeScheduler: v0.461.1
       describeWorkerAWS: local-v0.0.24
       describeWorkerAzure: local-v0.0.53
       describeWorkerEntraid: local-v0.0.22
-      describeWorkerGithub: local-v0.0.29
-      integration: v0.458.1
-      metadata: v0.460.0
-      inventory: v0.460.0
-      compliance: v0.458.1
-      complianceSummarizer: v0.460.0
-      complianceReport: v0.458.1
-      steampipe: v0.458.1
-      esSink: v0.458.1
-      queryRunnerWorker: v0.458.1
-      queryValidatorWorker: v0.458.1
+      describeWorkerGithub: local-v0.0.32
+      integration: v0.461.4
+      metadata: v0.461.1
+      inventory: v0.461.1
+      compliance: v0.461.1
+      complianceSummarizer: v0.460.1
+      complianceReport: v0.460.1
+      steampipe: v0.460.1
+      esSink: v0.460.1
+      queryRunnerWorker: v0.460.1
+      queryValidatorWorker: v0.460.1
       demoImport: v0.434.15
       psqlImport: v0.434.15
   apikey:
@@ -105,7 +105,7 @@ postgresql:
   image:
     registry: ghcr.io
     repository: opengovern/postgres
-    tag: v0.457.0
+    tag: v0.461.0
     pullPolicy: Always
     debug: false
   global:
@@ -168,7 +168,7 @@ postgresql:
           secretKeyRef:
             name: postgres-secret
             key: subscriptionUserPassword
-      
+
       - name: POSTGRES_INFORMATION_DB_PASSWORD
         valueFrom:
           secretKeyRef:
@@ -226,9 +226,9 @@ postgresql:
             key: postgresExporterUserPassword
       - name: POSTGRES_STEAMPIPE_USER_PASSWORD
         valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: steampipeUserPassword
+          secretKeyRef:
+            name: postgres-secret
+            key: steampipeUserPassword
       - name: POSTGRES_ALERTING_DB_PASSWORD
         valueFrom:
           secretKeyRef:
@@ -329,4 +329,4 @@ populateWithSampleData:
 swagger:
   enabled: false
 queryvalidator:
-  enabled: false
+  enabled: true
