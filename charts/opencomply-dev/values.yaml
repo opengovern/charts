@@ -19,7 +19,7 @@ opengovernance:
       describeWorkerEntraid: local-v0.0.23
       describeWorkerGithub: local-v0.0.32
       describeWorkerDigitalocean: local-v0.0.2
-      integration: v0.462.4
+      integration: v0.465.8
       metadata: v0.462.4
       inventory: v0.462.4
       compliance: v0.462.4
