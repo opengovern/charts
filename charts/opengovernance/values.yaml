@@ -23,7 +23,7 @@ opengovernance:
       inventory: v0.460.0
       compliance: v0.458.1
       complianceSummarizer: v0.460.0
-      complianceReport: v0.460.0
+      complianceReport: v0.458.1
       steampipe: v0.458.1
       esSink: v0.458.1
       queryRunnerWorker: v0.458.1
@@ -322,7 +322,7 @@ aws:
 github:
   token: ""
 keda:
-  enabled: false
+  enabled: true
 populateWithSampleData:
   enabled: false
   fileURL: "https://opengovernance.nyc3.cdn.digitaloceanspaces.com/demo-data/v3.0/demo_data.tar.gz.enc"
