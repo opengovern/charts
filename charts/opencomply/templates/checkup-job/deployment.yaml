@@ -23,8 +23,8 @@ spec:
       serviceAccountName: checkup-worker
       containers:
         - name: checkup-worker
-          image: "{{ .Values.opengovernance.docker.registry }}/checkup-worker:{{ .Values.opengovernance.docker.tags.checkupWorker }}"
-          command: ["/checkup-worker"]
+          image: "{{ .Values.opengovernance.docker.registry }}/checkup-job:{{ .Values.opengovernance.docker.tags.checkupJob }}"
+          command: ["/checkup-job"]
           args:
             - --id=$(WORKER_ID)
           imagePullPolicy: Always

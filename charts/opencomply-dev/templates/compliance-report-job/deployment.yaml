@@ -19,8 +19,8 @@ spec:
       serviceAccountName: compliance-report-worker
       containers:
         - name: compliance-worker
-          image: "{{ .Values.opengovernance.docker.registry }}/compliance-report-worker:{{ .Values.opengovernance.docker.tags.complianceReport }}"
-          command: ["/compliance-report-worker"]
+          image: "{{ .Values.opengovernance.docker.registry }}/compliance-report-job:{{ .Values.opengovernance.docker.tags.complianceReportJob }}"
+          command: ["/compliance-report-job"]
           args:
             - --id=$(WORKER_ID)
           imagePullPolicy: Always
@@ -116,8 +116,8 @@ spec:
       serviceAccountName: compliance-report-worker
       containers:
         - name: compliance-worker
-          image: "{{ .Values.opengovernance.docker.registry }}/compliance-report-worker:{{ .Values.opengovernance.docker.tags.complianceReport }}"
-          command: ["/compliance-report-worker"]
+          image: "{{ .Values.opengovernance.docker.registry }}/compliance-report-job:{{ .Values.opengovernance.docker.tags.complianceReportJob }}"
+          command: ["/compliance-report-job"]
           args:
             - --id=$(WORKER_ID)
           imagePullPolicy: Always
