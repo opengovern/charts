@@ -18,8 +18,8 @@ spec:
     spec:
       containers:
         - name: query-runner-worker
-          image: "{{ .Values.opengovernance.docker.registry }}/query-runner-worker:{{ .Values.opengovernance.docker.tags.queryRunnerWorker }}"
-          command: ["/query-runner-worker"]
+          image: "{{ .Values.opengovernance.docker.registry }}/query-runner-job:{{ .Values.opengovernance.docker.tags.queryRunnerJob }}"
+          command: ["/query-runner-job"]
           args:
             - --id=$(WORKER_ID)
           imagePullPolicy: Always

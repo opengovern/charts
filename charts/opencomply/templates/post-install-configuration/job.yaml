@@ -12,8 +12,8 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: post-install-configuration
-          image: "{{ .Values.opengovernance.docker.registry }}/post-install:{{ .Values.opengovernance.docker.tags.postInstall }}"
-          command: ["/post-install-worker"]
+          image: "{{ .Values.opengovernance.docker.registry }}/post-install-job:{{ .Values.opengovernance.docker.tags.postInstallJob }}"
+          command: ["/post-install-job"]
           imagePullPolicy: Always
           resources:
             limits:

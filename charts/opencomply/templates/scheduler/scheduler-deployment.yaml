@@ -19,8 +19,8 @@ spec:
       serviceAccountName: scheduler
       containers:
       - name: describe-scheduler
-        image: "{{ .Values.opengovernance.docker.registry }}/describe-scheduler:{{ .Values.opengovernance.docker.tags.describeScheduler }}"
-        command: ["/describe-scheduler"]
+        image: "{{ .Values.opengovernance.docker.registry }}/describe-scheduler-service:{{ .Values.opengovernance.docker.tags.describeSchedulerService }}"
+        command: ["/describe-scheduler-service"]
         #resources:
         #  limits:
         #    cpu: 500m

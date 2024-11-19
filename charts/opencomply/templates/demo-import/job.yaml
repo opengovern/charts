@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: import-es-demo-data
-          image: "{{ .Values.opengovernance.docker.registry }}/demo-importer:{{ .Values.opengovernance.docker.tags.demoImport }}"
+          image: "{{ .Values.opengovernance.docker.registry }}/demo-importer-job:{{ .Values.opengovernance.docker.tags.demoImporterJob }}"
           command: ["/demo-importer-worker"]
           env:
 {{- include "elastic.envs" . | indent 12 }}
