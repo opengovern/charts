@@ -59,7 +59,7 @@ dex:
   image:
     repository: ghcr.io/opengovern/dex-login
     pullPolicy: Always
-    tag: v0.447.1
+    tag: v0.468.7
   config:
     grpc:
       addr: 'localhost:5557'
