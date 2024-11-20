@@ -17,7 +17,7 @@ opengovernance:
       describeWorkerAWS: local-v0.1.2
       describeWorkerAzure: local-v0.0.54
       describeWorkerEntraid: local-v0.0.23
-      describeWorkerGithub: local-v0.1.16
+      describeWorkerGithub: local-v0.1.17
       describeWorkerDigitalocean: local-v0.0.2
       integration: v0.468.9
       metadata: v0.468.9
