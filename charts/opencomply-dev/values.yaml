@@ -12,23 +12,23 @@ opengovernance:
       auth: v0.468.8
       swagger: v0.468.8
       checkupJob: v0.468.8
-      postInstallJob: v0.468.8
-      describeSchedulerService: v0.468.8
-      describeWorkerAWS: local-v0.0.25
+      postInstallJob: v0.468.13
+      describeSchedulerService: v0.468.9
+      describeWorkerAWS: local-v0.1.2
       describeWorkerAzure: local-v0.0.54
       describeWorkerEntraid: local-v0.0.23
-      describeWorkerGithub: local-v0.1.0
+      describeWorkerGithub: local-v0.1.17
       describeWorkerDigitalocean: local-v0.0.2
-      integration: v0.468.8
-      metadata: v0.468.8
-      inventory: v0.468.8
-      compliance: v0.468.8
+      integration: v0.468.9
+      metadata: v0.468.9
+      inventory: v0.468.9
+      compliance: v0.468.19
       complianceSummarizerJob: v0.468.8
-      complianceReportJob: v0.468.8
-      steampipe: v0.468.8
+      complianceReportJob: v0.468.24
+      steampipe: v0.468.24
       esSink: v0.468.17
-      queryRunnerJob: v0.468.8
-      queryValidatorJob: v0.468.8
+      queryRunnerJob: v0.468.24
+      queryValidatorJob: v0.468.24
       demoImporterJob: v0.434.15
       psqlImport: v0.434.15
   apikey:
@@ -323,7 +323,7 @@ aws:
 github:
   token: ""
 keda:
-  enabled: false
+  enabled: true
 populateWithSampleData:
   enabled: false
   fileURL: "https://opengovernance.nyc3.cdn.digitaloceanspaces.com/demo-data/v3.0/demo_data.tar.gz.enc"
