@@ -24,11 +24,11 @@ opengovernance:
       inventory: v0.468.9
       compliance: v0.468.19
       complianceSummarizerJob: v0.468.8
-      complianceReportJob: v0.468.21
-      steampipe: v0.468.21
+      complianceReportJob: v0.468.24
+      steampipe: v0.468.24
       esSink: v0.468.17
-      queryRunnerJob: v0.468.21
-      queryValidatorJob: v0.468.21
+      queryRunnerJob: v0.468.24
+      queryValidatorJob: v0.468.24
       demoImporterJob: v0.434.15
       psqlImport: v0.434.15
   apikey:
@@ -323,7 +323,7 @@ aws:
 github:
   token: ""
 keda:
-  enabled: false
+  enabled: true
 populateWithSampleData:
   enabled: false
   fileURL: "https://opengovernance.nyc3.cdn.digitaloceanspaces.com/demo-data/v3.0/demo_data.tar.gz.enc"
