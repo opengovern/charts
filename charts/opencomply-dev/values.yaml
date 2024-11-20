@@ -26,7 +26,7 @@ opengovernance:
       complianceSummarizerJob: v0.468.8
       complianceReportJob: v0.468.8
       steampipe: v0.468.8
-      esSink: v0.468.8
+      esSink: v0.468.17
       queryRunnerJob: v0.468.8
       queryValidatorJob: v0.468.8
       demoImporterJob: v0.434.15
