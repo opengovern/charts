@@ -14,21 +14,21 @@ opengovernance:
       checkupJob: v0.468.8
       postInstallJob: v0.468.13
       describeSchedulerService: v0.468.9
-      describeWorkerAWS: local-v0.0.25
+      describeWorkerAWS: local-v0.1.2
       describeWorkerAzure: local-v0.0.54
       describeWorkerEntraid: local-v0.0.23
-      describeWorkerGithub: local-v0.1.6
+      describeWorkerGithub: local-v0.1.16
       describeWorkerDigitalocean: local-v0.0.2
       integration: v0.468.9
       metadata: v0.468.9
       inventory: v0.468.9
-      compliance: v0.468.9
+      compliance: v0.468.19
       complianceSummarizerJob: v0.468.8
-      complianceReportJob: v0.468.11
-      steampipe: v0.468.11
-      esSink: v0.468.8
-      queryRunnerJob: v0.468.11
-      queryValidatorJob: v0.468.11
+      complianceReportJob: v0.468.21
+      steampipe: v0.468.21
+      esSink: v0.468.17
+      queryRunnerJob: v0.468.21
+      queryValidatorJob: v0.468.21
       demoImporterJob: v0.434.15
       psqlImport: v0.434.15
   apikey:
