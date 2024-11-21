@@ -3,6 +3,33 @@ entries:
   opencomply:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-11-21T17:53:59.878773982Z"
+    dependencies:
+    - condition: keda.enabled
+      name: keda
+      repository: ""
+      version: 2.15.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: ""
+      version: 15.5.21
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: ""
+      version: 2.22.0
+    - condition: opensearch-dashboards.enabled
+      name: opensearch-dashboards
+      repository: ""
+      version: 2.20.0
+    description: A Helm chart for deploying opencomply to Kubernetes
+    digest: e2e4fa6dbcb1a14921f86e32e22bbf54b5bfb34a75b173c06cb034ef7813fe73
+    name: opencomply
+    type: application
+    urls:
+    - https://github.com/opengovern/charts/releases/download/opencomply-0.1.169/opencomply-0.1.169.tgz
+    version: 0.1.169
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-11-20T21:53:12.038595073Z"
     dependencies:
     - condition: keda.enabled
@@ -137,6 +164,33 @@ entries:
     - https://github.com/opengovern/charts/releases/download/opencomply-0.1.157/opencomply-0.1.157.tgz
     version: 0.1.157
   opencomply-dev:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-11-21T17:54:00.044161388Z"
+    dependencies:
+    - condition: keda.enabled
+      name: keda
+      repository: ""
+      version: 2.15.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: ""
+      version: 15.5.21
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: ""
+      version: 2.22.0
+    - condition: opensearch-dashboards.enabled
+      name: opensearch-dashboards
+      repository: ""
+      version: 2.20.0
+    description: A Helm chart for deploying opencomply-dev to Kubernetes
+    digest: 4c116a487f56b29538ee0091b400aef7cc8f0d2c8a50b6c3760a268b98aaa6a5
+    name: opencomply-dev
+    type: application
+    urls:
+    - https://github.com/opengovern/charts/releases/download/opencomply-dev-0.1.173/opencomply-dev-0.1.173.tgz
+    version: 0.1.173
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2024-11-20T21:53:12.244765004Z"
@@ -1623,4 +1677,4 @@ entries:
     urls:
     - https://github.com/opengovern/charts/releases/download/opengovernance-0.1.108/opengovernance-0.1.108.tgz
     version: 0.1.108
-generated: "2024-11-20T21:53:12.244869299Z"
+generated: "2024-11-21T17:54:00.044301078Z"
