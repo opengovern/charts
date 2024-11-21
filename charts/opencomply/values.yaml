@@ -13,7 +13,7 @@ opengovernance:
       swagger: v0.468.8
       checkupJob: v0.468.8
       postInstallJob: v0.468.13
-      describeSchedulerService: v0.468.9
+      describeSchedulerService: v0.468.25
       describeWorkerAWS: local-v0.1.2
       describeWorkerAzure: local-v0.0.54
       describeWorkerEntraid: local-v0.0.23
@@ -21,7 +21,7 @@ opengovernance:
       describeWorkerDigitalocean: local-v0.0.2
       integration: v0.468.9
       metadata: v0.468.9
-      inventory: v0.468.9
+      inventory: v0.468.25
       compliance: v0.468.19
       complianceSummarizerJob: v0.468.8
       complianceReportJob: v0.468.24
