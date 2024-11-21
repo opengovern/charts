@@ -323,11 +323,9 @@ aws:
 github:
   token: ""
 keda:
-  enabled: false
+  enabled: true
 populateWithSampleData:
   enabled: false
   fileURL: "https://opengovernance.nyc3.cdn.digitaloceanspaces.com/demo-data/v3.0/demo_data.tar.gz.enc"
 swagger:
-  enabled: false
-queryvalidator:
   enabled: false
