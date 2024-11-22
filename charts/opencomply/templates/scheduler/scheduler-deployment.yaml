@@ -39,9 +39,9 @@ spec:
         - name: GRPC_ADDRESS
           value: "0.0.0.0:5252"
         - name: POSTGRESQL_HOST
-          value: "{{ include "postgres.endpoint" . }}"
+          value: "{{ include \"postgres.endpoint\" . }}"
         - name: POSTGRESQL_PORT
-          value: "{{ include "postgres.port" . }}"
+          value: "{{ include \"postgres.port\" . }}"
         - name: POSTGRESQL_DB
           value: "describe"
         - name: POSTGRESQL_USERNAME
@@ -52,7 +52,7 @@ spec:
               name: postgres-secret
               key: describeSchedulerUserPassword
         - name: POSTGRESQL_SSLMODE
-          value: "{{ include "postgres.sslMode" . }}"
+          value: "{{ include \"postgres.sslMode\" . }}"
         - name: SCHEDULER_ID
           valueFrom:
             fieldRef:
@@ -70,7 +70,7 @@ spec:
         - name: COMPLIANCE_INTERVAL_HOURS
           value: "24"
         - name: QUERY_VALIDATOR_ENABLED
-          value: "{{ .Values.queryvalidator.enabled }}"
+          value: "{{ .Values.queryvalidator.enabled | default false }}"
         - name: SERVERLESS_PROVIDER
           value: "local"
         - name: COMPLIANCEINTERVALHOURS
@@ -97,13 +97,13 @@ spec:
           value: "http://es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
         - name: AUTH_GRPC_URI
           value: "auth-service.{{ .Release.Namespace }}.svc.cluster.local:50051"
-{{- include "elastic.envs" . | indent 8 }}
+    {{- include "elastic.envs" . | indent 8 }}
         - name: DESCRIBE_JOB_ENDPOINT_LOCAL
           value: "describe-scheduler.{{ .Release.Namespace }}.svc.cluster.local:5252"
         - name: DESCRIBE_DELIVER_ENDPOINT_LOCAL
           value: "es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:5252"
-{{/*        - name: DESCRIBE_DELIVER_ENDPOINT_EXTERNAL*/}}
-{{/*          value: "{{ .Values.opengovernance.domain.grpc_external }}:443"*/}}
+    {{/*        - name: DESCRIBE_DELIVER_ENDPOINT_EXTERNAL*/}}
+    {{/*          value: "{{ .Values.opengovernance.domain.grpc_external }}:443"*/}}
 
         - name: KMS_ACCOUNT_REGION
           value: {{ .Values.opengovernance.vault.aws.region }}
@@ -127,7 +127,7 @@ spec:
         - name: VAULT_AZURE_CLIENT_SECRET
           value: {{ .Values.opengovernance.vault.azure.clientSecret }}
         - name: VAULT_HASHICORP_ADDRESS
-          value: "http://{{ .Release.Name }}-vault-internal.{{.Release.Namespace}}.svc.cluster.local:8200"
+          value: "http://{{ .Release.Name }}-vault-internal.{{ .Release.Namespace}}.svc.cluster.local:8200"
         - name: VAULT_KEY_ID
           value: {{ .Values.opengovernance.vault.keyID }}
 
