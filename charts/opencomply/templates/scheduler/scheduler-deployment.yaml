@@ -70,7 +70,7 @@ spec:
         - name: COMPLIANCE_INTERVAL_HOURS
           value: "24"
         - name: QUERY_VALIDATOR_ENABLED
-          value: "{{ .Values.queryvalidator.enabled | default false }}"
+          value: "{{ if .Values.queryvalidator }}{{ default false .Values.queryvalidator.enabled }}{{ else }}false{{ end }}"
         - name: SERVERLESS_PROVIDER
           value: "local"
         - name: COMPLIANCEINTERVALHOURS
@@ -97,13 +97,13 @@ spec:
           value: "http://es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
         - name: AUTH_GRPC_URI
           value: "auth-service.{{ .Release.Namespace }}.svc.cluster.local:50051"
-  {{- include "elastic.envs" . | indent 8 }}
+{{- include "elastic.envs" . | indent 8 }}
         - name: DESCRIBE_JOB_ENDPOINT_LOCAL
           value: "describe-scheduler.{{ .Release.Namespace }}.svc.cluster.local:5252"
         - name: DESCRIBE_DELIVER_ENDPOINT_LOCAL
           value: "es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:5252"
-  {{/*        - name: DESCRIBE_DELIVER_ENDPOINT_EXTERNAL*/}}
-  {{/*          value: "{{ .Values.opengovernance.domain.grpc_external }}:443"*/}}
+{{/*        - name: DESCRIBE_DELIVER_ENDPOINT_EXTERNAL*/}}
+{{/*          value: "{{ .Values.opengovernance.domain.grpc_external }}:443"*/}}
 
         - name: KMS_ACCOUNT_REGION
           value: "{{ .Values.opengovernance.vault.aws.region }}"
