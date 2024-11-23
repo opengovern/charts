@@ -79,8 +79,6 @@ spec:
               value: /etc/certs/tls.key
             - name: GRPC_TLS_CA_PATH
               value: /etc/certs/ca.crt
-            - name: WORKSPACE_BASE_URL
-              value: "http://workspace-service.{{ .Release.Namespace }}.svc.cluster.local:8351"
             - name: COMPLIANCE_BASE_URL
               value: "http://compliance-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
             - name: INTEGRATION_BASE_URL

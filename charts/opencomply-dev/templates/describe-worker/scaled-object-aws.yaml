@@ -14,7 +14,7 @@ spec:
     name: og-describer-aws
   pollingInterval: 30
   cooldownPeriod:  300
-  minReplicaCount: 1
+  minReplicaCount: 0
   maxReplicaCount: 20
   fallback:
     failureThreshold: 1
@@ -44,7 +44,7 @@ spec:
     name: og-describer-aws-manuals
   pollingInterval: 5
   cooldownPeriod:  300
-  minReplicaCount: 1
+  minReplicaCount: 0
   maxReplicaCount: 20
   fallback:
     failureThreshold: 1

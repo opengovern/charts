@@ -99,9 +99,6 @@ spec:
             dt=$(date '+%d/%m/%Y %H:%M:%S');
             echo "$dt - Running init script the 1st time Primary PostgreSql container is created...";
 
-            workspaceDatabaseName="workspace"
-            workspaceUserName="workspace_service"
-
             authDatabaseName="auth"
             authUserName="auth_service"
 
@@ -145,18 +142,6 @@ spec:
 
             PGPASSWORD="$POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 --host="$POSTGRES_HOST" --port="$POSTGRES_PORT" --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
 
-            SELECT 'CREATE DATABASE $workspaceDatabaseName'
-            WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$workspaceDatabaseName')\gexec
-            SELECT 'ALTER ROLE $workspaceUserName WITH PASSWORD ''$POSTGRES_WORKSPACE_DB_PASSWORD''' 
-            WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$workspaceUserName')\gexec
-            SELECT 'CREATE USER $workspaceUserName WITH PASSWORD ''$POSTGRES_WORKSPACE_DB_PASSWORD''' 
-            WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$workspaceUserName')\gexec
-            GRANT ALL PRIVILEGES ON DATABASE "$workspaceDatabaseName" to $workspaceUserName;
-
-            \c "$workspaceDatabaseName"
-            GRANT ALL ON SCHEMA public TO $workspaceUserName;
-            CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
-            
 
             SELECT 'CREATE DATABASE $informationDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$informationDatabaseName')\gexec

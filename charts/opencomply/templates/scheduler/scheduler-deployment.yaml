@@ -83,8 +83,6 @@ spec:
           value: "2"
         - name: MUST_SUMMARIZE_INTERVAL_HOURS
           value: "4"
-        - name: WORKSPACE_BASE_URL
-          value: "http://workspace-service.{{ .Release.Namespace }}.svc.cluster.local:8351"
         - name: INVENTORY_BASE_URL
           value: "http://inventory-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
         - name: METADATA_BASE_URL
