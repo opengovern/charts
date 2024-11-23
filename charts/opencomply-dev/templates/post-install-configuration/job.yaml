@@ -4,7 +4,7 @@ metadata:
   name: post-install-configuration
   namespace: {{ .Release.Namespace }}
   annotations:
-    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook": post-install
     "helm.sh/hook-weight": "0"
 spec:
   template:
@@ -188,15 +188,16 @@ data:
         "logo":"https://raw.githubusercontent.com/opengovern/website/main/connectors/icons/gcp.svg"
       },
       {
-        "id":5,
-        "name":"KubernetesCluster",
-        "label":"Kubernetes",
-        "tier":"Enterprise",
-        "tags": { "usage": ["DevOps", "Containers"] },
-        "auto_onboard_support":true,
-        "short_description":"Gain visibility into Kubernetes objects.",
-        "description":"Gain visibility into Kubernetes objects.",
-        "logo":"https://raw.githubusercontent.com/opengovern/website/main/connectors/icons/kubernetes.svg"
+        "id": 5,
+        "integration_type": "digitalocean_team",
+        "name": "DigitalOceanCloud",
+        "label": "DigitalOcean",
+        "tier": "Community",
+        "tags": { "usage": ["DevOps", "Cloud", "Containers"] },
+        "auto_onboard_support": true,
+        "short_description": "Gain visibility into DigitalOcean projects and resources.",
+        "description": "Gain comprehensive visibility into DigitalOcean projects and resources, including droplets, databases, networking components, and other cloud infrastructure elements.",
+        "logo": "https://raw.githubusercontent.com/opengovern/website/main/connectors/icons/digitalocean.svg"
       },
       {
         "id":6,
@@ -257,8 +258,9 @@ data:
       {
         "id":11,
         "name":"Cloudflare",
+        "integration_type": "cloudflare_account",
         "label":"Cloudflare",
-        "tier":"Enterprise",
+        "tier":"Community",
         "tags": { "usage": ["Web Security"] },
         "auto_onboard_support":true,
         "short_description":"Gain visibility in to Domains, DNS, WAFs, Firewall Rules, Workers and more.",
@@ -681,6 +683,17 @@ data:
         "short_description":"Track Threat Reports, Fees, and Alerts",
         "description":"Track Threat Reports, Fees, and Alerts",
         "logo":"https://raw.githubusercontent.com/opengovern/website/main/connectors/icons/vmware.svg"
+      },
+      {
+        "id":51,
+        "name":"KubernetesCluster",
+        "label":"Kubernetes",
+        "tier":"Enterprise",
+        "tags": { "usage": ["DevOps", "Containers"] },
+        "auto_onboard_support":true,
+        "short_description":"Gain visibility into Kubernetes objects.",
+        "description":"Gain visibility into Kubernetes objects.",
+        "logo":"https://raw.githubusercontent.com/opengovern/website/main/connectors/icons/kubernetes.svg"
       }
     ]
 

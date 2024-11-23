@@ -8,21 +8,22 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v0.466.0
+      webui: v0.471.3
       auth: v0.470.1
       swagger: v0.470.1
       checkupJob: v0.470.1
       postInstallJob: v0.470.1
-      describeSchedulerService: v0.470.3
+      describeSchedulerService: v0.471.4
       describeWorkerAWS: local-v0.1.2
       describeWorkerAzure: local-v0.0.54
       describeWorkerEntraid: local-v0.0.23
       describeWorkerGithub: local-v0.1.17
       describeWorkerDigitalocean: local-v0.0.2
-      integration: v0.470.5
-      metadata: v0.470.3
-      inventory: v0.470.3
-      compliance: v0.470.3
+      describeWorkerCloudflare: local-v0.1.4
+      integration: v0.471.2
+      metadata: v0.471.1
+      inventory: v0.471.1
+      compliance: v0.471.1
       complianceSummarizerJob: v0.470.1
       complianceReportJob: v0.470.3
       steampipe: v0.470.1
