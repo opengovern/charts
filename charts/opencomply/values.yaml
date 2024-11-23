@@ -53,6 +53,9 @@ opengovernance:
       clientId: "xxx"
       clientSecret: "xxx"
     keyID: "workspace-creds"
+# Added queryvalidator section
+queryvalidator:
+  enabled: false
 dex:
   configSecret:
     create: false
