@@ -112,3 +112,5 @@ spec:
           value: "{{ .Values.opengovernance.docker.tags.describeWorkerEntraid }}"
         - name: OG_DESCRIBER_GITHUB_IMAGE_TAG
           value: "{{ .Values.opengovernance.docker.tags.describeWorkerGithub }}"
+        - name: OG_DESCRIBER_CLOUDFLARE_IMAGE_TAG
+          value: "{{ .Values.opengovernance.docker.tags.describeWorkerCloudflare }}"
