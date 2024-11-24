@@ -19,17 +19,17 @@ opengovernance:
       describeWorkerEntraid: local-v0.0.23
       describeWorkerGithub: local-v0.1.17
       describeWorkerDigitalocean: local-v0.0.2
-      describeWorkerCloudflare: local-v0.1.4
-      integration: v0.471.2
+      describeWorkerCloudflare: local-v0.2.2
+      integration: v0.471.15
       metadata: v0.471.1
       inventory: v0.471.1
       compliance: v0.471.1
       complianceSummarizerJob: v0.470.1
-      complianceReportJob: v0.470.3
-      steampipe: v0.470.1
+      complianceReportJob: v0.471.16
+      steampipe: v0.471.16
       esSink: v0.470.1
-      queryRunnerJob: v0.470.1
-      queryValidatorJob: v0.470.1
+      queryRunnerJob: v0.471.16
+      queryValidatorJob: v0.471.16
       demoImporterJob: v0.434.15
       psqlImport: v0.434.15
   apikey:
