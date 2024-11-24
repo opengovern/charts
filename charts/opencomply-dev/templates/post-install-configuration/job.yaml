@@ -4,7 +4,7 @@ metadata:
   name: post-install-configuration
   namespace: {{ .Release.Namespace }}
   annotations:
-    "helm.sh/hook": post-install
+    "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "0"
 spec:
   template:
@@ -213,6 +213,18 @@ data:
       },
       {
         "id":7,
+        "name":"Cloudflare",
+        "integration_type": "cloudflare_account",
+        "label":"Cloudflare",
+        "tier":"Community",
+        "tags": { "usage": ["Web Security"] },
+        "auto_onboard_support":true,
+        "short_description":"Gain visibility in to Domains, DNS, WAFs, Firewall Rules, Workers and more.",
+        "description":"Gain visibility in to Domains, DNS, WAFs, Firewall Rules, Workers and more.",
+        "logo":"https://raw.githubusercontent.com/opengovern/website/main/connectors/icons/cloudflare.svg"
+      },
+      {
+        "id":8,
         "name":"GitLabCloud",
         "label":"Gitlab Cloud",
         "tier":"Enterprise",
@@ -223,7 +235,7 @@ data:
         "logo":"https://raw.githubusercontent.com/opengovern/website/main/connectors/icons/gitlab.svg"
       },
       {
-        "id":8,
+        "id":9,
         "name":"Gitguardian",
         "label":"Gitguardian",
         "tier":"Enterprise",
@@ -234,7 +246,7 @@ data:
         "logo":"https://raw.githubusercontent.com/opengovern/website/main/connectors/icons/gitguardian.png"
       },
       {
-        "id":9,
+        "id":10,
         "name":"JIRACloud",
         "label":"JIRA Cloud",
         "tier":"Enterprise",
@@ -245,7 +257,7 @@ data:
         "logo":"https://raw.githubusercontent.com/opengovern/website/main/connectors/icons/jira.svg"
       },
       {
-        "id":10,
+        "id":11,
         "name":"ServiceNow",
         "label":"ServiceNow",
         "tier":"Enterprise",
@@ -254,18 +266,6 @@ data:
         "short_description":"With ServiceNow, connect CMDBs, Incidents, Tickets, and changes",
         "description":"With ServiceNow, connect CMDBs, Incidents, Tickets, and changes",
         "logo":"https://raw.githubusercontent.com/opengovern/website/main/connectors/icons/servicenow.png"
-      },
-      {
-        "id":11,
-        "name":"Cloudflare",
-        "integration_type": "cloudflare_account",
-        "label":"Cloudflare",
-        "tier":"Community",
-        "tags": { "usage": ["Web Security"] },
-        "auto_onboard_support":true,
-        "short_description":"Gain visibility in to Domains, DNS, WAFs, Firewall Rules, Workers and more.",
-        "description":"Gain visibility in to Domains, DNS, WAFs, Firewall Rules, Workers and more.",
-        "logo":"https://raw.githubusercontent.com/opengovern/website/main/connectors/icons/cloudflare.svg"
       },
       {
         "id":12,
