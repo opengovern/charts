@@ -71,8 +71,8 @@ spec:
             mountPath: /home/steampipe/.steampipe/config/azure.spc
             subPath: azure.spc
           - name: steampipe-spc
-            mountPath: /home/steampipe/.steampipe/config/azuread.spc
-            subPath: azuread.spc
+            mountPath: /home/steampipe/.steampipe/config/entraid.spc
+            subPath: entraid.spc
           - name: steampipe-spc
             mountPath: /home/steampipe/.steampipe/config/opengovernance.spc
             subPath: opengovernance.spc

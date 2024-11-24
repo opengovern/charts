@@ -20,9 +20,9 @@ data:
       password = ""
     }
 
-  azuread.spc: |
-    connection "azuread" {
-      plugin = "azuread"
+  entraid.spc: |
+    connection "entraid" {
+      plugin = "entraid"
       addresses = []
       username = ""
       password = ""
