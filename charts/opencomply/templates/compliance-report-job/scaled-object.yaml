@@ -15,7 +15,7 @@ spec:
   pollingInterval: 30
   cooldownPeriod:  300
   minReplicaCount: 1
-  maxReplicaCount: 1
+  maxReplicaCount: 10
   fallback:
     failureThreshold: 1
     replicas: 1
@@ -45,7 +45,7 @@ spec:
   pollingInterval: 5
   cooldownPeriod:  300
   minReplicaCount: 1
-  maxReplicaCount: 1
+  maxReplicaCount: 10
   fallback:
     failureThreshold: 1
     replicas: 1
