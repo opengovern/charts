@@ -63,7 +63,7 @@ dex:
   image:
     repository: ghcr.io/opengovern/dex-login
     pullPolicy: Always
-    tag: v0.468.14
+    tag: v0.474.1
   config:
     grpc:
       addr: 'localhost:5557'
@@ -110,7 +110,7 @@ postgresql:
   image:
     registry: ghcr.io
     repository: opengovern/postgres
-    tag: v0.472.0
+    tag: v0.474.1
     pullPolicy: Always
     debug: false
   global:
