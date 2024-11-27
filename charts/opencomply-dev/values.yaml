@@ -8,7 +8,7 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v0.476.0
+      webui: v0.476.3
       auth: v0.476.2
       swagger: v0.476.2
       checkupJob: v0.476.2
@@ -62,7 +62,7 @@ dex:
   image:
     repository: ghcr.io/opengovern/dex-login
     pullPolicy: Always
-    tag: v0.474.1
+    tag: v0.477.1
   config:
     grpc:
       addr: 'localhost:5557'
