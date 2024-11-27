@@ -54,6 +54,8 @@ opengovernance:
       clientId: "xxx"
       clientSecret: "xxx"
     keyID: "workspace-creds"
+  parallelism:
+    complianceReportJobMaxParallelism: 10
 dex:
   configSecret:
     create: false
