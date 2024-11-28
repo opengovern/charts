@@ -24,8 +24,8 @@ opengovernance:
       metadata: v0.476.2
       inventory: v0.476.2
       compliance: v0.476.2
-      complianceSummarizerJob: v0.476.2
-      complianceReportJob: v0.476.2
+      complianceSummarizerJob: v0.477.4
+      complianceReportJob: v0.477.4
       steampipe: v0.476.2
       esSink: v0.476.2
       queryRunnerJob: v0.476.2
