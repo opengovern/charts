@@ -114,3 +114,5 @@ spec:
           value: "{{ .Values.opengovernance.docker.tags.describeWorkerGithub }}"
         - name: OG_DESCRIBER_CLOUDFLARE_IMAGE_TAG
           value: "{{ .Values.opengovernance.docker.tags.describeWorkerCloudflare }}"
+        - name: OG_DESCRIBER_OPENAI_IMAGE_TAG
+          value: "{{ .Values.opengovernance.docker.tags.describeWorkerOpenai }}"
