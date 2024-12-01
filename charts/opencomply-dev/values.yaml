@@ -12,8 +12,8 @@ opengovernance:
       auth: v0.476.2
       swagger: v0.476.2
       checkupJob: v0.476.2
-      postInstallJob: v0.476.2
-      describeSchedulerService: v0.478.9
+      postInstallJob: v0.479.10
+      describeSchedulerService: v0.479.11
       describeWorkerAWS: local-v0.1.4
       describeWorkerAzure: local-v0.1.5
       describeWorkerEntraid: local-v0.1.3
@@ -22,10 +22,10 @@ opengovernance:
       describeWorkerCloudflare: local-v0.2.6
       describeWorkerOpenai: local-v0.1.8
       describeWorkerLinode: local-v0.1.4
-      integration: v0.478.9
+      integration: v0.479.9
       metadata: v0.476.2
-      inventory: v0.478.9
-      compliance: v0.478.9
+      inventory: v0.479.8
+      compliance: v0.479.5
       complianceSummarizerJob: v0.477.4
       complianceReportJob: v0.479.3
       steampipe: v0.479.3
