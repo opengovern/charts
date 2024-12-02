@@ -15,15 +15,8 @@ opengovernance:
       postInstallJob: v0.479.10
       describeSchedulerService: v0.483.1
       describeWorkerAWS: local-v0.1.4
-      describeWorkerAzure: local-v0.1.5
-      describeWorkerEntraid: local-v0.1.3
       describeWorkerGithub: local-v0.1.18
-      describeWorkerDigitalocean: local-v0.0.4
-      describeWorkerCloudflare: local-v0.2.6
-      describeWorkerOpenai: local-v0.1.11
-      describeWorkerLinode: local-v0.1.4
-      describeWorkerCohereai: local-v0.2.0
-      integration: v0.483.2
+      integration: v0.484.4
       metadata: v0.476.2
       inventory: v0.483.1
       compliance: v0.483.1
