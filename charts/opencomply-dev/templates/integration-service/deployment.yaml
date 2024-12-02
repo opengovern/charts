@@ -102,21 +102,3 @@ spec:
           value: "{{ .Release.Namespace }}"
         - name: KEDA_ENABLED
           value: "{{ .Values.keda.enabled }}"
-        - name: OG_DESCRIBER_AWS_IMAGE_TAG
-          value : "{{ .Values.opengovernance.docker.tags.describeWorkerAWS }}"
-        - name: OG_DESCRIBER_AZURE_IMAGE_TAG
-          value: "{{ .Values.opengovernance.docker.tags.describeWorkerAzure }}"
-        - name: OG_DESCRIBER_DIGITALOCEAN_IMAGE_TAG
-          value: "{{ .Values.opengovernance.docker.tags.describeWorkerDigitalocean }}"
-        - name: OG_DESCRIBER_ENTRAID_IMAGE_TAG
-          value: "{{ .Values.opengovernance.docker.tags.describeWorkerEntraid }}"
-        - name: OG_DESCRIBER_GITHUB_IMAGE_TAG
-          value: "{{ .Values.opengovernance.docker.tags.describeWorkerGithub }}"
-        - name: OG_DESCRIBER_CLOUDFLARE_IMAGE_TAG
-          value: "{{ .Values.opengovernance.docker.tags.describeWorkerCloudflare }}"
-        - name: OG_DESCRIBER_OPENAI_IMAGE_TAG
-          value: "{{ .Values.opengovernance.docker.tags.describeWorkerOpenai }}"
-        - name: OG_DESCRIBER_LINODE_IMAGE_TAG
-          value: "{{ .Values.opengovernance.docker.tags.describeWorkerLinode }}"
-        - name: OG_DESCRIBER_COHEREAI_IMAGE_TAG
-          value: "{{ .Values.opengovernance.docker.tags.describeWorkerCohereai }}"
