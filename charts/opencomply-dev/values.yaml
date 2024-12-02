@@ -22,6 +22,7 @@ opengovernance:
       describeWorkerCloudflare: local-v0.2.6
       describeWorkerOpenai: local-v0.1.11
       describeWorkerLinode: local-v0.1.4
+      describeWorkerCohereai: local-v0.2.0
       integration: v0.483.2
       metadata: v0.476.2
       inventory: v0.483.1

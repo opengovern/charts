@@ -118,3 +118,5 @@ spec:
           value: "{{ .Values.opengovernance.docker.tags.describeWorkerOpenai }}"
         - name: OG_DESCRIBER_LINODE_IMAGE_TAG
           value: "{{ .Values.opengovernance.docker.tags.describeWorkerLinode }}"
+        - name: OG_DESCRIBER_COHEREAI_IMAGE_TAG
+          value: "{{ .Values.opengovernance.docker.tags.describeWorkerCohereai }}"
