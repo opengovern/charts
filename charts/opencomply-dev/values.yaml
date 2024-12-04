@@ -16,7 +16,7 @@ opengovernance:
       describeSchedulerService: v0.485.10
       describeWorkerAWS: local-v0.1.4
       describeWorkerGithub: local-v0.1.18
-      integration: v0.490.2
+      integration: v0.490.3
       metadata: v0.485.10
       inventory: v0.485.10
       compliance: v0.485.10
