@@ -294,10 +294,10 @@ nats:
       # we are using jetstream as our job queue, because of that
       # there is no need to have a persistent storage.
       fileStore:
-        enabled: true
+        enabled: false
         storageDirectory: /data
         pvc:
-          enabled: true
+          enabled: false
           size: 25Gi
   container:
     merge:
