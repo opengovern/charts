@@ -248,7 +248,7 @@ opensearch:
   enabled: true
   clusterName: opensearch-cluster
   persistence:
-    size: 50Gi
+    size: 25Gi
   opensearchJavaOpts: "-XX:-HeapDumpOnOutOfMemoryError -Xmx3072M -Xms3072M"
   resources:
   requests:
