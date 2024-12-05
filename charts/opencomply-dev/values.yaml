@@ -17,7 +17,7 @@ opengovernance:
       describeWorkerAWS: local-v0.1.4
       describeWorkerGithub: local-v0.1.18
       integration:  v0.502.1
-      metadata: v0.485.10
+      metadata: v0.502.3
       inventory: v0.492.0
       compliance: v0.502.2
       complianceSummarizerJob: v0.485.10
