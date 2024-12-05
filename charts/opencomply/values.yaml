@@ -115,7 +115,7 @@ postgresql:
         postgresPassword: "postgres"
   primary:
     persistence:
-      size: 20Gi
+      size: 10Gi
     configuration: |
       listen_addresses = '*'
       max_wal_senders = 10
