@@ -297,7 +297,7 @@ nats:
         enabled: true
         storageDirectory: /data
         pvc:
-          enabled: true
+          enabled: false
           size: 25Gi
   container:
     merge:
