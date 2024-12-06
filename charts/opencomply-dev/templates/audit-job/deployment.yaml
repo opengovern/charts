@@ -23,13 +23,6 @@ spec:
           args:
             - --id=$(WORKER_ID)
           imagePullPolicy: Always
-          #resources:
-          #  limits:
-          #    cpu: 500m
-          #    memory: 1Gi
-          #  requests:
-          #    cpu: 500m
-          #    memory: 100Mi
           env:
             - name: PG_PASSWORD
               valueFrom:
@@ -72,6 +65,6 @@ spec:
                 fieldRef:
                   fieldPath: status.hostIP
             - name: JAEGER_SERVICE_NAME
-              value: "compliance-worker"
+              value: "audit-worker"
             - name: JAEGER_SAMPLE_RATE
               value: "0.0005"
