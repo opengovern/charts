@@ -9,25 +9,26 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       webui: v0.503.2
-      auth: v0.476.2
+      auth: v0.502.4
       swagger: v0.476.2
-      checkupJob: v0.476.2
-      postInstallJob: v0.502.2
-      describeSchedulerService: v0.503.1
+      checkupJob: v0.502.4
+      postInstallJob: v0.502.5
+      describeSchedulerService: v0.503.14
       describeWorkerAWS: local-v0.1.4
       describeWorkerGithub: local-v0.1.18
-      integration:  v0.502.1
-      metadata: v0.502.3
-      inventory: v0.492.0
-      compliance: v0.502.2
-      complianceSummarizerJob: v0.503.1
-      complianceReportJob: v0.503.1
-      steampipe: v0.503.1
-      esSink: v0.476.2
-      queryRunnerJob: v0.503.1
-      queryValidatorJob: v0.503.1
-      demoImporterJob: v0.434.15
-      psqlImport: v0.434.15
+      integration: v0.502.4
+      metadata: v0.502.4
+      inventory: v0.503.8
+      compliance: v0.503.5
+      complianceSummarizerJob: v0.502.4
+      complianceReportJob: v0.503.17
+      steampipe: v0.503.17
+      esSink: v0.502.4
+      auditJob: v0.503.17
+      queryRunnerJob: v0.503.17
+      queryValidatorJob: v0.503.17
+      demoImporterJob: v0.502.4
+      psqlImport: v0.502.4
   apikey:
     public: ""
     private: ""
@@ -293,10 +294,10 @@ nats:
       # we are using jetstream as our job queue, because of that
       # there is no need to have a persistent storage.
       fileStore:
-        enabled: false
+        enabled: true
         storageDirectory: /data
         pvc:
-          enabled: false
+          enabled: true
           size: 25Gi
   container:
     merge:
@@ -329,4 +330,4 @@ populateWithSampleData:
 swagger:
   enabled: false
 queryvalidator:
-  enabled: true
+  enabled: false
