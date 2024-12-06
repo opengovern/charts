@@ -107,7 +107,7 @@ postgresql:
   image:
     registry: ghcr.io
     repository: opengovern/postgres
-    tag: v0.507.1
+    tag: v0.508.0 
     pullPolicy: Always
     debug: false
   global:
