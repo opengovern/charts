@@ -24,7 +24,7 @@ opengovernance:
       complianceReportJob: v0.503.17
       steampipe: v0.503.17
       esSink: v0.502.4
-      auditJob: v0.503.17
+      auditJob: v0.505.5
       queryRunnerJob: v0.503.17
       queryValidatorJob: v0.503.17
       demoImporterJob: v0.502.4
@@ -184,7 +184,7 @@ postgresql:
         valueFrom:
           secretKeyRef:
             name: postgres-secret
-            key: schedulerUserPassword
+            key: describeSchedulerUserPassword
       - name : POSTGRES_POLICY_DB_PASSWORD
         valueFrom:
           secretKeyRef:
@@ -297,7 +297,7 @@ nats:
         enabled: true
         storageDirectory: /data
         pvc:
-          enabled: false
+          enabled: true
           size: 25Gi
   container:
     merge:
