@@ -47,7 +47,7 @@ spec:
         - name: INTEGRATION_INVENTORY__BASE_URL
           value: "http://inventory-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
         - name: INTEGRATION_DESCRIBE__BASE_URL
-          value: "http://describe-scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251"
+          value: "http://scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251"
         - name: INTEGRATION_METADATA__BASE_URL
           value: "http://metadata-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
 
