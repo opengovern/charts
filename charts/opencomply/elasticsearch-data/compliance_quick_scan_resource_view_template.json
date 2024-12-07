@@ -1,5 +1,5 @@
 {
-  "index_patterns": ["audit_resources_summary"],
+  "index_patterns": ["compliance_quick_scan_resource_view"],
   "template": {
     "settings": {
       "number_of_shards": 1,
@@ -16,7 +16,7 @@
         "integrations": {
           "enabled": false
         },
-        "audit_summary": {
+        "compliance_summary": {
           "type": "object",
           "dynamic": true
         },

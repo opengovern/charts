@@ -13,7 +13,7 @@ opengovernance:
       swagger: v0.476.2
       checkupJob: v0.502.4
       postInstallJob: v0.502.5
-      schedulerService: v0.505.0
+      schedulerService: v0.508.1
       describeWorkerAWS: local-v0.1.4
       describeWorkerGithub: local-v0.1.18
       integration: v0.502.4
@@ -24,7 +24,7 @@ opengovernance:
       complianceReportJob: v0.503.17
       steampipe: v0.503.17
       esSink: v0.502.4
-      auditJob: v0.505.5
+      auditJob: v0.508.2
       queryRunnerJob: v0.503.17
       queryValidatorJob: v0.503.17
       demoImporterJob: v0.502.4
