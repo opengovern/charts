@@ -6,7 +6,7 @@ rules:
   - apiGroups:
       - "keda.sh/v1alpha1"
     resources:
-      - "scaledobject"
+      - "scaledobjects"
     verbs:
       - "get"
       - "list"
@@ -47,7 +47,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ .Release.Name }}-make-describers-access
+  name: {{ .Release.Name }}-make-describers-access-to-integration
 subjects:
   - kind: ServiceAccount
     name: integration

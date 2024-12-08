@@ -6,7 +6,7 @@ rules:
   - apiGroups:
       - "keda.sh/v1alpha1"
     resources:
-      - "scaledobject"
+      - "scaledobjects"
     verbs:
       - "get"
       - "list"
