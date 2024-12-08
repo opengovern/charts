@@ -44,6 +44,23 @@ spec:
           value: "{{ include "postgres.sslMode" . }}"
         - name: TASKS_HTTP__ADDRESS
           value: "0.0.0.0:8001"
+        - name: PLATFORM_HOST
+              value: {{ .Values.global.domain }}
+        - name: POSTGRESQL_HOST
+          value: "{{ include "postgres.endpoint" . }}"
+        - name: POSTGRESQL_PORT
+          value: "{{ include "postgres.port" . }}"
+        - name: POSTGRESQL_DB
+          value: "auth"
+        - name: POSTGRESQL_USERNAME
+          value: "task_service"
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: taskServiceUserPassword
+        - name: POSTGRESQL_SSLMODE
+          value: "{{ include "postgres.sslMode" . }}"
         - name: TASKS_INVENTORY__BASE_URL
           value: "http://inventory-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
         - name: TASKS_DESCRIBE__BASE_URL
