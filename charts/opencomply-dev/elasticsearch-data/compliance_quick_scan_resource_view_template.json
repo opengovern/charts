@@ -26,6 +26,9 @@
             "job_id": {
               "type": "long"
             },
+            "auditable": {
+              "type": "boolean"
+            },
             "framework_id": {
               "type": "keyword"
             },
