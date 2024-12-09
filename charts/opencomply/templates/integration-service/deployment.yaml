@@ -102,3 +102,5 @@ spec:
           value: "{{ .Release.Namespace }}"
         - name: KEDA_ENABLED
           value: "{{ .Values.keda.enabled }}"
+        - name: NATS_URL
+          value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
