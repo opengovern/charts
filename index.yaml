@@ -381,6 +381,33 @@ entries:
     version: 0.1.157
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-12-09T13:13:57.8827312Z"
+    dependencies:
+    - condition: keda.enabled
+      name: keda
+      repository: ""
+      version: 2.15.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: ""
+      version: 15.5.21
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: ""
+      version: 2.22.0
+    - condition: opensearch-dashboards.enabled
+      name: opensearch-dashboards
+      repository: ""
+      version: 2.20.0
+    description: A Helm chart for deploying opencomply to Kubernetes
+    digest: 2752da2dfdc9152cf981a1e43d7f3c59482aa1a2de0cd3f6d2b70d479a7e5c4b
+    name: opencomply
+    type: application
+    urls:
+    - https://github.com/opengovern/charts/releases/download/opencomply-0.1.79/opencomply-0.1.79.tgz
+    version: 0.1.79
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-12-09T03:29:30.660418906Z"
     dependencies:
     - condition: keda.enabled
@@ -2623,6 +2650,33 @@ entries:
     version: 0.1.19
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-12-09T13:13:58.129421998Z"
+    dependencies:
+    - condition: keda.enabled
+      name: keda
+      repository: ""
+      version: 2.15.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: ""
+      version: 15.5.21
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: ""
+      version: 2.22.0
+    - condition: opensearch-dashboards.enabled
+      name: opensearch-dashboards
+      repository: ""
+      version: 2.20.0
+    description: A Helm chart for deploying opencomply-dev to Kubernetes
+    digest: 95ea0b1b2fdfbb4f298bddb8cd54efabfc24570d905cb3256bdab103281293fb
+    name: opencomply-dev
+    type: application
+    urls:
+    - https://github.com/opengovern/charts/releases/download/opencomply-dev-0.1.7/opencomply-dev-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-12-06T17:08:18.302078234Z"
     dependencies:
     - condition: keda.enabled
@@ -3999,4 +4053,4 @@ entries:
     urls:
     - https://github.com/opengovern/charts/releases/download/opengovernance-0.1.108/opengovernance-0.1.108.tgz
     version: 0.1.108
-generated: "2024-12-09T03:29:30.87880473Z"
+generated: "2024-12-09T13:13:58.12987345Z"
