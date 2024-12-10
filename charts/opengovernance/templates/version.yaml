@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: kaytu-version
-  namespace: {{ .Release.Namespace }}
-data:
-  version: "{{ .Chart.Version }}"
