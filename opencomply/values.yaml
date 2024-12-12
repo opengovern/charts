@@ -29,7 +29,7 @@ opengovernance:
       queryRunnerJob: v0.512.15
       queryValidatorJob: v0.512.15
       demoImporterJob: v0.512.22
-      psqlImport: v0.512.15
+      psqlImport: v0.515.1
   apikey:
     public: ""
     private: ""
