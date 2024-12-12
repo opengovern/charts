@@ -11,7 +11,7 @@ opengovernance:
       webui:  v0.512.21
       auth: v0.508.3
       swagger: v0.476.2
-      checkupJob: v0.514.3
+      checkupJob: v0.514.4
       postInstallJob: v0.508.3
       schedulerService: v0.512.20
       describeWorkerAWS: local-v0.1.4
