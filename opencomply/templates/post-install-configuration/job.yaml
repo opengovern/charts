@@ -130,7 +130,7 @@ spec:
         - name: migrator-config
           configMap:
             name: migrator-config
-  backoffLimit: 5
+  backoffLimit: 10
 ---
 apiVersion: v1
 kind: ConfigMap

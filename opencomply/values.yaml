@@ -11,13 +11,13 @@ opengovernance:
       webui: v0.517.0
       auth: v0.508.3
       swagger: v0.476.2
-      checkupJob: v0.514.4
-      postInstallJob: v0.508.3
-      schedulerService: v0.512.20
-      integration: v0.517.4
-      metadata: v0.516.0
-      inventory: v0.512.7
-      compliance: v0.512.7
+      checkupJob: v0.517.6
+      postInstallJob: v0.517.6
+      schedulerService: v0.517.7
+      integration: v0.517.8
+      metadata: v0.517.7
+      inventory: v0.517.6
+      compliance: v0.517.6
       complianceSummarizerJob: v0.512.18
       complianceReportJob: v0.512.15
       steampipe: v0.512.15
