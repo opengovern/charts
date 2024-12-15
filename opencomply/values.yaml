@@ -17,7 +17,7 @@ opengovernance:
       integration: v0.521.1
       metadata: v0.517.7
       inventory: v0.517.6
-      compliance: v0.517.6
+      compliance: v0.524.21
       complianceSummarizerJob: v0.512.18
       complianceReportJob: v0.512.15
       steampipe: v0.512.15
