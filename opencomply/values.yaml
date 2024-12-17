@@ -18,7 +18,7 @@ opengovernance:
       metadata: v0.533.11
       inventory: v0.533.11
       compliance: v0.536.3
-      complianceSummarizerJob: v0.536.3
+      complianceSummarizerJob: v0.536.4
       complianceReportJob: v0.533.11
       steampipe: v0.533.11
       esSink: v0.508.3
