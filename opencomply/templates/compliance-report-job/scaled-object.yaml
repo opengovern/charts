@@ -15,7 +15,7 @@ spec:
   pollingInterval: 30
   cooldownPeriod:  300
   minReplicaCount: 1
-  maxReplicaCount: 10
+  maxReplicaCount: {{ .Values.opengovernance.parallelism.complianceReportJobMaxParallelism}}
   fallback:
     failureThreshold: 1
     replicas: 1

@@ -145,9 +145,9 @@ spec:
 
             SELECT 'CREATE DATABASE $informationDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$informationDatabaseName')\gexec
-            SELECT 'ALTER ROLE $informationUserName WITH PASSWORD ''$POSTGRES_INFORMATION_DB_PASSWORD'''
+            SELECT 'ALTER ROLE $informationUserName WITH PASSWORD ''$POSTGRES_INFORMATION_DB_PASSWORD''' 
             WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$informationUserName')\gexec
-            SELECT 'CREATE USER $informationUserName WITH PASSWORD ''$POSTGRES_INFORMATION_DB_PASSWORD'''
+            SELECT 'CREATE USER $informationUserName WITH PASSWORD ''$POSTGRES_INFORMATION_DB_PASSWORD''' 
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$informationUserName')\gexec
             GRANT ALL PRIVILEGES ON DATABASE "$informationDatabaseName" to $informationUserName;
 
@@ -157,9 +157,9 @@ spec:
 
             SELECT 'CREATE DATABASE $dexDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$dexDatabaseName')\gexec
-            SELECT 'ALTER ROLE $dexUserName WITH PASSWORD ''$DEX_DB_PASSWORD'''
+            SELECT 'ALTER ROLE $dexUserName WITH PASSWORD ''$DEX_DB_PASSWORD''' 
             WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$dexUserName')\gexec
-            SELECT 'CREATE USER $dexUserName WITH PASSWORD ''$DEX_DB_PASSWORD'''
+            SELECT 'CREATE USER $dexUserName WITH PASSWORD ''$DEX_DB_PASSWORD''' 
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$dexUserName')\gexec
             GRANT ALL PRIVILEGES ON DATABASE "$dexDatabaseName" to $dexUserName;
 
@@ -169,9 +169,9 @@ spec:
 
             SELECT 'CREATE DATABASE $describeDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$describeDatabaseName')\gexec
-            SELECT 'ALTER ROLE $describeUserName WITH PASSWORD ''$POSTGRES_DESCRIBE_DB_PASSWORD'''
+            SELECT 'ALTER ROLE $describeUserName WITH PASSWORD ''$POSTGRES_DESCRIBE_DB_PASSWORD''' 
             WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$describeUserName')\gexec
-            SELECT 'CREATE USER $describeUserName WITH PASSWORD ''$POSTGRES_DESCRIBE_DB_PASSWORD'''
+            SELECT 'CREATE USER $describeUserName WITH PASSWORD ''$POSTGRES_DESCRIBE_DB_PASSWORD''' 
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$describeUserName')\gexec
             GRANT ALL PRIVILEGES ON DATABASE "$describeDatabaseName" to $describeUserName;
 
@@ -182,9 +182,9 @@ spec:
 
             SELECT 'CREATE DATABASE $policyDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$policyDatabaseName')\gexec
-            SELECT 'ALTER ROLE $policyUserName WITH PASSWORD ''$POSTGRES_POLICY_DB_PASSWORD'''
+            SELECT 'ALTER ROLE $policyUserName WITH PASSWORD ''$POSTGRES_POLICY_DB_PASSWORD''' 
             WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$policyUserName')\gexec
-            SELECT 'CREATE USER $policyUserName WITH PASSWORD ''$POSTGRES_POLICY_DB_PASSWORD'''
+            SELECT 'CREATE USER $policyUserName WITH PASSWORD ''$POSTGRES_POLICY_DB_PASSWORD''' 
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$policyUserName')\gexec
             GRANT ALL PRIVILEGES ON DATABASE "$policyDatabaseName" to $policyUserName;
 
@@ -195,9 +195,9 @@ spec:
 
             SELECT 'CREATE DATABASE $inventoryDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$inventoryDatabaseName')\gexec
-            SELECT 'ALTER ROLE $inventoryUserName WITH PASSWORD ''$POSTGRES_INVENTORY_DB_PASSWORD'''
+            SELECT 'ALTER ROLE $inventoryUserName WITH PASSWORD ''$POSTGRES_INVENTORY_DB_PASSWORD''' 
             WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$inventoryUserName')\gexec
-            SELECT 'CREATE USER $inventoryUserName WITH PASSWORD ''$POSTGRES_INVENTORY_DB_PASSWORD'''
+            SELECT 'CREATE USER $inventoryUserName WITH PASSWORD ''$POSTGRES_INVENTORY_DB_PASSWORD''' 
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$inventoryUserName')\gexec
             GRANT ALL PRIVILEGES ON DATABASE "$inventoryDatabaseName" to $inventoryUserName;
 
@@ -208,9 +208,9 @@ spec:
 
             SELECT 'CREATE DATABASE $assistantDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$assistantDatabaseName')\gexec
-            SELECT 'ALTER ROLE $assistantUserName WITH PASSWORD ''$POSTGRES_ASSISTANT_DB_PASSWORD'''
+            SELECT 'ALTER ROLE $assistantUserName WITH PASSWORD ''$POSTGRES_ASSISTANT_DB_PASSWORD''' 
             WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$assistantUserName')\gexec
-            SELECT 'CREATE USER $assistantUserName WITH PASSWORD ''$POSTGRES_ASSISTANT_DB_PASSWORD'''
+            SELECT 'CREATE USER $assistantUserName WITH PASSWORD ''$POSTGRES_ASSISTANT_DB_PASSWORD''' 
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$assistantUserName')\gexec
             GRANT ALL PRIVILEGES ON DATABASE "$assistantDatabaseName" to $assistantUserName;
 
@@ -221,9 +221,9 @@ spec:
 
             SELECT 'CREATE DATABASE $complianceDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$complianceDatabaseName')\gexec
-            SELECT 'ALTER ROLE $complianceUserName WITH PASSWORD ''$POSTGRES_COMPLIANCE_DB_PASSWORD'''
+            SELECT 'ALTER ROLE $complianceUserName WITH PASSWORD ''$POSTGRES_COMPLIANCE_DB_PASSWORD''' 
             WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$complianceUserName')\gexec
-            SELECT 'CREATE USER $complianceUserName WITH PASSWORD ''$POSTGRES_COMPLIANCE_DB_PASSWORD'''
+            SELECT 'CREATE USER $complianceUserName WITH PASSWORD ''$POSTGRES_COMPLIANCE_DB_PASSWORD''' 
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$complianceUserName')\gexec
             GRANT ALL PRIVILEGES ON DATABASE "$complianceDatabaseName" to $complianceUserName;
 
@@ -247,9 +247,9 @@ spec:
 
             SELECT 'CREATE DATABASE $authDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$authDatabaseName')\gexec
-            SELECT 'ALTER ROLE $authUserName WITH PASSWORD ''$POSTGRES_AUTH_DB_PASSWORD'''
+            SELECT 'ALTER ROLE $authUserName WITH PASSWORD ''$POSTGRES_AUTH_DB_PASSWORD''' 
             WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$authUserName')\gexec
-            SELECT 'CREATE USER $authUserName WITH PASSWORD ''$POSTGRES_AUTH_DB_PASSWORD'''
+            SELECT 'CREATE USER $authUserName WITH PASSWORD ''$POSTGRES_AUTH_DB_PASSWORD''' 
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$authUserName')\gexec
             GRANT ALL PRIVILEGES ON DATABASE "$authDatabaseName" to $authUserName;
 
@@ -260,9 +260,9 @@ spec:
 
             SELECT 'CREATE DATABASE $metadataDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$metadataDatabaseName')\gexec
-            SELECT 'ALTER ROLE $metadataUserName WITH PASSWORD ''$POSTGRES_METADATA_DB_PASSWORD'''
+            SELECT 'ALTER ROLE $metadataUserName WITH PASSWORD ''$POSTGRES_METADATA_DB_PASSWORD''' 
             WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$metadataUserName')\gexec
-            SELECT 'CREATE USER $metadataUserName WITH PASSWORD ''$POSTGRES_METADATA_DB_PASSWORD'''
+            SELECT 'CREATE USER $metadataUserName WITH PASSWORD ''$POSTGRES_METADATA_DB_PASSWORD''' 
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$metadataUserName')\gexec
             GRANT ALL PRIVILEGES ON DATABASE "$metadataDatabaseName" to $metadataUserName;
 
@@ -273,9 +273,9 @@ spec:
 
             SELECT 'CREATE DATABASE $reporterDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$reporterDatabaseName')\gexec
-            SELECT 'ALTER ROLE $reporterUserName WITH PASSWORD ''$POSTGRES_REPORTER_DB_PASSWORD'''
+            SELECT 'ALTER ROLE $reporterUserName WITH PASSWORD ''$POSTGRES_REPORTER_DB_PASSWORD''' 
             WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$reporterUserName')\gexec
-            SELECT 'CREATE USER $reporterUserName WITH PASSWORD ''$POSTGRES_REPORTER_DB_PASSWORD'''
+            SELECT 'CREATE USER $reporterUserName WITH PASSWORD ''$POSTGRES_REPORTER_DB_PASSWORD''' 
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$reporterUserName')\gexec
             GRANT ALL PRIVILEGES ON DATABASE "$reporterDatabaseName" to $reporterUserName;
 
@@ -286,9 +286,9 @@ spec:
 
             SELECT 'CREATE DATABASE $migratorDatabaseName'
             WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$migratorDatabaseName')\gexec
-            SELECT 'ALTER ROLE $migratorUserName WITH PASSWORD ''$POSTGRES_MIGRATOR_DB_PASSWORD'''
+            SELECT 'ALTER ROLE $migratorUserName WITH PASSWORD ''$POSTGRES_MIGRATOR_DB_PASSWORD''' 
             WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$migratorUserName')\gexec
-            SELECT 'CREATE USER $migratorUserName WITH PASSWORD ''$POSTGRES_MIGRATOR_DB_PASSWORD'''
+            SELECT 'CREATE USER $migratorUserName WITH PASSWORD ''$POSTGRES_MIGRATOR_DB_PASSWORD''' 
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$migratorUserName')\gexec
             GRANT ALL PRIVILEGES ON DATABASE "$migratorDatabaseName" to $migratorUserName;
 
@@ -297,9 +297,9 @@ spec:
             CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
             CREATE EXTENSION IF NOT EXISTS citext;
 
-            SELECT 'ALTER ROLE $steampipeUserName WITH PASSWORD ''$POSTGRES_STEAMPIPE_USER_PASSWORD'''
+            SELECT 'ALTER ROLE $steampipeUserName WITH PASSWORD ''$POSTGRES_STEAMPIPE_USER_PASSWORD''' 
             WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$steampipeUserName')\gexec
-            SELECT 'CREATE USER $steampipeUserName WITH PASSWORD ''$POSTGRES_STEAMPIPE_USER_PASSWORD'''
+            SELECT 'CREATE USER $steampipeUserName WITH PASSWORD ''$POSTGRES_STEAMPIPE_USER_PASSWORD''' 
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$steampipeUserName')\gexec
 
             \connect "$complianceDatabaseName";
@@ -319,12 +319,12 @@ spec:
 
             \connect "postgres";
             CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
-            SELECT 'ALTER ROLE $exporterUserName WITH PASSWORD ''$POSTGRES_EXPORTER_PASSWORD'''
+            SELECT 'ALTER ROLE $exporterUserName WITH PASSWORD ''$POSTGRES_EXPORTER_PASSWORD''' 
             WHERE EXISTS (select from pg_catalog.pg_roles where rolname = '$exporterUserName')\gexec
-            SELECT 'CREATE USER $exporterUserName WITH PASSWORD ''$POSTGRES_EXPORTER_PASSWORD'''
+            SELECT 'CREATE USER $exporterUserName WITH PASSWORD ''$POSTGRES_EXPORTER_PASSWORD''' 
             WHERE NOT EXISTS (select from pg_catalog.pg_roles where rolname = '$exporterUserName')\gexec
             GRANT pg_monitor TO $exporterUserName;
-
+            
             EOSQL
 
             echo "$dt - Init script is completed";

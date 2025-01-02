@@ -1,6 +1,6 @@
 global:
   domain: og.app.domain
-  debugMode: false
+  debugMode: true
   size: lg
 
 opengovernance:
@@ -8,25 +8,27 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v0.536.0
-      auth: v0.540.7
+      webui: v0.567.0
+      auth: v0.561.2
       swagger: v0.476.2
-      checkupJob: v0.540.7
-      postInstallJob: v0.541.14
-      schedulerService: v0.543.0
-      integration: v0.543.0
-      metadata: v0.543.0
-      inventory: v0.541.14
-      compliance: v0.541.12
-      complianceSummarizerJob: v0.541.14
-      complianceReportJob: v0.541.14
-      steampipe: v0.541.14
-      esSink: v0.540.7
-      auditJob: v0.541.14
-      queryRunnerJob: v0.541.14
-      queryValidatorJob: v0.541.14
+      checkupJob: v0.561.2
+      postInstallJob: v0.561.3
+      schedulerService: v0.566.1
+      integration: v0.561.2
+      metadata: v0.566.1
+      inventory: v0.566.1
+      compliance: v0.566.1
+      complianceSummarizerJob: v0.561.2
+      complianceReportJob: v0.561.2
+      steampipe: v0.561.2
+      esSink: v0.561.2
+      complianceQuick: v0.561.2
+      queryRunnerJob: v0.560.56
+      queryValidatorJob: v0.560.56
       demoImporterJob: v0.512.22
       psqlImport: v0.515.1
+      tasks: v0.565.0
+      rego: v0.561.2
   apikey:
     public: ""
     private: ""
@@ -49,9 +51,8 @@ opengovernance:
       clientId: "xxx"
       clientSecret: "xxx"
     keyID: "workspace-creds"
-# Added queryvalidator section
-queryvalidator:
-  enabled: false
+  parallelism:
+    complianceReportJobMaxParallelism: 10
 dex:
   configSecret:
     create: false
@@ -105,7 +106,7 @@ postgresql:
   image:
     registry: ghcr.io
     repository: opengovern/postgres
-    tag: v0.515.8
+    tag: v0.521.5
     pullPolicy: Always
     debug: false
   global:
@@ -239,6 +240,11 @@ postgresql:
           secretKeyRef:
             name: postgres-secret
             key: integrationServiceUserPassword
+      - name: POSTGRES_TASK_DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: postgres-secret
+            key: taskServiceUserPassword
 externalOpensearch:
   enabled: false
   endpoint: "https://opensearch.example.com"
@@ -263,7 +269,7 @@ opensearch:
   sysctlInit:
     enabled: true
 opensearch-dashboards:
-  enabled: false
+  enabled: true
   replicaCount: 1
   resources:
     requests:
@@ -324,7 +330,9 @@ github:
 keda:
   enabled: true
 populateWithSampleData:
-  enabled: true
+  enabled: false
   fileURL: "https://demo-data.opencomply.io/v1/demo_data.tar.gz.enc"
 swagger:
+  enabled: false
+queryvalidator:
   enabled: false

@@ -9,5 +9,6 @@ spec:
   selector:
     app: steampipe-service
   ports:
-    - port: 9193
+    - name: steampipe
+      port: 9193
       targetPort: 9193

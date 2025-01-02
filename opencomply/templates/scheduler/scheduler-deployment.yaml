@@ -39,9 +39,9 @@ spec:
         - name: GRPC_ADDRESS
           value: "0.0.0.0:5252"
         - name: POSTGRESQL_HOST
-          value: {{ include "postgres.endpoint" . | quote }}
+          value: "{{ include "postgres.endpoint" . }}"
         - name: POSTGRESQL_PORT
-          value: {{ include "postgres.port" . | quote }}
+          value: "{{ include "postgres.port" . }}"
         - name: POSTGRESQL_DB
           value: "describe"
         - name: POSTGRESQL_USERNAME
@@ -52,7 +52,7 @@ spec:
               name: postgres-secret
               key: schedulerUserPassword
         - name: POSTGRESQL_SSLMODE
-          value: {{ include "postgres.sslMode" . | quote }}
+          value: "{{ include "postgres.sslMode" . }}"
         - name: SCHEDULER_ID
           valueFrom:
             fieldRef:
@@ -70,7 +70,7 @@ spec:
         - name: COMPLIANCE_INTERVAL_HOURS
           value: "24"
         - name: QUERY_VALIDATOR_ENABLED
-          value: "{{ if .Values.queryvalidator }}{{ default false .Values.queryvalidator.enabled }}{{ else }}false{{ end }}"
+          value: "{{ .Values.queryvalidator.enabled }}"
         - name: SERVERLESS_PROVIDER
           value: "local"
         - name: COMPLIANCEINTERVALHOURS
@@ -104,30 +104,30 @@ spec:
 {{/*          value: "{{ .Values.opengovernance.domain.grpc_external }}:443"*/}}
 
         - name: KMS_ACCOUNT_REGION
-          value: "{{ .Values.opengovernance.vault.aws.region }}"
+          value: {{ .Values.opengovernance.vault.aws.region }}
           
         - name: VAULT_PROVIDER
-          value: "{{ .Values.opengovernance.vault.provider }}"
+          value: {{ .Values.opengovernance.vault.provider }}
         - name: VAULT_AWS_REGION
-          value: "{{ .Values.opengovernance.vault.aws.region }}"
+          value: {{ .Values.opengovernance.vault.aws.region }}
         - name: VAULT_AWS_ROLE_ARN
-          value: "{{ .Values.opengovernance.vault.aws.roleArn }}"
+          value: {{ .Values.opengovernance.vault.aws.roleArn }}
         - name: VAULT_AWS_ACCESS_KEY
-          value: "{{ .Values.opengovernance.vault.aws.accessKey }}"
+          value: {{ .Values.opengovernance.vault.aws.accessKey }}
         - name: VAULT_AWS_SECRET_KEY
-          value: "{{ .Values.opengovernance.vault.aws.secretKey }}"
+          value: {{ .Values.opengovernance.vault.aws.secretKey }}
         - name: VAULT_AZURE_BASE_URL
-          value: "{{ .Values.opengovernance.vault.azure.baseUrl }}"
+          value: {{ .Values.opengovernance.vault.azure.baseUrl }}
         - name: VAULT_AZURE_CLIENT_ID
-          value: "{{ .Values.opengovernance.vault.azure.clientId }}"
+          value: {{ .Values.opengovernance.vault.azure.clientId }}
         - name: VAULT_AZURE_TENANT_ID
-          value: "{{ .Values.opengovernance.vault.azure.tenantId }}"
+          value: {{ .Values.opengovernance.vault.azure.tenantId }}
         - name: VAULT_AZURE_CLIENT_SECRET
-          value: "{{ .Values.opengovernance.vault.azure.clientSecret }}"
+          value: {{ .Values.opengovernance.vault.azure.clientSecret }}
         - name: VAULT_HASHICORP_ADDRESS
-          value: "http://{{ .Release.Name }}-vault-internal.{{ .Release.Namespace }}.svc.cluster.local:8200"
+          value: "http://{{ .Release.Name }}-vault-internal.{{.Release.Namespace}}.svc.cluster.local:8200"
         - name: VAULT_KEY_ID
-          value: "{{ .Values.opengovernance.vault.keyID }}"
+          value: {{ .Values.opengovernance.vault.keyID }}
 
         - name: DO_DELETE_OLD_RESOURCES
           value: "true"
