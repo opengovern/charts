@@ -269,7 +269,7 @@ opensearch:
   sysctlInit:
     enabled: true
 opensearch-dashboards:
-  enabled: true
+  enabled: false
   replicaCount: 1
   resources:
     requests:
@@ -330,7 +330,7 @@ github:
 keda:
   enabled: true
 populateWithSampleData:
-  enabled: false
+  enabled: true
   fileURL: "https://demo-data.opencomply.io/v1/demo_data.tar.gz.enc"
 swagger:
   enabled: false
