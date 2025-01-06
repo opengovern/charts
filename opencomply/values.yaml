@@ -8,27 +8,26 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v0.567.3
-      auth: v0.561.2
+      webui: v0.575.2
+      auth: v0.572.0
       swagger: v0.476.2
-      checkupJob: v0.561.2
-      postInstallJob: v0.561.3
-      schedulerService: v0.566.1
-      integration: v0.561.2
-      metadata: v0.566.1
-      inventory: v0.566.1
-      compliance: v0.566.1
-      complianceSummarizerJob: v0.561.2
-      complianceReportJob: v0.561.2
-      steampipe: v0.561.2
-      esSink: v0.561.2
-      complianceQuick: v0.561.2
-      queryRunnerJob: v0.560.56
-      queryValidatorJob: v0.560.56
-      demoImporterJob: v0.512.22
-      psqlImport: v0.515.1
-      tasks: v0.565.0
-      rego: v0.561.2
+      checkupJob: v0.572.0
+      postInstallJob: v0.576.4
+      schedulerService: v0.572.0
+      integration: v0.572.0
+      core: v0.576.1
+      compliance: v0.572.0
+      complianceSummarizerJob: v0.572.0
+      complianceReportJob: v0.572.0
+      steampipe: v0.572.0
+      esSink: v0.572.0
+      complianceQuick: v0.572.0
+      queryRunnerJob: v0.572.0
+      queryValidatorJob: v0.572.0
+      demoImporterJob: v0.572.0
+      psqlImport: v0.572.0
+      tasks: v0.572.0
+      rego: v0.572.0
   apikey:
     public: ""
     private: ""
@@ -106,7 +105,7 @@ postgresql:
   image:
     registry: ghcr.io
     repository: opengovern/postgres
-    tag: v0.521.5
+    tag: v0.572.0
     pullPolicy: Always
     debug: false
   global:
@@ -190,11 +189,6 @@ postgresql:
           secretKeyRef:
             name: postgres-secret
             key: policyServiceUserPassword
-      - name: POSTGRES_INVENTORY_DB_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: postgres-secret
-            key: inventoryServiceUserPassword
       - name: POSTGRES_ASSISTANT_DB_PASSWORD
         valueFrom:
           secretKeyRef:
@@ -205,11 +199,11 @@ postgresql:
           secretKeyRef:
             name: postgres-secret
             key: complianceServiceUserPassword
-      - name: POSTGRES_METADATA_DB_PASSWORD
+      - name: POSTGRES_CORE_DB_PASSWORD
         valueFrom:
           secretKeyRef:
             name: postgres-secret
-            key: metadataServiceUserPassword
+            key: coreServiceUserPassword
       - name: POSTGRES_REPORTER_DB_PASSWORD
         valueFrom:
           secretKeyRef:
