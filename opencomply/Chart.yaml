@@ -1,6 +1,6 @@
 apiVersion: v2
 name: opencomply
-description: A Helm chart for deploying opencomply-dev to Kubernetes
+description: A Helm chart for deploying opencomply to Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
 #
