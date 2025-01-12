@@ -22,6 +22,7 @@ version: 2.0.0
 # It is recommended to use it with quotes.
 appVersion: "2.0.0"
 
+
 dependencies:
   - name: keda
     version: 2.15.1
