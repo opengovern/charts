@@ -1,6 +1,6 @@
 global:
   domain: og.app.domain
-  debugMode: false
+  debugMode: true
   size: lg
 
 opengovernance:
@@ -16,7 +16,7 @@ opengovernance:
       schedulerService: v2.1.3
       integration: v2.1.4
       core: v2.1.4
-      compliance: v2.1.4
+      compliance: v2.2.3
       complianceSummarizerJob: v2.0.1
       complianceReportJob: v2.0.1
       steampipe: v2.0.1
