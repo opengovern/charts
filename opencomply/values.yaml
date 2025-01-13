@@ -13,10 +13,10 @@ opengovernance:
       swagger: v2.0.1
       checkupJob: v2.0.1
       postInstallJob: v2.0.1
-      schedulerService: v2.0.1
-      integration: v2.0.1
-      core: v2.0.1
-      compliance: v2.0.1
+      schedulerService: v2.1.1
+      integration: v2.1.1
+      core: v2.1.1
+      compliance: v2.1.1
       complianceSummarizerJob: v2.0.1
       complianceReportJob: v2.0.1
       steampipe: v2.0.1
