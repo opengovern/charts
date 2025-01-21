@@ -8,24 +8,24 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v2.6.1
-      auth: v2.0.1
-      swagger: v2.0.1
-      checkupJob: v2.0.1
-      postInstallJob: v2.3.5
-      schedulerService: v2.1.3
-      integration: v2.4.5
-      core: v2.1.4
-      compliance: v2.3.0
-      complianceSummarizerJob: v2.0.1
-      complianceReportJob: v2.0.1
-      steampipe: v2.0.1
-      esSink: v2.0.1
-      complianceQuick: v2.0.1
-      queryRunnerJob: v2.0.1
-      queryValidatorJob: v2.0.1
-      demoImporterJob: v2.1.3
-      psqlImport: v2.1.3
+      webui: v2.12.0
+      auth: v2.26.1-dev.1
+      swagger: v2.26.1-dev.1
+      checkupJob: v2.26.1-dev.1
+      postInstallJob: v2.26.1-dev.1
+      schedulerService: v2.26.1-dev.1
+      integration: v2.26.1-dev.1
+      core: v2.26.1-dev.1
+      compliance: v2.26.1-dev.1
+      complianceSummarizerJob: v2.26.1-dev.1
+      complianceReportJob: v2.26.1-dev.1
+      cloudql: v2.26.1-dev.1
+      esSink: v2.26.1-dev.1
+      complianceQuick: v2.26.1-dev.1
+      queryRunnerJob: v2.26.1-dev.1
+      queryValidatorJob: v2.26.1-dev.1
+      demoImporterJob: v2.26.1-dev.1
+      psqlImport: v2.26.1-dev.1
   apikey:
     public: ""
     private: ""
@@ -57,7 +57,7 @@ dex:
   image:
     repository: ghcr.io/opengovern/dex-login
     pullPolicy: Always
-    tag: v2.0.1
+    tag: v0.477.1
   config:
     grpc:
       addr: 'localhost:5557'
@@ -104,7 +104,7 @@ postgresql:
   image:
     registry: ghcr.io
     repository: opengovern/postgres
-    tag: v2.2.6
+    tag: v2.26.1-dev.1
     pullPolicy: Always
     debug: false
   global:
@@ -324,7 +324,7 @@ keda:
   enabled: true
 populateWithSampleData:
   enabled: true
-  fileURL: "https://demo-data.opencomply.io/v2/demo_data.tar.gz.enc"
+  fileURL: "https://demo-data.opencomply.io/v1/demo_data.tar.gz.enc"
 swagger:
   enabled: false
 queryvalidator:
