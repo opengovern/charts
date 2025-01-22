@@ -251,9 +251,9 @@ opensearch:
   opensearchJavaOpts: "-XX:-HeapDumpOnOutOfMemoryError -Xmx3072M -Xms3072M"
   resources:
   requests:
-    cpu: "1000m"
-    memory: "6Gi"
-  replicas: 2
+    cpu: "500m"
+    memory: "4Gi"
+  replicas: 1
   extraEnvs:
     - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
       value: myStrongPassword@123!

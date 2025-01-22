@@ -22,13 +22,13 @@ spec:
         image: "{{ .Values.opengovernance.docker.registry }}/integration:{{ .Values.opengovernance.docker.tags.integration }}"
         command: ["/integration-service"]
         imagePullPolicy: Always
-        resources:
-         limits:
-           cpu: 500m
-           memory: 4Gi
-         requests:
-           cpu: 500m
-           memory: 2Gi
+        # resources:
+        #  limits:
+        #    cpu: 500m
+        #    memory: 4Gi
+        #  requests:
+        #    cpu: 500m
+        #    memory: 2Gi
         env:
         - name: INTEGRATION_POSTGRES__HOST
           value: "{{ include "postgres.endpoint" . }}"
