@@ -12,13 +12,13 @@ opengovernance:
       auth: v2.19.12
       swagger: v2.19.12
       checkupJob: v2.19.12
-      postInstallJob: v2.19.12
-      schedulerService: v2.19.12
+      postInstallJob: v2.19.13
+      schedulerService: v2.19.13
       integration: v2.19.12
-      core: v2.19.12
-      compliance: v2.19.12
-      complianceSummarizerJob: v2.19.12
-      complianceReportJob: v2.19.12
+      core: v2.19.13
+      compliance: v2.19.13
+      complianceSummarizerJob: v2.19.13
+      complianceReportJob: v2.19.13
       cloudql: v2.19.12
       esSink: v2.19.12
       complianceQuick: v2.19.12
