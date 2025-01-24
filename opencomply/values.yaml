@@ -13,10 +13,10 @@ opengovernance:
       swagger: v2.19.12
       checkupJob: v2.19.12
       postInstallJob: v2.19.13
-      schedulerService: v2.19.13
+      schedulerService: v2.19.16
       integration: v2.19.12
-      core: v2.19.13
-      compliance: v2.19.13
+      core: v2.19.16
+      compliance: v2.19.17
       complianceSummarizerJob: v2.19.13
       complianceReportJob: v2.19.13
       cloudql: v2.19.12
