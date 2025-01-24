@@ -12,15 +12,15 @@ opengovernance:
       auth: v2.15.6
       swagger: v2.15.6
       checkupJob: v2.15.6
-      postInstallJob: v2.15.6
-      schedulerService: v2.15.6
-      integration: v2.16.0
-      core: v2.15.6
-      compliance: v2.15.6
-      complianceSummarizerJob: v2.15.6
+      postInstallJob: v2.17.0
+      schedulerService: v2.17.0
+      integration: v2.17.0
+      core: v2.17.0
+      compliance: v2.17.0
+      complianceSummarizerJob: v2.17.0
       complianceReportJob: v2.15.6
       cloudql: v2.15.6
-      esSink: v2.15.6
+      esSink: v2.17.0
       complianceQuick: v2.15.6
       queryRunnerJob: v2.15.6
       queryValidatorJob: v2.15.6
