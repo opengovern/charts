@@ -27,12 +27,12 @@ spec:
             - --id=$(WORKER_ID)
           imagePullPolicy: Always
           resources:
-          limits:
-            cpu: 500m
-            memory: 2000Mi
-          requests:
-            cpu: 500m
-            memory: 1000Mi
+            limits:
+              cpu: 500m
+              memory: 2000Mi
+            requests:
+              cpu: 500m
+              memory: 1000Mi
           env:
 #            - name: STEAMPIPE_HOST
 #              value: "compliance-worker-steampipe"
