@@ -22,13 +22,13 @@ spec:
         image: "{{ .Values.opengovernance.docker.registry }}/core-service:{{ .Values.opengovernance.docker.tags.core }}"
         command: ["/core-service"]
         imagePullPolicy: Always
-        #resources:
-        #  limits:
-        #    cpu: 100m
-        #    memory: 500Mi
-        #  requests:
-        #    cpu: 100m
-        #    memory: 100Mi
+        resources:
+          limits:
+            cpu: 500m
+            memory: 500Mi
+          requests:
+            cpu: 500m
+            memory: 100Mi
         env:
 {{- include "elastic.envs" . | indent 8 }}
         - name: CORE_POSTGRES__HOST

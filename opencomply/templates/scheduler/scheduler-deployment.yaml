@@ -21,13 +21,13 @@ spec:
       - name: scheduler
         image: "{{ .Values.opengovernance.docker.registry }}/scheduler-service:{{ .Values.opengovernance.docker.tags.schedulerService }}"
         command: ["/scheduler-service"]
-        #resources:
-        #  limits:
-        #    cpu: 500m
-        #    memory: 8Gi
-        #  requests:
-        #    cpu: 100m
-        #    memory: 2Gi
+        resources:
+         limits:
+           cpu: 500m
+           memory: 2Gi
+         requests:
+           cpu: 100m
+           memory: 1Gi
         args:
         - --id=$(SCHEDULER_ID)
         imagePullPolicy: Always

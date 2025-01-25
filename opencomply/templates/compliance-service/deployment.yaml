@@ -22,13 +22,13 @@ spec:
         image: "{{ .Values.opengovernance.docker.registry }}/compliance-service:{{ .Values.opengovernance.docker.tags.compliance }}"
         command: ["/compliance-service"]
         imagePullPolicy: Always
-        #resources:
-        #  limits:
-        #    cpu: 1000m
-        #    memory: 3Gi
-        #  requests:
-        #    cpu: 200m
-        #    memory: 500Mi
+        resources:
+          limits:
+            cpu: 500m
+            memory: 2500Mi
+          requests:
+            cpu: 500m
+            memory: 1000Mi
         env:
 {{- include "elastic.envs" . | indent 8 }}
         - name: CURRENT_NAMESPACE
