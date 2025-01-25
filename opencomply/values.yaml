@@ -1,6 +1,6 @@
 global:
   domain: og.app.domain
-  debugMode: false
+  debugMode: true
   size: lg
 
 opengovernance:
