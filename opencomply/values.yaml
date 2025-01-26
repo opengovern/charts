@@ -12,18 +12,18 @@ opengovernance:
       auth: v2.22.0
       swagger: v2.22.0
       checkupJob: v2.22.0
-      postInstallJob: v2.22.0
+      postInstallJob: v2.22.6
       schedulerService: v2.22.0
       integration: v2.22.1
       core: v2.22.0
       compliance: v2.22.0
-      complianceSummarizerJob: v2.22.0
-      complianceReportJob: v2.22.0
-      cloudql: v2.22.0
+      complianceSummarizerJob: v2.22.6
+      complianceReportJob: v2.22.6
+      cloudql: v2.22.6
       esSink: v2.22.0
-      complianceQuick: v2.22.0
-      queryRunnerJob: v2.22.0
-      queryValidatorJob: v2.22.0
+      complianceQuick: v2.22.6
+      queryRunnerJob: v2.22.6
+      queryValidatorJob: v2.22.6
       demoImporterJob: v2.22.0
       psqlImport: v2.22.0
   apikey:

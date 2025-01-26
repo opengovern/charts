@@ -28,10 +28,10 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 2500Mi
+              memory: 4500Mi
             requests:
               cpu: 500m
-              memory: 500Mi
+              memory: 1000Mi
           env:
             - name: PG_PASSWORD
               valueFrom:
