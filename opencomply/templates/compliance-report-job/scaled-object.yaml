@@ -14,7 +14,7 @@ spec:
     name: compliance-worker
   pollingInterval: 30
   cooldownPeriod:  300
-  minReplicaCount: 1
+  minReplicaCount: 0
   maxReplicaCount: {{ .Values.opengovernance.parallelism.complianceReportJobMaxParallelism}}
   fallback:
     failureThreshold: 1
@@ -44,8 +44,8 @@ spec:
     name: compliance-worker-manual
   pollingInterval: 5
   cooldownPeriod:  300
-  minReplicaCount: 1
-  maxReplicaCount: 10
+  minReplicaCount: 0
+  maxReplicaCount: {{ .Values.opengovernance.parallelism.complianceReportJobMaxParallelism}}
   fallback:
     failureThreshold: 1
     replicas: 1

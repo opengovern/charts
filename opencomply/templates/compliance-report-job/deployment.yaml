@@ -8,7 +8,7 @@ metadata:
     cloudql-enabled: "true"
 spec:
   minReadySeconds: 10
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: compliance-worker
@@ -117,7 +117,7 @@ metadata:
     app: compliance-worker-manual
 spec:
   minReadySeconds: 10
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: compliance-worker-manual
