@@ -292,13 +292,11 @@ nats:
       memoryStore:
         enabled: true
         maxSize: 4Gi
-      # we are using jetstream as our job queue, because of that
-      # there is no need to have a persistent storage.
       fileStore:
         enabled: true
         storageDirectory: /data
         pvc:
-          enabled: false
+          enabled: true
           size: 25Gi
   container:
     merge:
