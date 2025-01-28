@@ -26,7 +26,7 @@ spec:
         account: "$G"
         stream: "compliance-runner"
         consumer: "compliance-runner-service"
-        lagThreshold: "200"
+        lagThreshold: "{{ .Values.opengovernance.parallelism.complianceReportLagThreshold}}"
         useHttps: "false"
 ---
 apiVersion: keda.sh/v1alpha1
@@ -56,6 +56,6 @@ spec:
         account: "$G"
         stream: "compliance-runner"
         consumer: "compliance-runner-manuals-service"
-        lagThreshold: "200"
+        lagThreshold: "{{ .Values.opengovernance.parallelism.complianceReportLagThreshold}}"
         useHttps: "false"
 {{- end }}

@@ -12,18 +12,18 @@ opengovernance:
       auth: v2.25.0
       swagger: v2.25.0
       checkupJob: v2.25.0
-      postInstallJob: v2.25.0
-      schedulerService: v2.25.0
-      integration: v2.25.0
-      core: v2.25.0
-      compliance: v2.25.0
-      complianceSummarizerJob: v2.25.0
-      complianceReportJob: v2.25.0
-      cloudql: v2.25.0
-      esSink: v2.25.0
-      complianceQuick: v2.25.0
-      queryRunnerJob: v2.25.0
-      queryValidatorJob: v2.25.0
+      postInstallJob: v2.25.7
+      schedulerService: v2.25.8
+      integration: v2.25.5
+      core: v2.25.8
+      compliance: v2.25.8
+      complianceSummarizerJob: v2.25.5
+      complianceReportJob: v2.25.5
+      cloudql: v2.25.5
+      esSink: v2.25.5
+      complianceQuick: v2.25.5
+      queryRunnerJob: v2.25.5
+      queryValidatorJob: v2.25.5
       demoImporterJob: v2.25.0
       psqlImport: v2.25.0
   apikey:
@@ -50,6 +50,7 @@ opengovernance:
     keyID: "workspace-creds"
   parallelism:
     complianceReportJobMaxParallelism: 10
+    complianceReportLagThreshold: "20" # should be string
     complianceQuickJobMaxParallelism: 5
 dex:
   configSecret:
