@@ -17,6 +17,16 @@ spec:
         app: core-service
     spec:
       serviceAccountName: core
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - app
       containers:
       - name: core-service
         image: "{{ .Values.opengovernance.docker.registry }}/core-service:{{ .Values.opengovernance.docker.tags.core }}"

@@ -16,6 +16,16 @@ spec:
       labels:
         app: es-sink-service
     spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - app
       containers:
         - name: es-sink-service
           image: "{{ .Values.opengovernance.docker.registry }}/es-sink:{{ .Values.opengovernance.docker.tags.esSink }}"

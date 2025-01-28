@@ -264,6 +264,15 @@ opensearch:
       value: "us-east-2"
   sysctlInit:
     enabled: true
+  nodeAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+            - key: opencomply-node
+              operator: In
+              values:
+                - opensearch
 opensearch-dashboards:
   enabled: false
   replicaCount: 1

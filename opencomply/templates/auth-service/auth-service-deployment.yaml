@@ -28,6 +28,16 @@ spec:
         app: auth-service
     spec:
       serviceAccountName: auth-service
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - app
       containers:
         - name: auth-service
           image: "{{ .Values.opengovernance.docker.registry }}/auth-service:{{ .Values.opengovernance.docker.tags.auth }}"

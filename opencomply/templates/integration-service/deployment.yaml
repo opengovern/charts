@@ -17,6 +17,16 @@ spec:
         app: integration-service
     spec:
       serviceAccountName: integration
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - app
       containers:
       - name: integration-service
         image: "{{ .Values.opengovernance.docker.registry }}/integration:{{ .Values.opengovernance.docker.tags.integration }}"

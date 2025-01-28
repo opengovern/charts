@@ -18,6 +18,16 @@ spec:
         app: compliance-quick-worker
         cloudql-enabled: "true"
     spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - worker
       containers:
         - name: audit-worker
           image: "{{ .Values.opengovernance.docker.registry }}/audit-job:{{ .Values.opengovernance.docker.tags.complianceQuick }}"

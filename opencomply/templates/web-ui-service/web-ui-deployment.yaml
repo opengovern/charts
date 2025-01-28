@@ -15,7 +15,16 @@ spec:
       labels:
         app: web-ui
     spec:
-
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - app
       containers:
       - name: web-ui
         image: "{{ .Values.opengovernance.docker.registry }}/web-ui:{{ .Values.opengovernance.docker.tags.webui }}"

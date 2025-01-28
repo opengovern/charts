@@ -19,6 +19,16 @@ spec:
         cloudql-enabled: "true"
     spec:
       serviceAccountName: cloudql
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - app
       containers:
       - name: cloudql-service
         image: "{{ .Values.opengovernance.docker.registry }}/cloudql-service:{{ .Values.opengovernance.docker.tags.cloudql }}"

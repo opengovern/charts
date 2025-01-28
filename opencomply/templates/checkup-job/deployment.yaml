@@ -21,6 +21,16 @@ spec:
         app: checkup-worker
     spec:
       serviceAccountName: checkup-worker
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - worker
       containers:
         - name: checkup-worker
           image: "{{ .Values.opengovernance.docker.registry }}/checkup-job:{{ .Values.opengovernance.docker.tags.checkupJob }}"

@@ -17,6 +17,16 @@ spec:
         app: scheduler
     spec:
       serviceAccountName: scheduler
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - app
       containers:
       - name: scheduler
         image: "{{ .Values.opengovernance.docker.registry }}/scheduler-service:{{ .Values.opengovernance.docker.tags.schedulerService }}"

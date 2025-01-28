@@ -19,6 +19,16 @@ spec:
         app: query-validator-worker
         cloudql-enabled: "true"
     spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - worker
       containers:
         - name: query-validator-worker
           image: "{{ .Values.opengovernance.docker.registry }}/query-validator-job:{{ .Values.opengovernance.docker.tags.queryValidatorJob }}"

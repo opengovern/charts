@@ -17,6 +17,16 @@ spec:
         app: compliance-summarizer
     spec:
       serviceAccountName: compliance-summarizer
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - worker
       containers:
         - name: compliance-summarizer
           image: "{{ .Values.opengovernance.docker.registry }}/compliance-summarizer-job:{{ .Values.opengovernance.docker.tags.complianceSummarizerJob }}"
@@ -64,6 +74,16 @@ spec:
         app: compliance-summarizer-manuals
     spec:
       serviceAccountName: compliance-summarizer
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - worker
       containers:
         - name: compliance-summarizer
           image: "{{ .Values.opengovernance.docker.registry }}/compliance-summarizer-job:{{ .Values.opengovernance.docker.tags.complianceSummarizerJob }}"

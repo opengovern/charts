@@ -17,6 +17,16 @@ spec:
         app: compliance-service
     spec:
       serviceAccountName: compliance
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - app
       containers:
       - name: compliance-service
         image: "{{ .Values.opengovernance.docker.registry }}/compliance-service:{{ .Values.opengovernance.docker.tags.compliance }}"

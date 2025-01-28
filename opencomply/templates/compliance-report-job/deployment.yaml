@@ -19,6 +19,16 @@ spec:
         cloudql-enabled: "true"
     spec:
       serviceAccountName: compliance-report-worker
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - worker
       containers:
         - name: compliance-worker
           image: "{{ .Values.opengovernance.docker.registry }}/compliance-report-job:{{ .Values.opengovernance.docker.tags.complianceReportJob }}"
@@ -127,6 +137,16 @@ spec:
         app: compliance-worker-manual
     spec:
       serviceAccountName: compliance-report-worker
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - worker
       containers:
         - name: compliance-worker
           image: "{{ .Values.opengovernance.docker.registry }}/compliance-report-job:{{ .Values.opengovernance.docker.tags.complianceReportJob }}"

@@ -18,6 +18,16 @@ spec:
         app: query-runner-worker
         cloudql-enabled: "true"
     spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: opencomply-node
+                    operator: In
+                    values:
+                      - worker
       containers:
         - name: query-runner-worker
           image: "{{ .Values.opengovernance.docker.registry }}/query-runner-job:{{ .Values.opengovernance.docker.tags.queryRunnerJob }}"
