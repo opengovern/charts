@@ -12,12 +12,12 @@ opengovernance:
       auth: v2.26.2
       swagger: v2.26.2
       checkupJob: v2.26.2
-      postInstallJob: v2.26.2
-      schedulerService: v2.26.2
+      postInstallJob: v2.26.4
+      schedulerService: v2.26.4
       integration: v2.26.2
-      core: v2.26.2
-      compliance: v2.26.2
-      complianceSummarizerJob: v2.26.2
+      core: v2.26.4
+      compliance: v2.26.4
+      complianceSummarizerJob: v2.26.4
       complianceReportJob: v2.26.2
       cloudql: v2.26.2
       esSink: v2.26.2
