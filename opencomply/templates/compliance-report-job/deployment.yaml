@@ -44,16 +44,10 @@ spec:
               cpu: 500m
               memory: 1000Mi
           env:
-#            - name: STEAMPIPE_HOST
-#              value: "compliance-worker-steampipe"
-#            - name: STEAMPIPE_PORT
-#              value: "9193"
-#            - name: STEAMPIPE_USERNAME
-#              value: "steampipe"
-#            - name: STEAMPIPE_PASSWORD
-#              value: "abcd"
-#            - name: STEAMPIPE_DB
-#              value: "steampipe"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: POSTGRESPLUGIN_HOST
               value: "{{ include "postgres.endpoint" . }}"
             - name: POSTGRESPLUGIN_PORT
@@ -162,16 +156,10 @@ spec:
               cpu: 500m
               memory: 1000Mi
           env:
-            #            - name: STEAMPIPE_HOST
-            #              value: "compliance-worker-steampipe"
-            #            - name: STEAMPIPE_PORT
-            #              value: "9193"
-            #            - name: STEAMPIPE_USERNAME
-            #              value: "steampipe"
-            #            - name: STEAMPIPE_PASSWORD
-            #              value: "abcd"
-            #            - name: STEAMPIPE_DB
-            #              value: "steampipe"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: POSTGRESPLUGIN_HOST
               value: "{{ include "postgres.endpoint" . }}"
             - name: POSTGRESPLUGIN_PORT
