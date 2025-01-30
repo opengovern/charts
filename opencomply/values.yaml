@@ -9,21 +9,21 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       webui: v2.29.0
-      auth: v2.31.0
-      swagger: v2.31.0
-      checkupJob: v2.31.0
-      postInstallJob: v2.31.0
-      schedulerService: v2.31.0
-      integration: v2.31.0
-      core: v2.31.0
-      compliance: v2.31.0
-      complianceSummarizerJob: v2.31.0
-      complianceReportJob: v2.31.0
-      cloudql: v2.31.0
-      esSink: v2.31.0
-      complianceQuick: v2.31.0
-      queryRunnerJob: v2.31.0
-      queryValidatorJob: v2.31.0
+      auth: v2.31.4
+      swagger: v2.31.4
+      checkupJob: v2.31.4
+      postInstallJob: v2.31.4
+      schedulerService: v2.31.5
+      integration: v2.31.4
+      core: v2.31.4
+      compliance: v2.31.4
+      complianceSummarizerJob: v2.31.4
+      complianceReportJob: v2.31.4
+      cloudql: v2.31.4
+      esSink: v2.31.4
+      complianceQuick: v2.31.4
+      queryRunnerJob: v2.31.4
+      queryValidatorJob: v2.31.4
       demoImporterJob: v2.25.0
       psqlImport: v2.25.0
   apikey:
