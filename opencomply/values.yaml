@@ -8,24 +8,24 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v2.35.0
-      auth: v2.37.5
-      swagger: v2.37.5
-      checkupJob: v2.37.5
-      postInstallJob: v2.38.0
-      schedulerService: v2.37.5
-      integration: v2.37.5
-      core: v2.37.5
-      compliance: v2.37.5
-      complianceSummarizerJob: v2.37.5
-      complianceReportJob: v2.37.5
-      cloudql: v2.37.5
-      esSink: v2.37.5
-      complianceQuick: v2.37.5
-      queryRunnerJob: v2.37.5
-      queryValidatorJob: v2.37.5
-      demoImporterJob: v2.25.0
-      psqlImport: v2.25.0
+      webui: v2.39.0
+      auth: v2.40.0
+      swagger: v2.40.0
+      checkupJob: v2.40.0
+      postInstallJob: v2.40.0
+      schedulerService: v2.40.0
+      integration: v2.40.0
+      core: v2.40.0
+      compliance: v2.40.0
+      complianceSummarizerJob: v2.40.0
+      complianceReportJob: v2.40.0
+      cloudql: v2.40.0
+      esSink: v2.40.0
+      complianceQuick: v2.40.0
+      queryRunnerJob: v2.40.0
+      queryValidatorJob: v2.40.0
+      demoImporterJob: v2.40.0
+      psqlImport: v2.40.0
   apikey:
     public: ""
     private: ""
@@ -58,7 +58,7 @@ dex:
   image:
     repository: ghcr.io/opengovern/dex-login
     pullPolicy: Always
-    tag: v2.25.0
+    tag: v2.40.0
   config:
     grpc:
       addr: 'localhost:5557'
@@ -105,7 +105,7 @@ postgresql:
   image:
     registry: ghcr.io
     repository: opengovern/postgres
-    tag: v2.27.9
+    tag: v2.40.0
     pullPolicy: Always
     debug: false
   global:
