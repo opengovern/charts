@@ -9,6 +9,7 @@ metadata:
 spec:
   template:
     spec:
+      serviceAccountName: configuration
       restartPolicy: OnFailure
       containers:
         - name: post-install-configuration
@@ -81,6 +82,8 @@ spec:
               value: "admin@opencomply.io"
             - name: DEFAULT_DEX_USER_PASSWORD
               value: "password"
+            - name: PLATFORM_NAMESPACE
+              value: "{{ .Release.Namespace }}"
 
           volumeMounts:
             - name: elasticsearch-index-config

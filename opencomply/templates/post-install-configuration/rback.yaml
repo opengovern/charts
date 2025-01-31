@@ -1,0 +1,31 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: configuration-access
+  namespace: {{ .Release.Namespace }}
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - "namespaces"
+      - "pods"
+      - "configmaps"
+      - "secrets"
+    verbs:
+      - "get"
+      - "list"
+      - "delete"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: configuration-access
+  namespace: {{ .Release.Namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: configuration
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: Role
+  name: configuration-access
+  apiGroup: rbac.authorization.k8s.io
