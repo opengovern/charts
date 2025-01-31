@@ -2,6 +2,33 @@ apiVersion: v1
 entries:
   opencomply:
   - apiVersion: v2
+    appVersion: 2.37.5
+    created: "2025-01-31T18:00:28.661485677Z"
+    dependencies:
+    - condition: keda.enabled
+      name: keda
+      repository: ""
+      version: 2.15.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: ""
+      version: 15.5.21
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: ""
+      version: 2.22.0
+    - condition: opensearch-dashboards.enabled
+      name: opensearch-dashboards
+      repository: ""
+      version: 2.20.0
+    description: A Helm chart for deploying opencomply to Kubernetes
+    digest: c9d17238043aa5fb86f8beedfd773f04c33439d77919800587a169e42a528b8c
+    name: opencomply
+    type: application
+    urls:
+    - https://github.com/opengovern/charts/releases/download/opencomply-2.37.5/opencomply-2.37.5.tgz
+    version: 2.37.5
+  - apiVersion: v2
     appVersion: 2.37.2
     created: "2025-01-31T15:07:36.954601752Z"
     dependencies:
@@ -1054,4 +1081,4 @@ entries:
     urls:
     - https://github.com/opengovern/charts/releases/download/opencomply-2.1.0/opencomply-2.1.0.tgz
     version: 2.1.0
-generated: "2025-01-31T15:07:36.954955971Z"
+generated: "2025-01-31T18:00:28.66175926Z"
