@@ -13,10 +13,10 @@ opengovernance:
       swagger: v2.40.0
       checkupJob: v2.40.0
       postInstallJob: v2.40.0
-      schedulerService: v2.40.5
+      schedulerService: v2.40.8
       integration: v2.40.0
-      core: v2.40.5
-      compliance: v2.40.4
+      core: v2.40.8
+      compliance: v2.40.8
       complianceSummarizerJob: v2.40.0
       complianceReportJob: v2.40.0
       cloudql: v2.40.0
