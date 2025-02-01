@@ -8,7 +8,7 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v2.42.0
+      webui: v2.43.0
       auth: v2.40.0
       swagger: v2.40.0
       checkupJob: v2.40.0
@@ -16,7 +16,7 @@ opengovernance:
       schedulerService: v2.40.8
       integration: v2.40.0
       core: v2.40.8
-      compliance: v2.41.0
+      compliance: v2.43.1
       complianceSummarizerJob: v2.40.0
       complianceReportJob: v2.40.0
       cloudql: v2.40.0
@@ -331,7 +331,7 @@ opensearch:
               values:
                 - opensearch
 opensearch-dashboards:
-  enabled: false
+  enabled: true
   replicaCount: 1
   resources:
     requests:
