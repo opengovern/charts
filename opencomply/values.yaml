@@ -244,9 +244,65 @@ externalOpensearch:
   endpoint: "https://opensearch.example.com"
   roleArn: "arn:aws:iam::000000000000:role/opensearch-fullaccess"
   awsRegion: "us-east-1"
+
 opensearch:
   enabled: true
   clusterName: opensearch-cluster
+
+  config:
+    opensearch.yml: |
+      cluster.name: opensearch-cluster
+      network.host: 0.0.0.0
+
+      ###################################################################
+      # Application & module log levels
+      ###################################################################
+      # Discovery logs (common to set at INFO)
+      logger.org.opensearch.discovery: info
+
+      # Reindex logs (DEBUG for more detail)
+      logger.org.opensearch.index.reindex: debug
+
+      # Shard-level slow logs for searching & indexing
+      logger.org.opensearch.index.search.slowlog: info
+      logger.org.opensearch.index.indexing.slowlog: info
+
+      ###################################################################
+      # Shard slow logs (per-shard took time)
+      ###################################################################
+      # For indexing operations:
+      index.indexing.slowlog.threshold.index.warn: "5s"
+      index.indexing.slowlog.threshold.index.info: "2s"
+      index.indexing.slowlog.threshold.index.debug: "1s"
+      index.indexing.slowlog.threshold.index.trace: "500ms"
+      # For search operations (query phase):
+      index.search.slowlog.threshold.query.warn: "2s"
+      index.search.slowlog.threshold.query.info: "1s"
+      index.search.slowlog.threshold.query.debug: "500ms"
+      index.search.slowlog.threshold.query.trace: "250ms"
+      # (If you also want fetch-phase slow logs, add index.search.slowlog.threshold.fetch.*)
+
+      ###################################################################
+      # Request slow logs (cluster-level, new in OpenSearch 2.12)
+      ###################################################################
+      # Logged based on total request time (not per shard).
+      # Setting 'level' to TRACE will log at the given thresholds:
+      cluster.search.request.slowlog.level: "TRACE"
+      cluster.search.request.slowlog.threshold.warn: "10s"
+      cluster.search.request.slowlog.threshold.info: "5s"
+      cluster.search.request.slowlog.threshold.debug: "2s"
+      cluster.search.request.slowlog.threshold.trace: "10ms"
+
+      ###################################################################
+      # Task resource consumers (top expensive tasks)
+      ###################################################################
+      # Enable logging of top CPU/memory-intensive tasks:
+      task_resource_consumers.enabled: true
+
+      # Number of search tasks to log & logging interval
+      cluster.task.consumers.top_n.size: 100
+      cluster.task.consumers.top_n.frequency: 60s
+
   persistence:
     size: 25Gi
   opensearchJavaOpts: "-Xms3072M -Xmx3072M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/share/opensearch/heap-dump.hprof"
