@@ -24,8 +24,8 @@ opengovernance:
       complianceQuick: v2.45.2
       queryRunnerJob: v2.45.2
       queryValidatorJob: v2.45.2
-      demoImporterJob: v2.44.0
-      psqlImport: v2.44.0
+      demoImporterJob: v2.45.6
+      psqlImport: v2.45.6
   apikey:
     public: ""
     private: ""
