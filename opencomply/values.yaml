@@ -395,7 +395,7 @@ kube-prometheus-stack:
               "editable": true,
               "fiscalYearStartMonth": 0,
               "graphTooltip": 0,
-              "id": 28,
+              "id": 1,
               "links": [],
               "panels": [
                 {
@@ -459,10 +459,102 @@ kube-prometheus-stack:
                     "overrides": []
                   },
                   "gridPos": {
-                    "h": 16,
+                    "h": 7,
                     "w": 24,
                     "x": 0,
                     "y": 0
+                  },
+                  "id": 2,
+                  "options": {
+                    "legend": {
+                      "calcs": [],
+                      "displayMode": "list",
+                      "placement": "bottom",
+                      "showLegend": true
+                    },
+                    "tooltip": {
+                      "mode": "single",
+                      "sort": "none"
+                    }
+                  },
+                  "pluginVersion": "11.4.0",
+                  "targets": [
+                    {
+                      "editorMode": "code",
+                      "expr": "rate(opengovernance_es_sink_docs_num_flushed[30s])",
+                      "legendFormat": "__auto",
+                      "range": true,
+                      "refId": "A"
+                    }
+                  ],
+                  "title": "Flush Rate",
+                  "type": "timeseries"
+                },
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "prometheus"
+                  },
+                  "fieldConfig": {
+                    "defaults": {
+                      "color": {
+                        "mode": "palette-classic"
+                      },
+                      "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                          "legend": false,
+                          "tooltip": false,
+                          "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                          "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                          "group": "A",
+                          "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                          "mode": "off"
+                        }
+                      },
+                      "mappings": [],
+                      "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                          {
+                            "color": "green",
+                            "value": null
+                          },
+                          {
+                            "color": "red",
+                            "value": 80
+                          }
+                        ]
+                      }
+                    },
+                    "overrides": []
+                  },
+                  "gridPos": {
+                    "h": 8,
+                    "w": 24,
+                    "x": 0,
+                    "y": 7
                   },
                   "id": 1,
                   "options": {
@@ -486,7 +578,7 @@ kube-prometheus-stack:
                       },
                       "editorMode": "code",
                       "expr": "opengovernance_es_sink_docs_num_added - opengovernance_es_sink_docs_num_flushed",
-                      "legendFormat": "__auto",
+                      "legendFormat": "Num Unflushed",
                       "range": true,
                       "refId": "A"
                     }
@@ -509,6 +601,6 @@ kube-prometheus-stack:
               "timezone": "browser",
               "title": "ES Sink",
               "uid": "aebtn21m9u70gd",
-              "version": 3,
+              "version": 1,
               "weekStart": ""
             }
