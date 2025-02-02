@@ -277,7 +277,7 @@ opensearch:
               values:
                 - opensearch
 opensearch-dashboards:
-  enabled: true
+  enabled: false
   replicaCount: 1
   resources:
     requests:
