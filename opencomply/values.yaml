@@ -337,7 +337,7 @@ keda:
   enabled: true
 populateWithSampleData:
   enabled: true
-  fileURL: "https://demo-data.opencomply.io/v1/demo_data.tar.gz.enc"
+  fileURL: "https://demo-data.opencomply.io/v2/demo_data.tar.gz.enc"
 swagger:
   enabled: false
 queryvalidator:
