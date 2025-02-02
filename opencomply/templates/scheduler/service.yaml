@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: scheduler
-    service-monitor: {{ .Release.Name }}
+    monitoring: {{ .Release.Name }}
 spec:
   selector:
     app: scheduler
