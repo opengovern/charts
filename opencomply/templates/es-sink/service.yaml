@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: es-sink-service
-    monitoring: kaytu
+    service-monitor: {{ .Release.Name }}
 spec:
   selector:
     app: es-sink-service

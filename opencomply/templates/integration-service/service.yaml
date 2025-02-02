@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: integration-service
-    monitoring: kaytu
+    service-monitor: {{ .Release.Name }}
 spec:
   selector:
     app: integration-service
