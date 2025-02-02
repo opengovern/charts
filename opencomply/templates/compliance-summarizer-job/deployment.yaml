@@ -46,6 +46,8 @@ spec:
               value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
 {{- include "elastic.envs" . | indent 12 }}
 
+            - name: POSTGRESQL_HOST
+              value: "{{ include "postgres.endpoint" . }}"
             - name: POSTGRESQL_PORT
               value: "{{ include "postgres.port" . }}"
             - name: POSTGRESQL_USERNAME
@@ -116,6 +118,22 @@ spec:
             - name: NATS_URL
               value: "{{ .Release.Namespace }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
 {{- include "elastic.envs" . | indent 12 }}
+
+            - name: POSTGRESQL_HOST
+              value: "{{ include "postgres.endpoint" . }}"
+            - name: POSTGRESQL_PORT
+              value: "{{ include "postgres.port" . }}"
+            - name: POSTGRESQL_USERNAME
+              value: "compliance_service"
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: complianceServiceUserPassword
+            - name: POSTGRESQL_DB
+              value: "compliance"
+            - name: POSTGRESQL_SSLMODE
+              value: "{{ include "postgres.sslMode" . }}"
 
             - name: CORE_BASEURL
               value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
