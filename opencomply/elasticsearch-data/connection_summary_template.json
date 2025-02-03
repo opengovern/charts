@@ -2,6 +2,7 @@
   "index_patterns": [
     "connection_summary"
   ],
+  "priority": 1000,
   "template": {
     "mappings": {
       "_source": {

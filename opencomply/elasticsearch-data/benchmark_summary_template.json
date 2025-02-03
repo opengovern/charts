@@ -3,6 +3,7 @@
     "benchmark_summary",
     "rc_benchmark_summary"
   ],
+  "priority": 1000,
   "template": {
     "settings": {
       "index": {

@@ -2,6 +2,7 @@
   "index_patterns": [
     "rc_insights"
   ],
+  "priority": 1000,
   "template": {
     "settings": {
       "index": {

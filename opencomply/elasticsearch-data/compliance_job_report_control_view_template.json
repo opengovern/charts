@@ -1,5 +1,6 @@
 {
   "index_patterns": ["compliance_job_report_control_view"],
+  "priority": 1000,
   "template": {
     "settings": {
       "number_of_shards": 1,
