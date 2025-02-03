@@ -104,8 +104,9 @@ spec:
         - name: INTEGRATION_JAEGER_SAMPLE_RATE
           value: "0.005"
 
+{{- include "elastic.envs" . | indent 8 }}
         - name: CURRENT_NAMESPACE
-          value: "{{ .Release.Namespace }}"
+          value: "{{ .Release.Namespace }}
         - name: KEDA_ENABLED
           value: "{{ .Values.keda.enabled }}"
         - name: NATS_URL
