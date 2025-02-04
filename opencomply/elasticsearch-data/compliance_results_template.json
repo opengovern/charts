@@ -3,6 +3,7 @@
     "compliance_results",
     "rc_compliance_results"
   ],
+  "priority": 1000,
   "template": {
     "settings": {
       "index": {

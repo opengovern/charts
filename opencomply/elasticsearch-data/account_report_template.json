@@ -2,6 +2,7 @@
   "index_patterns": [
     "account_report"
   ],
+  "priority": 1000,
   "template": {
     "settings": {
       "index": {

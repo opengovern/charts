@@ -2,6 +2,7 @@
   "index_patterns": [
     "source_resources_summary"
   ],
+  "priority": 1000,
   "template": {
     "settings": {
       "index":{

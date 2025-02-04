@@ -3,6 +3,7 @@
     "analytics_connection_summary",
     "rc_analytics_connection_summary"
   ],
+  "priority": 1000,
   "template": {
     "mappings": {
       "_source": {

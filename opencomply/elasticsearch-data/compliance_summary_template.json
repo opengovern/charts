@@ -2,6 +2,7 @@
   "index_patterns": [
     "compliance_summary"
   ],
+  "priority": 1000,
   "template": {
     "settings": {
       "index": {

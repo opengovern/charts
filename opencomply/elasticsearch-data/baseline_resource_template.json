@@ -1,0 +1,49 @@
+{
+  "index_patterns": [
+    "*"
+  ],
+  "template": {
+    "settings": {
+      "number_of_shards": 1,
+      "index":{
+        "mapping":{
+          "total_fields": {
+            "limit": "10000"
+          }
+        }
+      }
+    },
+    "mappings": {
+      "dynamic_templates": [
+        {
+          "properties_as_object": {
+            "match_mapping_type": "*",
+            "match": "properties",
+            "mapping": {
+              "type": "object",
+              "enabled": false
+            }
+          }
+        },
+        {
+          "tags_as_objects": {
+            "match_mapping_type": "*",
+            "match": "tags",
+            "mapping": {
+              "type": "object",
+              "enabled": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  "priority": 1,
+  "composed_of": [
+    "resource_component_template"
+  ],
+  "version": 1,
+  "_meta": {
+    "description": "Baseline resources indices"
+  }
+}

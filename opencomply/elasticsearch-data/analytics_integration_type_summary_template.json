@@ -3,6 +3,7 @@
     "analytics_integration_type_summary",
     "rc_analytics_integration_type_summary"
   ],
+  "priority": 1000,
   "template": {
     "mappings": {
       "_source": {
