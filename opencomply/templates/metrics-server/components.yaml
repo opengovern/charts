@@ -1,4 +1,4 @@
-{{- if eq (.Values.global.debugMode | toString) "enable" }}
+{{- if eq (.Values.global.metricsService | toString) "enable" }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:

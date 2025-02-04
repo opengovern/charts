@@ -1,7 +1,7 @@
 global:
   domain: og.app.domain
   debugMode: false
-  metricsService: enable
+  metricsService: disable
   size: lg
 
 opengovernance:
@@ -14,10 +14,10 @@ opengovernance:
       swagger: v2.45.2
       checkupJob: v2.51.0
       postInstallJob: v2.59.2
-      schedulerService: v2.56.4
-      integration: v2.59.2
-      core: v2.45.7
-      compliance: v2.56.4
+      schedulerService: v2.59.3
+      integration: v2.59.3
+      core: v2.59.3
+      compliance: v2.59.3
       complianceSummarizerJob: v2.45.2
       complianceReportJob: v2.45.2
       cloudql: v2.45.2
