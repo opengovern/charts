@@ -13,9 +13,9 @@ opengovernance:
       auth: v2.45.2
       swagger: v2.45.2
       checkupJob: v2.51.0
-      postInstallJob: v2.55.0-dev.1
+      postInstallJob: v2.59.2
       schedulerService: v2.56.4
-      integration: v2.57.7-dev.0
+      integration: v2.59.2
       core: v2.45.7
       compliance: v2.56.4
       complianceSummarizerJob: v2.45.2
@@ -388,7 +388,7 @@ queryvalidator:
 
 
 # Following charts are only enabled if monitoringDebugMode is set to true. They could cause crd collision in existing clusters do not enable them unless you know what you are doing
-monitoringDebugMode: true
+monitoringDebugMode: false
 
 kube-prometheus-stack:
 
