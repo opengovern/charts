@@ -1,6 +1,6 @@
 global:
   domain: og.app.domain
-  debugMode: false
+  debugMode: true
   metricsService: disable
   size: lg
 
@@ -9,7 +9,7 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v2.59.1
+      webui: v2.60.0
       auth: v2.45.2
       swagger: v2.45.2
       checkupJob: v2.51.0
