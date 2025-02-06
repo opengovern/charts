@@ -17,7 +17,7 @@ opengovernance:
       schedulerService: v2.63.4
       integration: v2.63.4
       core: v2.66.0
-      compliance: v2.63.4
+      compliance: v2.67.2
       complianceSummarizerJob: v2.63.4
       complianceReportJob: v2.63.4
       cloudql: v2.63.4
