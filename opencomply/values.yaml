@@ -9,7 +9,7 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v2.67.0
+      webui: v2.68.0
       auth: v2.63.4
       swagger: v2.63.4
       checkupJob: v2.63.4
