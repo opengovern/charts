@@ -60,6 +60,8 @@ spec:
               value: "https://github.com/kaytu-io/control-enrichmentor"
             - name: CORE_BASEURL
               value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+            - name: INTEGRATION_BASEURL
+              value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
             - name: GITHUB_TOKEN
               value: "{{ .Values.github.token }}"
             - name: PROMETHEUS_PUSH_ADDRESS
