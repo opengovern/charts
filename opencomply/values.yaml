@@ -14,7 +14,7 @@ opengovernance:
       swagger: v2.63.4
       checkupJob: v2.63.4
       postInstallJob: v2.68.6
-      schedulerService: v2.70.1
+      schedulerService: v2.76.5
       integration: v2.68.5
       core: v2.76.3
       compliance: v2.76.4
