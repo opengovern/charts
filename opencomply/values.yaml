@@ -12,19 +12,18 @@ opengovernance:
       webui: v2.79.0
       auth: v2.63.4
       swagger: v2.63.4
-      checkupJob: v2.63.4
-      postInstallJob: v2.68.6
-      schedulerService: v2.76.7
-      integration: v2.76.8
-      core: v2.77.1
-      compliance: v2.76.12
-      complianceSummarizerJob: v2.68.5
-      complianceReportJob: v2.68.5
-      cloudql: v2.68.5
-      esSink: v2.63.4
-      complianceQuick: v2.68.5
-      queryRunnerJob: v2.68.5
-      queryValidatorJob: v2.68.5
+      checkupJob: v2.79.14
+      postInstallJob: v2.79.14
+      schedulerService: v2.79.15
+      integration: v2.79.14
+      core: v2.79.15
+      compliance: v2.79.15
+      complianceSummarizerJob: v2.79.14
+      complianceReportJob: v2.79.14
+      esSink: v2.79.14
+      complianceQuick: v2.79.14
+      queryRunnerJob: v2.79.14
+      queryValidatorJob: v2.79.14
       demoImporterJob: v2.68.3
       psqlImport: v2.68.3
   apikey:
