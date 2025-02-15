@@ -1,3 +1,4 @@
+{{- if eq .Values.opengovernance.compliance true }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -29,3 +30,4 @@ roleRef:
   kind: Role
   name: {{ .Release.Name }}-migrator-runner
   apiGroup: rbac.authorization.k8s.io
+{{- end }}

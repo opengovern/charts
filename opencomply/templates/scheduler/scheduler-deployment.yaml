@@ -151,3 +151,5 @@ spec:
               fieldPath: status.hostIP
         - name: JAEGER_SAMPLE_RATE
           value: "0.005"
+        - name: COMPLIANCE_ENABLED
+          value: "{{ .Values.opengovernance.compliance }}"

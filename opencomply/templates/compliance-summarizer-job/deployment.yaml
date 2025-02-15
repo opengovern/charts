@@ -1,3 +1,4 @@
+{{- if eq .Values.opengovernance.compliance true }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -145,3 +146,4 @@ spec:
               value: "prom-system-prometheus-pushgateway.prom-system.svc.cluster.local:9091"
             - name: MANUAL_TRIGGER
               value: "true"
+{{- end }}

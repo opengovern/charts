@@ -13,11 +13,11 @@ opengovernance:
       auth: v2.63.4
       swagger: v2.63.4
       checkupJob: v2.79.14
-      postInstallJob: v2.79.14
-      schedulerService: v2.79.15
-      integration: v2.79.14
-      core: v2.79.15
-      compliance: v2.79.15
+      postInstallJob: v2.79.16
+      schedulerService: v2.79.16
+      integration: v2.79.16
+      core: v2.79.16
+      compliance: v2.79.16
       complianceSummarizerJob: v2.79.14
       complianceReportJob: v2.79.14
       esSink: v2.79.14
@@ -52,6 +52,7 @@ opengovernance:
     complianceReportJobMaxParallelism: 10
     complianceReportLagThreshold: "50" # should be string
     complianceQuickJobMaxParallelism: 5
+  compliance: true
 dex:
   configSecret:
     create: false

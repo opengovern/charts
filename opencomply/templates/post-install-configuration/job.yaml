@@ -86,6 +86,8 @@ spec:
               value: "password"
             - name: PLATFORM_NAMESPACE
               value: "{{ .Release.Namespace }}"
+            - name: COMPLIANCE_ENABLED
+              value: "{{ .Values.opengovernance.compliance }}"
 
           volumeMounts:
             - name: elasticsearch-index-config

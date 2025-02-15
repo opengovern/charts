@@ -1,3 +1,4 @@
+{{- if eq .Values.opengovernance.compliance true }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -214,3 +215,4 @@ spec:
         - name: compliance-worker-postgres-config
           configMap:
             name: compliance-worker-postgres-config
+{{- end }}

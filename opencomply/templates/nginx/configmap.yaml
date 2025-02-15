@@ -84,6 +84,7 @@ data:
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
 
+{{- if eq .Values.opengovernance.compliance true }}
         location /main/compliance {
           if ($request_method = 'OPTIONS') {
             add_header 'Access-Control-Allow-Origin' '*';
@@ -113,6 +114,7 @@ data:
 
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
+{{- end }}
 
         location /main/schedule {
           if ($request_method = 'OPTIONS') {
@@ -405,6 +407,7 @@ data:
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
 
+{{- if eq .Values.opengovernance.compliance true }}
         location /main/compliance {
           rewrite ^/main/compliance(.*) $1 break;
 
@@ -423,6 +426,7 @@ data:
 
           proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         }
+{{- end }}
 
         location /main/schedule {
           rewrite ^/main/schedule(.*) $1 break;

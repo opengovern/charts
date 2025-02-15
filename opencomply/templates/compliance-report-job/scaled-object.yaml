@@ -1,3 +1,4 @@
+{{- if eq .Values.opengovernance.compliance true }}
 {{- if eq .Values.keda.enabled true }}
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -58,4 +59,5 @@ spec:
         consumer: "compliance-runner-manuals-service"
         lagThreshold: "{{ .Values.opengovernance.parallelism.complianceReportLagThreshold}}"
         useHttps: "false"
+{{- end }}
 {{- end }}

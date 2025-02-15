@@ -1,3 +1,4 @@
+{{- if eq .Values.opengovernance.compliance true }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -13,3 +14,4 @@ spec:
   - name: http
     port: 7251
     targetPort: 7251
+{{- end }}
