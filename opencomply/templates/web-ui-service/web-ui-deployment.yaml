@@ -69,7 +69,7 @@ data:
     REACT_APP_DOMAIN: "https://{{ .Values.global.domain }}"
     REACT_APP_BASE_URL="https://{{ .Values.global.domain }}"
     REACT_APP_AUTH_BASE_URL="https://{{ .Values.global.domain }}"
-    SHOW_COMPLIANCE: {{.Values.opengovernance.compliance}}
+    SHOW_COMPLIANCE={{.Values.opengovernance.compliance}}
   NODE_ENV: production
   REACT_APP_NODE_ENV: prod
   REACT_APP_MUI_LICENSE: {{ .Values.opengovernance.webui.muiLicense }}
