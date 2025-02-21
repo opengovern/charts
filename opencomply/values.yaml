@@ -17,7 +17,7 @@ opengovernance:
       schedulerService: v2.80.2
       integration: v2.80.1
       core: v2.80.2
-      compliance: v2.79.19
+      compliance: v2.80.4
       complianceSummarizerJob: v2.79.19
       complianceReportJob: v2.79.19
       esSink: v2.79.19
