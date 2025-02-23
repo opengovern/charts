@@ -38,10 +38,9 @@ spec:
             memory: 100Mi
         ports:
           - containerPort: 7298
-       env:
-        - name: REACT_APP_SHOW_COMPLIANCE
-          value: "{{ .Values.opengovernance.compliance }}"
-
+        env:
+          - name: REACT_APP_SHOW_COMPLIANCE
+            value: "{{ .Values.opengovernance.compliance }}"
         envFrom:
           - configMapRef:
               name: web-ui-env
