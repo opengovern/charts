@@ -9,7 +9,7 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v2.82.0
+      webui: v2.87.0
       auth: v2.81.0
       swagger: v2.63.4
       checkupJob: v2.79.14
@@ -52,7 +52,7 @@ opengovernance:
     complianceReportJobMaxParallelism: 10
     complianceReportLagThreshold: "50" # should be string
     complianceQuickJobMaxParallelism: 5
-  compliance: true
+  compliance: false
 dex:
   configSecret:
     create: false

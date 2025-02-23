@@ -41,20 +41,20 @@ spec:
         env:
           - name: REACT_APP_SHOW_COMPLIANCE
             value: "{{ .Values.opengovernance.compliance }}"
-        envFrom:
-          - configMapRef:
-              name: web-ui-env
+
         volumeMounts:
-          - mountPath: /usr/share/nginx/html/.env
+          - mountPath: /build/env-config.js
             name: web-ui-env
-            subPath: .env
+            subPath: env-config.js
+            
       volumes:
         - name: web-ui-env
           configMap:
             name: web-ui-env
             items:
-              - key: .env
-                path: .env
+              - key: env-config.js
+                path: env-config.js
+
 
 ---
 apiVersion: v1
@@ -65,18 +65,14 @@ metadata:
   labels:
     app: web-ui
 data:
-  .env: |
-    NODE_ENV=production
-    REACT_APP_NODE_ENV=prod
-    REACT_APP_MUI_LICENSE={{ .Values.opengovernance.webui.muiLicense }}
-    REACT_APP_DOMAIN: "https://{{ .Values.global.domain }}"
-    REACT_APP_BASE_URL="https://{{ .Values.global.domain }}"
-    REACT_APP_AUTH_BASE_URL="https://{{ .Values.global.domain }}"
-    REACT_APP_SHOW_COMPLIANCE="{{ .Values.opengovernance.compliance }}"
-  NODE_ENV: production
-  REACT_APP_NODE_ENV: prod
-  REACT_APP_MUI_LICENSE: {{ .Values.opengovernance.webui.muiLicense }}
-  REACT_APP_DOMAIN: "https://{{ .Values.global.domain }}"
-  REACT_APP_BASE_URL: "https://{{ .Values.global.domain }}"
-  REACT_APP_AUTH_BASE_URL: "https://{{ .Values.global.domain }}"
-  REACT_APP_SHOW_COMPLIANCE: "{{ .Values.opengovernance.compliance }}"
+  env-config.js: |
+    window.__RUNTIME_CONFIG__ = {
+    NODE_ENV: "prod",
+    REACT_APP_RUNTIME_ENVIRONMENT: "production",
+    REACT_APP_BASE_URL: "https://{{ .Values.global.domain }}",
+    REACT_APP_AUTH_BASE_URL: "https://{{ .Values.global.domain }}",
+    REACT_APP_SHOW_COMPLIANCE: "{{ .Values.opengovernance.compliance }}",
+    };
+
+
+
