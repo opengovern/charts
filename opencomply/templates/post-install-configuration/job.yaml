@@ -81,7 +81,7 @@ spec:
             - name: DEFAULT_DEX_USER_NAME
               value: "admin"
             - name: DEFAULT_DEX_USER_EMAIL
-              value: "admin@opencomply.io"
+              value: "admin@opensecurity.sh"
             - name: DEFAULT_DEX_USER_PASSWORD
               value: "password"
             - name: PLATFORM_NAMESPACE
