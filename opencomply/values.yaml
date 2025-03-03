@@ -10,22 +10,22 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       webui: v2.2.0
-      auth: v2.0.1
-      swagger: v2.0.1
-      checkupJob: v2.0.1
-      postInstallJob: v2.0.1
-      schedulerService: v2.0.1
-      integration: v2.0.1
-      core: v2.0.1
-      compliance: v2.0.1
-      complianceSummarizerJob: v2.0.1
-      complianceReportJob: v2.0.1
-      esSink: v2.0.1
-      complianceQuick: v2.0.1
-      queryRunnerJob: v2.0.1
-      queryValidatorJob: v2.0.1
-      demoImporterJob: v2.0.1
-      psqlImport: v2.0.1
+      auth: v2.4.1
+      swagger: v2.4.1
+      checkupJob: v2.4.1
+      postInstallJob: v2.4.1
+      schedulerService: v2.4.1
+      integration: v2.4.1
+      core: v2.4.1
+      compliance: v2.4.1
+      complianceSummarizerJob: v2.4.1
+      complianceReportJob: v2.4.1
+      esSink: v2.4.1
+      complianceQuick: v2.4.1
+      queryRunnerJob: v2.4.1
+      queryValidatorJob: v2.4.1
+      demoImporterJob: v2.4.1
+      psqlImport: v2.4.1
   apikey:
     public: ""
     private: ""
@@ -52,14 +52,14 @@ opengovernance:
     complianceReportJobMaxParallelism: 10
     complianceReportLagThreshold: "50" # should be string
     complianceQuickJobMaxParallelism: 5
-  compliance: false
+  compliance: true
 dex:
   configSecret:
     create: false
   image:
     repository: ghcr.io/opengovern/dex-login
     pullPolicy: Always
-    tag: v2.0.1
+    tag: v2.4.1
   config:
     grpc:
       addr: 'localhost:5557'
@@ -106,7 +106,7 @@ postgresql:
   image:
     registry: ghcr.io
     repository: opengovern/postgres
-    tag: v2.0.1
+    tag: v2.4.1
     pullPolicy: Always
     debug: false
   global:
