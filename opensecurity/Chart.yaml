@@ -1,6 +1,6 @@
 apiVersion: v2
 name: opensecurity
-description: A Helm chart for deploying opencomply to Kubernetes
+description: A Helm chart for deploying opensecurity to Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
 #
