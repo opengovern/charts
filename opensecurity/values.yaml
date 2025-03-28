@@ -9,7 +9,7 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v2.7.0
+      webui: v2.9.0
       auth: v2.4.1
       swagger: v2.4.1
       checkupJob: v2.4.1
@@ -107,7 +107,7 @@ postgresql:
   image:
     registry: ghcr.io
     repository: opengovern/postgres
-    tag: v2.4.1
+    tag: v2.10.1
     pullPolicy: Always
     debug: false
   global:
