@@ -1,6 +1,6 @@
 global:
   domain: og.app.domain
-  debugMode: false
+  debugMode: true
   metricsService: disable
   size: lg
 
@@ -321,7 +321,7 @@ opensearch:
                 ".opendistro-asynchronous-search-response*",
               ]
 opensearch-dashboards:
-  enabled: false
+  enabled: true
   replicaCount: 1
   resources:
     requests:
