@@ -15,18 +15,18 @@ opengovernance:
       checkupJob: v2.4.1
       postInstallJob: v2.8.4
       schedulerService: v2.4.1
-      integration: v2.4.1
-      core: v2.4.1
-      compliance: v2.4.1
+      integration: v2.10.7
+      core: v2.10.7
+      compliance: v2.10.7
       complianceSummarizerJob: v2.4.1
-      complianceReportJob: v2.4.1
+      complianceReportJob: v2.10.5
       esSink: v2.4.1
-      complianceQuick: v2.4.1
-      queryRunnerJob: v2.4.1
-      queryValidatorJob: v2.4.1
+      complianceQuick: v2.10.5
+      queryRunnerJob: v2.10.5
+      queryValidatorJob: v2.10.5
       demoImporterJob: v2.4.1
       psqlImport: v2.4.1
-      tasks: v2.7.1
+      tasks: v2.10.5
   apikey:
     public: ""
     private: ""
