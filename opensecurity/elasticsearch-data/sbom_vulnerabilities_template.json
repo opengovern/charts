@@ -1,0 +1,43 @@
+{
+  "index_patterns": ["sbom_vulnerabilities"],
+  "priority": 1000,
+  "template": {
+    "settings": {
+      "number_of_shards": 1,
+      "number_of_replicas": 1
+    },
+    "mappings": {
+      "properties": {
+        "platform_id": { "type": "keyword" },
+        "resource_id": { "type": "keyword" },
+        "resource_name": { "type": "text" },
+        "result_type": { "type": "keyword" },
+        "task_type": { "type": "keyword" },
+        "described_at": { "type": "date", "format": "epoch_second" },
+        "described_by": { "type": "keyword" },
+        "es_id": { "type": "keyword" },
+        "es_index": { "type": "keyword" },
+        "metadata": {
+          "type": "object",
+          "enabled": false
+        },
+        "Description": {
+          "properties": {
+            "image_url": { "type": "keyword" },
+            "artifact_id": { "type": "keyword" },
+            "sbom_format": { "type": "keyword" },
+            "scan_timestamp": { "type": "date" },
+            "results": {
+              "type": "object",
+              "enabled": false
+            },
+            "summary": {
+              "type": "object",
+              "enabled": false
+            }
+          }
+        }
+      }
+    }
+  }
+}

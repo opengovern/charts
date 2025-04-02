@@ -16,7 +16,7 @@ opengovernance:
       postInstallJob: v2.8.4
       schedulerService: v2.4.1
       integration: v2.10.7
-      core: v2.10.7
+      core: v2.13.2
       compliance: v2.10.7
       complianceSummarizerJob: v2.4.1
       complianceReportJob: v2.10.5
@@ -26,7 +26,7 @@ opengovernance:
       queryValidatorJob: v2.10.5
       demoImporterJob: v2.4.1
       psqlImport: v2.4.1
-      tasks: v2.10.5
+      tasks: v2.11.3
   apikey:
     public: ""
     private: ""
