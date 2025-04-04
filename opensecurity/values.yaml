@@ -27,27 +27,7 @@ opengovernance:
       demoImporterJob: v2.4.1
       psqlImport: v2.4.1
       tasks: v2.11.3
-  apikey:
-    public: ""
-    private: ""
-    enabled: false
-  webui:
-    muiLicense: xxx
-  telemetry:
-    enabled: true
-    baseUrl: "https://stats.opencomply.io"
   vault:
-    provider: hashicorp-vault
-    aws:
-      region: us-east-2
-      roleArn: "arn:aws:iam::xxx:role/xxx"
-      accessKey: ""
-      secretKey: ""
-    azure:
-      baseUrl: "https://xxx.vault.azure.net"
-      tenantId: "xxx"
-      clientId: "xxx"
-      clientSecret: "xxx"
     keyID: "workspace-creds"
   parallelism:
     complianceReportJobMaxParallelism: 10

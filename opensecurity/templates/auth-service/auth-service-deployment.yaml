@@ -85,11 +85,11 @@ spec:
             - name: DEX_AUTH_PUBLIC_CLIENT_ID
               value: public-client
             - name: PLATFORM_KEY_ENABLED
-              value: "{{ .Values.opengovernance.apikey.enabled }}"
+              value: "false"
             - name: PLATFORM_PUBLIC_KEY
-              value: "{{ .Values.opengovernance.apikey.public }}"
+              value: ""
             - name: PLATFORM_PRIVATE_KEY
-              value: "{{ .Values.opengovernance.apikey.private }}"
+              value: ""
             - name: GRPC_TLS_CERT_PATH
               value: /etc/certs/tls.crt
             - name: GRPC_TLS_KEY_PATH

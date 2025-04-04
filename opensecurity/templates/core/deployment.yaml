@@ -83,23 +83,7 @@ spec:
         - name: CORE_SAMPLEDATA_INTEGRATIONS_CHECK
           value: "494894f0-aa87-4c32-bafd-066c3cf1a6ae,545a3e48-559d-4f1c-a446-27882bf77d68,f36afd2f-cd85-47c6-9eff-be8213289d28,218317b1-6f26-4ad0-91a7-40f17311d5b3,49d89218-1109-4b86-a7a4-edb55aa658dd,79302008-5d35-4a83-914c-20ecd80f4228,e6cb0afa-e624-4ca7-8b47-fa9988831137,1c2a6b18-ac87-4f5e-a472-1e26f8704f29,c00bb650-f448-41b7-8ccc-bcd6184f78c3"
         - name: CORE_VAULT__PROVIDER
-          value: {{ .Values.opengovernance.vault.provider }}
-        - name: CORE_VAULT__AWS__REGION
-          value: {{ .Values.opengovernance.vault.aws.region }}
-        - name: CORE_VAULT__AWS__ROLE_ARN
-          value: {{ .Values.opengovernance.vault.aws.roleArn }}
-        - name: CORE_VAULT__AWS__ACCESS_KEY
-          value: {{ .Values.opengovernance.vault.aws.accessKey }}
-        - name: CORE_VAULT__AWS__SECRET_KEY
-          value: {{ .Values.opengovernance.vault.aws.secretKey }}
-        - name: CORE_VAULT__AZURE__BASE_URL
-          value: {{ .Values.opengovernance.vault.azure.baseUrl }}
-        - name: CORE_VAULT__AZURE__CLIENT_ID
-          value: {{ .Values.opengovernance.vault.azure.clientId }}
-        - name: CORE_VAULT__AZURE__TENANT_ID
-          value: {{ .Values.opengovernance.vault.azure.tenantId }}
-        - name: CORE_VAULT__AZURE__CLIENT_SECRET
-          value: {{ .Values.opengovernance.vault.azure.clientSecret }}
+          value: "hashicorp-vault"
         - name: CORE_VAULT__HASHICORP__ADDRESS
           value: "http://{{ .Release.Name }}-vault-internal.{{ .Release.Namespace }}.svc.cluster.local:8200"
         - name: CORE_VAULT__KEY_ID
