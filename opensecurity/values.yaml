@@ -13,10 +13,10 @@ opengovernance:
       auth: v2.13.0
       swagger: v2.4.1
       checkupJob: v2.15.1
-      postInstallJob: v2.15.1
-      schedulerService: v2.15.1
+      postInstallJob: v2.17.9
+      schedulerService: v2.17.9
       integration: v2.15.1
-      core: v2.17.1
+      core: v2.17.9
       compliance: v2.15.1
       complianceSummarizerJob: v2.15.1
       complianceReportJob: v2.15.1
