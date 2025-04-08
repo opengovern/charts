@@ -14,17 +14,17 @@ opengovernance:
       swagger: v2.4.1
       checkupJob: v2.15.1
       postInstallJob: v2.19.2
-      schedulerService: v2.19.2
-      integration: v2.19.2
-      core: v2.21.0
-      compliance: v2.19.2
-      complianceSummarizerJob: v2.19.2
-      complianceReportJob: v2.19.2
+      schedulerService: v2.22.3
+      integration: v2.22.3
+      core: v2.22.5
+      compliance: v2.22.3
+      complianceSummarizerJob: v2.22.3
+      complianceReportJob: v2.22.3
       esSink: v2.4.1
-      complianceQuick: v2.19.2
-      queryRunnerJob: v2.19.2
-      queryValidatorJob: v2.19.2
-      demoImporterJob: v2.4.1
+      complianceQuick: v2.22.3
+      queryRunnerJob: v2.22.3
+      queryValidatorJob: v2.22.3
+      demoImporterJob: v2.22.3
       psqlImport: v2.4.1
       tasks: v2.11.3
   vault:
