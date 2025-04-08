@@ -1,6 +1,6 @@
 global:
   domain: og.app.domain
-  debugMode: false
+  debugMode: true
   metricsService: disable
   size: lg
 
@@ -16,7 +16,7 @@ opengovernance:
       postInstallJob: v2.22.10
       schedulerService: v2.22.10
       integration: v2.22.10
-      core: v2.22.5
+      core: v2.22.14
       compliance: v2.22.10
       complianceSummarizerJob: v2.22.10
       complianceReportJob: v2.22.10
