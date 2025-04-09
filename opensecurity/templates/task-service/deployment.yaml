@@ -37,6 +37,14 @@ spec:
           value: "{{ include "postgres.sslMode" . }}"
         - name: TASKS_HTTP__ADDRESS
           value: "0.0.0.0:8001"
+        - name: TASKS_CORE__BASE_URL
+          value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+        - name: TASKS_VAULT__PROVIDER
+          value: "hashicorp-vault"
+        - name: TASKS_VAULT__HASHICORP__ADDRESS
+          value: "http://{{ .Release.Name }}-vault-internal.{{.Release.Namespace}}.svc.cluster.local:8200"
+        - name: TASKS_VAULT__KEY_ID
+          value: {{ .Values.opengovernance.vault.keyID }}
 
 {{- include "elastic.envs" . | indent 8 }}
 
