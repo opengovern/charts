@@ -132,3 +132,6 @@ spec:
           value: "http://localhost:6251"
         - name: COMPLIANCE_ENABLED
           value: "{{ .Values.opengovernance.compliance }}"
+
+        - name: HF_API_TOKEN
+          value: ""
