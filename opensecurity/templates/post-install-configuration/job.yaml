@@ -88,6 +88,8 @@ spec:
               value: "{{ .Release.Namespace }}"
             - name: COMPLIANCE_ENABLED
               value: "{{ .Values.opengovernance.compliance }}"
+            - name: CURRENT_NAMESPACE
+              value: "{{ .Release.Namespace }}"
 
           volumeMounts:
             - name: elasticsearch-index-config
