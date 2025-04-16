@@ -16,7 +16,7 @@ opengovernance:
       postInstallJob: v2.42.10
       schedulerService: v2.42.10
       integration: v2.42.10
-      core:  v2.44.0
+      core: v2.44.1
       compliance: v2.42.10
       complianceSummarizerJob: v2.42.10
       complianceReportJob: v2.42.10
@@ -26,7 +26,7 @@ opengovernance:
       queryValidatorJob: v2.42.10
       demoImporterJob: v2.22.3
       psqlImport: v2.4.1
-      tasks: v2.42.10
+      tasks: v2.44.3
   vault:
     keyID: "workspace-creds"
   parallelism:

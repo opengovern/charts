@@ -90,6 +90,8 @@ spec:
               value: "{{ .Values.opengovernance.compliance }}"
             - name: CURRENT_NAMESPACE
               value: "{{ .Release.Namespace }}"
+            - name: NATS_URL
+              value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
 
           volumeMounts:
             - name: elasticsearch-index-config
