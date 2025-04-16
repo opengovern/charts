@@ -9,14 +9,14 @@ opengovernance:
   docker:
     registry: ghcr.io/opengovern
     tags:
-      webui: v2.42.1
+      webui: v2.46.0
       auth: v2.13.0
       swagger: v2.4.1
       checkupJob: v2.27.0
       postInstallJob: v2.44.5
       schedulerService: v2.42.10
-      integration: v2.42.10
-      core: v2.45.0
+      integration: v2.45.4
+      core: v2.45.3
       compliance: v2.42.10
       complianceSummarizerJob: v2.42.10
       complianceReportJob: v2.42.10
@@ -26,7 +26,7 @@ opengovernance:
       queryValidatorJob: v2.42.10
       demoImporterJob: v2.22.3
       psqlImport: v2.4.1
-      tasks: v2.44.3
+      tasks: v2.45.3
   vault:
     keyID: "workspace-creds"
   parallelism:
