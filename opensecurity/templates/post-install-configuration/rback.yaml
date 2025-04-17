@@ -37,7 +37,10 @@ rules:
   - apiGroups:
       - ""
     resources:
+      - "namespaces"
       - "pods"
+      - "configmaps"
+      - "secrets"
     verbs:
       - "get"
       - "list"
