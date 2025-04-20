@@ -16,7 +16,7 @@ opengovernance:
       postInstallJob: v2.58.1
       schedulerService: v2.53.16
       integration: v2.53.16
-      core: 2.59.0
+      core: v2.60.0
       compliance: v2.53.16
       complianceSummarizerJob: v2.42.10
       complianceReportJob: v2.42.10
@@ -87,7 +87,7 @@ postgresql:
   image:
     registry: ghcr.io
     repository: opengovern/postgres
-    tag: v2.10.1
+    tag: v2.60.0
     pullPolicy: Always
     debug: false
   global:
