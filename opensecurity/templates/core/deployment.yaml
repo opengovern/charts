@@ -106,6 +106,8 @@ spec:
           value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
         - name: COMPLIANCE_BASE_URL
           value: "http://compliance-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
+        - name: AUTH_BASE_URL
+          value: "http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251"
         - name: POSTGRESPLUGIN_HOST
           value: "{{ include "postgres.endpoint" . }}"
         - name: POSTGRESPLUGIN_PORT
