@@ -26,7 +26,7 @@ opengovernance:
       queryValidatorJob: v2.42.10
       demoImporterJob: v2.22.3
       psqlImport: v2.4.1
-      tasks: v2.65.4
+      tasks: v2.65.5
   vault:
     keyID: "workspace-creds"
   parallelism:
