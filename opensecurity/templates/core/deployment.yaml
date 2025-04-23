@@ -104,6 +104,8 @@ spec:
           value: "http://scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251"
         - name: INTEGRATION_BASE_URL
           value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
+        - name: INTEGRATION__BASE_URL
+          value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
         - name: COMPLIANCE_BASE_URL
           value: "http://compliance-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
         - name: AUTH_BASE_URL
