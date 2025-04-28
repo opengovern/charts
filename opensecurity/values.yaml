@@ -87,7 +87,7 @@ postgresql:
   image:
     registry: ghcr.io
     repository: opengovern/postgres
-    tag: v2.60.0
+    tag: v2.74.30
     pullPolicy: Always
     debug: false
   auth:
