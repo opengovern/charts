@@ -10,7 +10,7 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       webui: v2.74.0
-      auth: v2.73.0
+      auth: v2.74.19
       swagger: v2.4.1
       checkupJob: v2.27.0
       postInstallJob: v2.74.10
