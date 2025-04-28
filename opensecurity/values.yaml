@@ -13,10 +13,10 @@ opengovernance:
       auth: v2.74.19
       swagger: v2.4.1
       checkupJob: v2.27.0
-      postInstallJob: v2.74.10
-      schedulerService: v2.65.7
-      integration: v2.65.7
-      core: v2.74.9
+      postInstallJob: v2.74.18
+      schedulerService: v2.74.18
+      integration: v2.74.18
+      core: v2.74.18
       compliance: v2.65.7
       complianceSummarizerJob: v2.65.7
       complianceReportJob: v2.65.7
@@ -26,7 +26,7 @@ opengovernance:
       queryValidatorJob: v2.65.7
       demoImporterJob: v2.22.3
       psqlImport: v2.4.1
-      tasks: v2.74.8
+      tasks: v2.74.18
   vault:
     keyID: "workspace-creds"
   parallelism:

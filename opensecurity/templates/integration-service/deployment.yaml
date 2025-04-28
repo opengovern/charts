@@ -49,7 +49,10 @@ spec:
         - name: INTEGRATION_POSTGRES__USERNAME
           value: "postgres"
         - name: INTEGRATION_POSTGRES__PASSWORD
-          value: "postgres"
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
         - name: INTEGRATION_POSTGRES__SSLMODE
           value: "{{ include "postgres.sslMode" . }}"
         - name: INTEGRATION_HTTP__ADDRESS

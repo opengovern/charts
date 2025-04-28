@@ -32,7 +32,10 @@ spec:
         - name: TASKS_POSTGRES__USERNAME
           value: "postgres"
         - name: TASKS_POSTGRES__PASSWORD
-          value: "postgres"
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
         - name: TASKS_POSTGRES__SSLMODE
           value: "{{ include "postgres.sslMode" . }}"
         - name: TASKS_HTTP__ADDRESS
@@ -61,3 +64,5 @@ spec:
           value: "{{ .Release.Namespace }}-nats-headless.{{ .Release.Namespace }}.svc.cluster.local:8222"
         - name: CORE_BASEURL
           value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+        - name: NATS_URL
+          value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
