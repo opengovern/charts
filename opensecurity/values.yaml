@@ -10,23 +10,23 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       webui: v2.74.26
-      auth: v2.74.22
-      swagger: v2.74.18
-      checkupJob: v2.74.22
-      postInstallJob: v2.74.22
-      schedulerService: v2.74.22
-      integration: v2.74.22
-      core: v2.74.22
-      compliance: v2.74.22
-      complianceSummarizerJob: v2.65.7
-      complianceReportJob: v2.65.7
-      esSink: v2.4.1
-      complianceQuick: v2.65.7
-      queryRunnerJob: v2.65.7
-      queryValidatorJob: v2.65.7
-      demoImporterJob: v2.22.3
-      psqlImport: v2.4.1
-      tasks: v2.74.22
+      auth: v2.74.27
+      swagger: v2.74.27
+      checkupJob: v2.74.27
+      postInstallJob: v2.74.27
+      schedulerService: v2.74.27
+      integration: v2.74.27
+      core: v2.74.27
+      compliance: v2.74.27
+      complianceSummarizerJob: v2.74.27
+      complianceReportJob: v2.74.27
+      esSink: v2.74.27
+      complianceQuick: v2.74.27
+      queryRunnerJob: v2.74.27
+      queryValidatorJob: v2.74.27
+      demoImporterJob: v2.74.27
+      psqlImport: v2.60.0
+      tasks: v2.74.27
   vault:
     keyID: "workspace-creds"
   parallelism:
