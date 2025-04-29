@@ -164,3 +164,77 @@ spec:
             # This ConfigMap is defined elsewhere (e.g., migrator-configmap.yaml)
             name: migrator-config
   backoffLimit: 10 # Number of retries for the job
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: migrator-config
+  namespace: {{ .Release.Namespace }}
+data:
+
+  metadata.json: |
+    [
+      {"key": "workspace_date_time_format", "type": "string", "value": "1900-01-02"},
+      {"key": "workspace_debug_mode", "type": "bool", "value": "FALSE"},
+      {"key": "workspace_time_window", "type": "string", "value": "30d"},
+      {"key": "asset_management_enabled", "type": "bool", "value": "TRUE"},
+      {"key": "compliance_enabled", "type": "bool", "value": "TRUE"},
+      {"key": "product_management_enabled", "type": "bool", "value": "TRUE"},
+      {"key": "allow_invite", "type": "bool", "value": "TRUE"},
+      {"key": "workspace_key_support", "type": "bool", "value": "TRUE"},
+      {"key": "workspace_max_keys", "type": "int", "value": "3"},
+      {"key": "allowed_email_domains", "type": "string", "value": ""},
+      {"key": "auto_discovery_method", "type": "string", "value": "scheduled"},
+      {"key": "full_discovery_job_interval", "type": "int", "value": "48"},
+      {"key": "cost_discovery_job_interval", "type": "int", "value": "24"},
+      {"key": "describe_job_interval", "type": "int", "value": "8"},
+      {"key": "health_check_job_interval", "type": "int", "value": "60"},
+      {"key": "insight_job_interval", "type": "int", "value": "2"},
+      {"key": "metrics_job_interval", "type": "int", "value": "2"},
+      {"key": "compliance_job_interval", "type": "int", "value": "24"},
+      {"key": "data_retention_duration", "type": "int", "value": "366"},
+      {"key": "connection_limit", "type": "int", "value": "1000"},
+      {"key": "user_limit", "type": "int", "value": "1000"},
+      {"key": "analytics_git_url", "type": "string", "value": "https://github.com/opengovern/platform-configuration"},
+      {"key": "asset_discovery_aws_policy_arns", "type": "string", "value": "arn:aws:iam::aws:policy/SecurityAudit,arn:aws:iam::aws:policy/ReadOnlyAccess"},
+      {"key": "spend_discovery_aws_policy_arns", "type": "string", "value": "arn:aws:iam::aws:policy/AWSBillingReadOnlyAccess"},
+      {"key": "asset_discovery_azure_role_ids", "type": "string", "value": "/subscriptions/%s/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7"},
+      {"key": "spend_discovery_azure_role_ids", "type": "string", "value": "/subscriptions/%s/providers/Microsoft.Authorization/roleDefinitions/fa23ad8b-c56e-40d8-ac0c-ce449e1d2c64"},
+      {"key": "spend_discovery_azure_role_ids", "type": "string", "value": "/subscriptions/%s/providers/Microsoft.Authorization/roleDefinitions/fa23ad8b-c56e-40d8-ac0c-ce449e1d2c64"},
+      {"key": "aws_discovery_required_only", "type": "bool", "value": "true"},
+      {"key": "azure_discovery_required_only", "type": "bool", "value": "true"},
+      {"key": "asset_discovery_enabled", "type": "bool", "value": "true"},
+      {"key": "spend_discovery_enabled", "type": "bool", "value": "true"},
+      {"key": "customization_enabled", "type": "bool", "value": "true"}
+    ]
+
+  chat_prompt.txt: |
+    Prompt
+
+  main_prompt.txt: |
+    Prompt
+
+  assets_chat_prompt.txt: |
+    Prompt
+
+  assets_main_prompt.txt: |
+    Prompt
+
+  score_chat_prompt.txt: |
+    TODO
+  score_main_prompt.txt: |
+    Prompt
+
+  compliance_chat_prompt.txt: |
+    Prompt
+
+  compliance_main_prompt.txt: |
+    Prompt
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: inventory-data-config
+  namespace: {{ .Release.Namespace }}
+data:
+  {{- (.Files.Glob "inventory-data/*").AsConfig | nindent 2 }}
