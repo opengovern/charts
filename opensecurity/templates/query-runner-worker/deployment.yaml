@@ -1,4 +1,4 @@
-{{- if eq .Values.opengovernance.compliance true }}
+{{- if eq .Values.queryrunner.enabled true }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
