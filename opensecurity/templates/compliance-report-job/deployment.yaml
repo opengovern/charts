@@ -1,4 +1,4 @@
-{{- if eq .Values.opengovernance.compliance true }}
+{{- if eq .Values.opensecurity.compliance true }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,7 +32,7 @@ spec:
                       - worker
       containers:
         - name: compliance-worker
-          image: "{{ .Values.opengovernance.docker.registry }}/compliance-report-job:{{ .Values.opengovernance.docker.tags.complianceReportJob }}"
+          image: "{{ .Values.opensecurity.docker.registry }}/compliance-report-job:{{ .Values.opensecurity.docker.tags.complianceReportJob }}"
           command: ["/compliance-report-job"]
           args:
             - --id=$(WORKER_ID)
@@ -144,7 +144,7 @@ spec:
                       - worker
       containers:
         - name: compliance-worker
-          image: "{{ .Values.opengovernance.docker.registry }}/compliance-report-job:{{ .Values.opengovernance.docker.tags.complianceReportJob }}"
+          image: "{{ .Values.opensecurity.docker.registry }}/compliance-report-job:{{ .Values.opensecurity.docker.tags.complianceReportJob }}"
           command: ["/compliance-report-job"]
           args:
             - --id=$(WORKER_ID)

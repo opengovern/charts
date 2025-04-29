@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: import-es-demo-data
-          image: "{{ .Values.opengovernance.docker.registry }}/demo-importer-job:{{ .Values.opengovernance.docker.tags.demoImporterJob }}"
+          image: "{{ .Values.opensecurity.docker.registry }}/demo-importer-job:{{ .Values.opensecurity.docker.tags.demoImporterJob }}"
           command: ["/demo-importer-job"]
           env:
             {{- include "elastic.envs" . | indent 12 }}
@@ -78,7 +78,7 @@ spec:
     spec:
       containers:
         - name: import-psql-demo-data
-          image: "{{ .Values.opengovernance.docker.registry }}/import-data-script:{{ .Values.opengovernance.docker.tags.psqlImport }}"
+          image: "{{ .Values.opensecurity.docker.registry }}/import-data-script:{{ .Values.opensecurity.docker.tags.psqlImport }}"
           command: ["/bin/bash", "-c", "/usr/local/bin/import_psql_data.sh"]
           env:
             {{- include "elastic.envs" . | indent 12 }}

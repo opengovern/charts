@@ -15,7 +15,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: post-install-configuration
-          image: "{{ .Values.opengovernance.docker.registry }}/post-install-job:{{ .Values.opengovernance.docker.tags.postInstallJob }}"
+          image: "{{ .Values.opensecurity.docker.registry }}/post-install-job:{{ .Values.opensecurity.docker.tags.postInstallJob }}"
           command: ["/post-install-job"]
           imagePullPolicy: Always
           resources:
@@ -108,7 +108,7 @@ spec:
             - name: PLATFORM_NAMESPACE
               value: "{{ .Release.Namespace }}"
             - name: COMPLIANCE_ENABLED
-              value: "{{ .Values.opengovernance.compliance }}"
+              value: "{{ .Values.opensecurity.compliance }}"
             - name: CURRENT_NAMESPACE
               value: "{{ .Release.Namespace }}"
             - name: NATS_URL

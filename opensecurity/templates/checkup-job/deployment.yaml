@@ -33,7 +33,7 @@ spec:
                       - worker
       containers:
         - name: checkup-worker
-          image: "{{ .Values.opengovernance.docker.registry }}/checkup-job:{{ .Values.opengovernance.docker.tags.checkupJob }}"
+          image: "{{ .Values.opensecurity.docker.registry }}/checkup-job:{{ .Values.opensecurity.docker.tags.checkupJob }}"
           command: ["/checkup-job"]
           args:
             - --id=$(WORKER_ID)

@@ -29,7 +29,7 @@ spec:
                       - app
       containers:
       - name: scheduler
-        image: "{{ .Values.opengovernance.docker.registry }}/scheduler-service:{{ .Values.opengovernance.docker.tags.schedulerService }}"
+        image: "{{ .Values.opensecurity.docker.registry }}/scheduler-service:{{ .Values.opensecurity.docker.tags.schedulerService }}"
         command: ["/scheduler-service"]
         resources:
          limits:
@@ -109,7 +109,7 @@ spec:
         - name: DESCRIBE_DELIVER_ENDPOINT_LOCAL
           value: "es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:5252"
 {{/*        - name: DESCRIBE_DELIVER_ENDPOINT_EXTERNAL*/}}
-{{/*          value: "{{ .Values.opengovernance.domain.grpc_external }}:443"*/}}
+{{/*          value: "{{ .Values.opensecurity.domain.grpc_external }}:443"*/}}
 
         - name: KMS_ACCOUNT_REGION
           value: "us-east-2"
@@ -119,7 +119,7 @@ spec:
         - name: VAULT_HASHICORP_ADDRESS
           value: "http://{{ .Release.Name }}-vault-internal.{{.Release.Namespace}}.svc.cluster.local:8200"
         - name: VAULT_KEY_ID
-          value: {{ .Values.opengovernance.vault.keyID }}
+          value: {{ .Values.opensecurity.vault.keyID }}
 
         - name: DO_DELETE_OLD_RESOURCES
           value: "true"
@@ -136,4 +136,4 @@ spec:
         - name: JAEGER_SAMPLE_RATE
           value: "0.005"
         - name: COMPLIANCE_ENABLED
-          value: "{{ .Values.opengovernance.compliance }}"
+          value: "{{ .Values.opensecurity.compliance }}"

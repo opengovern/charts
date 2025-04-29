@@ -1,4 +1,4 @@
-{{- if eq .Values.opengovernance.compliance true }}
+{{- if eq .Values.opensecurity.compliance true }}
 {{- if eq .Values.keda.enabled true }}
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -16,7 +16,7 @@ spec:
   pollingInterval: 30
   cooldownPeriod:  300
   minReplicaCount: 0
-  maxReplicaCount: {{ .Values.opengovernance.parallelism.complianceReportJobMaxParallelism}}
+  maxReplicaCount: {{ .Values.opensecurity.parallelism.complianceReportJobMaxParallelism}}
   fallback:
     failureThreshold: 1
     replicas: 1
@@ -27,7 +27,7 @@ spec:
         account: "$G"
         stream: "compliance-runner"
         consumer: "compliance-runner-service"
-        lagThreshold: "{{ .Values.opengovernance.parallelism.complianceReportLagThreshold}}"
+        lagThreshold: "{{ .Values.opensecurity.parallelism.complianceReportLagThreshold}}"
         useHttps: "false"
 ---
 apiVersion: keda.sh/v1alpha1
@@ -46,7 +46,7 @@ spec:
   pollingInterval: 5
   cooldownPeriod:  300
   minReplicaCount: 0
-  maxReplicaCount: {{ .Values.opengovernance.parallelism.complianceReportJobMaxParallelism}}
+  maxReplicaCount: {{ .Values.opensecurity.parallelism.complianceReportJobMaxParallelism}}
   fallback:
     failureThreshold: 1
     replicas: 1
@@ -57,7 +57,7 @@ spec:
         account: "$G"
         stream: "compliance-runner"
         consumer: "compliance-runner-manuals-service"
-        lagThreshold: "{{ .Values.opengovernance.parallelism.complianceReportLagThreshold}}"
+        lagThreshold: "{{ .Values.opensecurity.parallelism.complianceReportLagThreshold}}"
         useHttps: "false"
 {{- end }}
 {{- end }}

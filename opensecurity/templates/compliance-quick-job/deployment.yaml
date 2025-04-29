@@ -1,4 +1,4 @@
-{{- if eq .Values.opengovernance.compliance true }}
+{{- if eq .Values.opensecurity.compliance true }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,7 +31,7 @@ spec:
                       - worker
       containers:
         - name: audit-worker
-          image: "{{ .Values.opengovernance.docker.registry }}/audit-job:{{ .Values.opengovernance.docker.tags.complianceQuick }}"
+          image: "{{ .Values.opensecurity.docker.registry }}/audit-job:{{ .Values.opensecurity.docker.tags.complianceQuick }}"
           command: ["/audit-job"]
           args:
             - --id=$(WORKER_ID)

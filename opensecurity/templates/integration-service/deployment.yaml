@@ -7,7 +7,7 @@ metadata:
     app: integration-service
 spec:
   minReadySeconds: 10
-  replicas: {{ .Values.opengovernance.replicaCount }}
+  replicas: {{ .Values.opensecurity.replicaCount }}
   selector:
     matchLabels:
       app: integration-service
@@ -29,7 +29,7 @@ spec:
                       - app
       containers:
       - name: integration-service
-        image: "{{ .Values.opengovernance.docker.registry }}/integration:{{ .Values.opengovernance.docker.tags.integration }}"
+        image: "{{ .Values.opensecurity.docker.registry }}/integration:{{ .Values.opensecurity.docker.tags.integration }}"
         command: ["/integration-service"]
         imagePullPolicy: Always
         resources:
@@ -77,7 +77,7 @@ spec:
         - name: INTEGRATION_VAULT__HASHICORP__ADDRESS
           value: "http://{{ .Release.Name }}-vault-internal.{{.Release.Namespace}}.svc.cluster.local:8200"
         - name: INTEGRATION_VAULT__KEY_ID
-          value: {{ .Values.opengovernance.vault.keyID }}
+          value: {{ .Values.opensecurity.vault.keyID }}
         - name: INTEGRATION_MASTER_ACCESS_KEY
           value: ""
         - name: INTEGRATION_MASTER_SECRET_KEY

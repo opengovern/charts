@@ -142,7 +142,7 @@ spec:
       # --- Main auth-service container ---
       containers:
         - name: auth-service
-          image: "{{ .Values.opengovernance.docker.registry }}/auth-service:{{ .Values.opengovernance.docker.tags.auth }}"
+          image: "{{ .Values.opensecurity.docker.registry }}/auth-service:{{ .Values.opensecurity.docker.tags.auth }}"
           command: [ "/auth-service" ]
           imagePullPolicy: Always
           resources:
@@ -188,7 +188,7 @@ spec:
               value: public-client # Hardcoded value
 
             # --- MODIFIED LINES for helm lint fix ---
-            {{- with .Values.opengovernance.apikey }}
+            {{- with .Values.opensecurity.apikey }}
             - name: PLATFORM_KEY_ENABLED
               value: '{{ .enabled  | default false  | quote }}'
             - name: PLATFORM_PUBLIC_KEY

@@ -1,4 +1,4 @@
-{{- if eq .Values.opengovernance.compliance true }}
+{{- if eq .Values.opensecurity.compliance true }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

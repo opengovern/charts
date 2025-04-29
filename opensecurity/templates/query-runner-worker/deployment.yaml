@@ -31,7 +31,7 @@ spec:
                       - worker
       containers:
         - name: query-runner-worker
-          image: "{{ .Values.opengovernance.docker.registry }}/query-runner-job:{{ .Values.opengovernance.docker.tags.queryRunnerJob }}"
+          image: "{{ .Values.opensecurity.docker.registry }}/query-runner-job:{{ .Values.opensecurity.docker.tags.queryRunnerJob }}"
           command: ["/query-runner-job"]
           args:
             - --id=$(WORKER_ID)

@@ -31,7 +31,7 @@ spec:
                       - worker
       containers:
         - name: query-validator-worker
-          image: "{{ .Values.opengovernance.docker.registry }}/query-validator-job:{{ .Values.opengovernance.docker.tags.queryValidatorJob }}"
+          image: "{{ .Values.opensecurity.docker.registry }}/query-validator-job:{{ .Values.opensecurity.docker.tags.queryValidatorJob }}"
           command: ["/query-validator-job"]
           args:
             - --id=$(WORKER_ID)

@@ -8,7 +8,7 @@ metadata:
     cloudql-enabled: "true"
 spec:
   minReadySeconds: 10
-  replicas: {{ .Values.opengovernance.replicaCount }}
+  replicas: {{ .Values.opensecurity.replicaCount }}
   selector:
     matchLabels:
       app: core-service
@@ -31,7 +31,7 @@ spec:
                       - app
       containers:
       - name: core-service
-        image: "{{ .Values.opengovernance.docker.registry }}/core-service:{{ .Values.opengovernance.docker.tags.core }}"
+        image: "{{ .Values.opensecurity.docker.registry }}/core-service:{{ .Values.opensecurity.docker.tags.core }}"
         command: ["/core-service"]
         imagePullPolicy: Always
         resources:
@@ -66,7 +66,7 @@ spec:
           value: "http://scheduler.%NAMESPACE%.svc.cluster.local:5251"
         - name: CORE_COMPLIANCE__BASE_URL
           value: "http://compliance-service.%NAMESPACE%.svc.cluster.local:7251"
-        - name: CORE_OPENGOVERNANCE_NAMESPACE
+        - name: CORE_OPENSECURITY_NAMESPACE
           value: "{{ .Release.Namespace }}"
         - name: CORE_PRIMARY_DOMAIN_URL
           value: "{{ .Values.global.domain }}"
@@ -87,7 +87,7 @@ spec:
         - name: CORE_VAULT__HASHICORP__ADDRESS
           value: "http://{{ .Release.Name }}-vault-internal.{{ .Release.Namespace }}.svc.cluster.local:8200"
         - name: CORE_VAULT__KEY_ID
-          value: {{ .Values.opengovernance.vault.keyID }}
+          value: {{ .Values.opensecurity.vault.keyID }}
         - name: STEAMPIPE_HOST
           value: cloudql-service.{{ .Release.Namespace }}.svc.cluster.local
         - name: STEAMPIPE_PORT
@@ -133,4 +133,4 @@ spec:
         - name: CORE_BASEURL
           value: "http://localhost:6251"
         - name: COMPLIANCE_ENABLED
-          value: "{{ .Values.opengovernance.compliance }}"
+          value: "{{ .Values.opensecurity.compliance }}"

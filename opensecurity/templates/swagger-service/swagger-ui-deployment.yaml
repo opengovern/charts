@@ -29,7 +29,7 @@ spec:
                       - app
       containers:
       - name: swagger-ui
-        image: "{{ .Values.opengovernance.docker.registry }}/swagger-ui:{{ .Values.opengovernance.docker.tags.swagger }}"
+        image: "{{ .Values.opensecurity.docker.registry }}/swagger-ui:{{ .Values.opensecurity.docker.tags.swagger }}"
         imagePullPolicy: Always
         env:
         - name: HTTP_ADDRESS

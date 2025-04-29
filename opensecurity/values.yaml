@@ -4,7 +4,7 @@ global:
   metricsService: disable
   size: lg
 
-opengovernance:
+opensecurity:
   replicaCount: 1
   docker:
     registry: ghcr.io/opengovern

@@ -7,7 +7,7 @@ metadata:
     app: es-sink-service
 spec:
   minReadySeconds: 10
-  replicas: {{ .Values.opengovernance.replicaCount }}
+  replicas: {{ .Values.opensecurity.replicaCount }}
   selector:
     matchLabels:
       app: es-sink-service
@@ -28,7 +28,7 @@ spec:
                       - app
       containers:
         - name: es-sink-service
-          image: "{{ .Values.opengovernance.docker.registry }}/es-sink:{{ .Values.opengovernance.docker.tags.esSink }}"
+          image: "{{ .Values.opensecurity.docker.registry }}/es-sink:{{ .Values.opensecurity.docker.tags.esSink }}"
           command: ["/es-sink-service"]
           imagePullPolicy: Always
           resources:

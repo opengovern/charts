@@ -1,4 +1,4 @@
-{{- if eq .Values.opengovernance.compliance true }}
+{{- if eq .Values.opensecurity.compliance true }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,7 +30,7 @@ spec:
                       - worker
       containers:
         - name: compliance-summarizer
-          image: "{{ .Values.opengovernance.docker.registry }}/compliance-summarizer-job:{{ .Values.opengovernance.docker.tags.complianceSummarizerJob }}"
+          image: "{{ .Values.opensecurity.docker.registry }}/compliance-summarizer-job:{{ .Values.opensecurity.docker.tags.complianceSummarizerJob }}"
           command: ["/compliance-summarizer-job"]
           args:
             - --id=$(WORKER_ID)
@@ -103,7 +103,7 @@ spec:
                       - worker
       containers:
         - name: compliance-summarizer
-          image: "{{ .Values.opengovernance.docker.registry }}/compliance-summarizer-job:{{ .Values.opengovernance.docker.tags.complianceSummarizerJob }}"
+          image: "{{ .Values.opensecurity.docker.registry }}/compliance-summarizer-job:{{ .Values.opensecurity.docker.tags.complianceSummarizerJob }}"
           command: ["/compliance-summarizer-job"]
           args:
             - --id=$(WORKER_ID)

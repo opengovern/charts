@@ -1,4 +1,4 @@
-{{- if eq .Values.opengovernance.compliance true }}
+{{- if eq .Values.opensecurity.compliance true }}
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
@@ -15,7 +15,7 @@ spec:
   pollingInterval: 30
   cooldownPeriod:  300
   minReplicaCount: 0
-  maxReplicaCount: {{ .Values.opengovernance.parallelism.complianceQuickJobMaxParallelism}}
+  maxReplicaCount: {{ .Values.opensecurity.parallelism.complianceQuickJobMaxParallelism}}
   fallback:
     failureThreshold: 1
     replicas: 1

@@ -7,7 +7,7 @@ metadata:
     app: task-service
 spec:
   minReadySeconds: 10
-  replicas: {{ .Values.opengovernance.replicaCount }}
+  replicas: {{ .Values.opensecurity.replicaCount }}
   selector:
     matchLabels:
       app: task-service
@@ -19,7 +19,7 @@ spec:
       serviceAccountName: task
       containers:
       - name: task-service
-        image: "{{ .Values.opengovernance.docker.registry }}/task-service:{{ .Values.opengovernance.docker.tags.tasks }}"
+        image: "{{ .Values.opensecurity.docker.registry }}/task-service:{{ .Values.opensecurity.docker.tags.tasks }}"
         command: ["/task-service"]
         imagePullPolicy: Always
         env:
@@ -47,7 +47,7 @@ spec:
         - name: TASKS_VAULT__HASHICORP__ADDRESS
           value: "http://{{ .Release.Name }}-vault-internal.{{.Release.Namespace}}.svc.cluster.local:8200"
         - name: TASKS_VAULT__KEY_ID
-          value: {{ .Values.opengovernance.vault.keyID }}
+          value: {{ .Values.opensecurity.vault.keyID }}
 
 {{- include "elastic.envs" . | indent 8 }}
 

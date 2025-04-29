@@ -27,7 +27,7 @@ spec:
                       - app
       containers:
       - name: web-ui
-        image: "{{ .Values.opengovernance.docker.registry }}/web-ui:{{ .Values.opengovernance.docker.tags.webui }}"
+        image: "{{ .Values.opensecurity.docker.registry }}/web-ui:{{ .Values.opensecurity.docker.tags.webui }}"
         imagePullPolicy: Always
         resources:
           limits:
@@ -40,7 +40,7 @@ spec:
           - containerPort: 7298
         env:
           - name: REACT_APP_SHOW_COMPLIANCE
-            value: "{{ .Values.opengovernance.compliance }}"
+            value: "{{ .Values.opensecurity.compliance }}"
 
         volumeMounts:
           - mountPath: /build/env-config.js
@@ -71,7 +71,7 @@ data:
     REACT_APP_RUNTIME_ENVIRONMENT: "production",
     REACT_APP_BASE_URL: "https://{{ .Values.global.domain }}",
     REACT_APP_AUTH_BASE_URL: "https://{{ .Values.global.domain }}",
-    REACT_APP_SHOW_COMPLIANCE: "{{ .Values.opengovernance.compliance }}",
+    REACT_APP_SHOW_COMPLIANCE: "{{ .Values.opensecurity.compliance }}",
     };
 
 

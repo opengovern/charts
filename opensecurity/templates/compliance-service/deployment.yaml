@@ -1,4 +1,4 @@
-{{- if eq .Values.opengovernance.compliance true }}
+{{- if eq .Values.opensecurity.compliance true }}
 # /Users/anil/workspace/charts/opensecurity/templates/compliance-service/deployment.yaml
 # Defines the Deployment for the compliance-service, including an initContainer
 # to wait for PostgreSQL readiness.
@@ -89,7 +89,7 @@ spec:
 
       containers:
       - name: compliance-service
-        image: "{{ .Values.opengovernance.docker.registry }}/compliance-service:{{ .Values.opengovernance.docker.tags.compliance }}"
+        image: "{{ .Values.opensecurity.docker.registry }}/compliance-service:{{ .Values.opensecurity.docker.tags.compliance }}"
         command: ["/compliance-service"]
         imagePullPolicy: Always # Consider changing to IfNotPresent for production stability
         resources:
