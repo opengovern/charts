@@ -17,7 +17,7 @@ metadata:
     app: auth-service
 spec:
   minReadySeconds: 10
-  replicas: 2 # You have this set to 2 in the original spec
+  replicas: 2
   selector:
     matchLabels:
       app: auth-service
@@ -38,46 +38,108 @@ spec:
                     values:
                       - app
 
-      # ============================================================
-      # BEGIN Init Container to wait for PostgreSQL (Compatibility)
-      # ============================================================
+      # <<< initContainers Block >>>
+      # NOTE: This init container requires values under the 'authDatabase' key.
       initContainers:
-        - name: wait-for-postgres
-          # Use an image containing pg_isready, matching your DB version is best
-          image: postgres:15.5 # Adjust tag if needed
-          # Use environment variables to pass Helm template results to the shell command
+        # ─── Wait for PostgreSQL ─────────────────────────────────────────────────────
+        - name: wait-for-postgres-auth
+          image: postgres:15.5
           env:
-            - name: PG_HOST
-              value: "{{ include "postgres.endpoint" . }}" # Use same helper as main container
-            - name: PG_PORT
-              value: "{{ include "postgres.port" . }}"   # Use same helper as main container
-            # Provide PGPASSWORD for the 'postgres' user check
+            {{- with .Values.authDatabase }} # Expects values under 'authDatabase' key in values.yaml
+            - name: PGHOST
+              value: {{ .host  | default (printf "%s-postgresql-primary.%s.svc.cluster.local" $.Release.Name $.Release.Namespace) | quote }}
+            - name: PGPORT
+              value: {{ .port  | default "5432" | quote }}
+            - name: PGDATABASE
+              value: {{ .name  | default "auth"  | quote }}
+            - name: PGUSER
+              value: {{ .username | default "auth_service" | quote }}
+            - name: PGSSLMODE
+              value: {{ .sslMode | default "disable"  | quote }}
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret       # Secret holding DB passwords
-                  key: postgres-password     # Key for 'postgres' user password
-          command: ['sh', '-c']
+                  name: {{ .passwordSecretName | default "postgres-secret"  | quote }}
+                  key:  {{ .passwordSecretKey | default "authServiceUserPassword" | quote }}
+            {{- else }} # Fallback if .Values.authDatabase is not defined
+            - name: PGHOST
+              value: {{ printf "%s-postgresql-primary.%s.svc.cluster.local" $.Release.Name $.Release.Namespace | quote }}
+            - name: PGPORT
+              value: "5432"
+            - name: PGDATABASE
+              value: "auth"
+            - name: PGUSER
+              value: "auth_service"
+            - name: PGSSLMODE
+              value: "disable"
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres-secret"
+                  key:  "authServiceUserPassword"
+            {{- end }}
+          command: ["sh", "-xc"] # -x prints commands, -c executes the following string
           args:
             - |
-              echo "InitContainer: Waiting for PostgreSQL host ${PG_HOST}:${PG_PORT}..."
-              # Loop until pg_isready succeeds, using env vars for host/port
-              until pg_isready -h ${PG_HOST} -p ${PG_PORT} -U postgres -q -t 2; do
-                echo "InitContainer: PostgreSQL unavailable - sleeping 2s"
-                sleep 2
+              echo "InitContainer (auth): Waiting for PostgreSQL at ${PGHOST}:${PGPORT} db=${PGDATABASE} user=${PGUSER} (sslmode=${PGSSLMODE})…"
+              retries=30; delay=5; count=0
+              until pg_isready \
+                -h "${PGHOST}" \
+                -p "${PGPORT}" \
+                -U "${PGUSER}" \
+                -d "${PGDATABASE}" \
+                -q -t 2; do
+                count=$((count+1))
+                if [ "$count" -ge "$retries" ]; then
+                  echo "InitContainer (auth): PostgreSQL unavailable after ${retries} retries – exiting."
+                  exit 1
+                fi
+                echo "InitContainer (auth): PostgreSQL unavailable - sleeping ${delay}s (attempt ${count}/${retries})"
+                sleep "${delay}"
               done
-              echo "InitContainer: PostgreSQL is ready!"
-          resources: # Optional: Define resources for the init container
+              echo "InitContainer (auth): PostgreSQL is ready!"
+          resources:
             limits:
-              cpu: 100m
-              memory: 100Mi
+              cpu:    "150m"
+              memory: "128Mi"
             requests:
-              cpu: 50m
-              memory: 50Mi
-      # ============================================================
-      # END Init Container
-      # ============================================================
+              cpu:    "50m"
+              memory: "64Mi"
 
+        # ─── Wait for Dex ────────────────────────────────────────────────────────────
+        - name: wait-for-dex-auth
+          image: curlimages/curl:7.85.0 # Using a lightweight curl image
+          env:
+            - name: DEX_URL
+              # Using port 5558 (telemetry port where /healthz/ready is served)
+              value: "http://{{ .Release.Name }}-dex.{{ .Release.Namespace }}.svc.cluster.local:5558/healthz/ready"
+          command: ["sh", "-xc"] # -x prints commands, -c executes the following string
+          args:
+            - |
+              echo "InitContainer (auth): Waiting for Dex at ${DEX_URL}…"
+              retries=30; delay=5; count=0
+              # Use curl with -f to fail silently on server errors (like 404/503)
+              # and -s for silent operation (no progress meters)
+              until curl -sf "${DEX_URL}"; do
+                count=$((count+1))
+                if [ "$count" -ge "$retries" ]; then
+                  echo "InitContainer (auth): Dex unavailable after ${retries} retries – exiting."
+                  exit 1
+                fi
+                echo "InitContainer (auth): Dex unavailable - sleeping ${delay}s (attempt ${count}/${retries})"
+                sleep "${delay}"
+              done
+              echo "InitContainer (auth): Dex is ready!"
+          resources:
+            limits:
+              cpu:    "50m"
+              memory: "50Mi"
+            requests:
+              cpu:    "25m"
+              memory: "25Mi"
+      # <<< END OF initContainers BLOCK >>>
+
+      # --- Main auth-service container ---
       containers:
         - name: auth-service
           image: "{{ .Values.opengovernance.docker.registry }}/auth-service:{{ .Values.opengovernance.docker.tags.auth }}"
@@ -92,11 +154,11 @@ spec:
               memory: 100Mi
           env:
             - name: PLATFORM_HOST
-              value: {{ .Values.global.domain }}
+              value: {{ .Values.global.domain | quote }} # Added quote for safety
             - name: POSTGRESQL_HOST
-              value: "{{ include "postgres.endpoint" . }}" # Uses helper
+              value: "{{ include "postgres.endpoint" . }}"
             - name: POSTGRESQL_PORT
-              value: "{{ include "postgres.port" . }}"   # Uses helper
+              value: "{{ include "postgres.port" . }}"
             - name: POSTGRESQL_DB
               value: "auth"
             - name: POSTGRESQL_USERNAME
@@ -105,7 +167,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
-                  key: authServiceUserPassword # Correct password for app's user
+                  key: authServiceUserPassword
             - name: POSTGRESQL_SSLMODE
               value: "{{ include "postgres.sslMode" . }}"
             - name: HTTP_ADDRESS
@@ -117,19 +179,33 @@ spec:
             - name: AUTH0_INVITE_TTL
               value: "21600"
             - name: AUTH0_MANAGE_DOMAIN
-              value: "https://kaytu.us.auth0.com" # These AUTH0 vars seem unrelated but are kept
+              value: "https://kaytu.us.auth0.com" # Hardcoded value
             - name: AUTH0_DOMAIN
-              value: "https://kaytu.us.auth0.com/" # Kept
+              value: "https://kaytu.us.auth0.com/" # Hardcoded value
             - name: DEX_AUTH_DOMAIN
               value: "http://{{ .Release.Name }}-dex.{{ .Release.Namespace }}.svc.cluster.local:5556/dex"
             - name: DEX_AUTH_PUBLIC_CLIENT_ID
-              value: public-client
+              value: public-client # Hardcoded value
+
+            # --- MODIFIED LINES for helm lint fix ---
+            {{- with .Values.opengovernance.apikey }}
             - name: PLATFORM_KEY_ENABLED
-              value: "false"
+              value: '{{ .enabled  | default false  | quote }}'
             - name: PLATFORM_PUBLIC_KEY
-              value: ""
+              value: '{{ .public   | default ""     | quote }}'
             - name: PLATFORM_PRIVATE_KEY
-              value: ""
+              value: '{{ .private  | default ""     | quote }}'
+            {{- else }}
+            - name: PLATFORM_KEY_ENABLED
+              value: 'false'
+            - name: PLATFORM_PUBLIC_KEY
+              value: ''
+            - name: PLATFORM_PRIVATE_KEY
+              value: ''
+            {{- end }}
+
+
+
             - name: GRPC_TLS_CERT_PATH
               value: /etc/certs/tls.crt
             - name: GRPC_TLS_KEY_PATH
@@ -147,12 +223,8 @@ spec:
             - name: DEX_GRPC_ADDR
               value: "{{ .Release.Name }}-dex.{{ .Release.Namespace }}.svc.cluster.local:5557"
             - name: WORKSPACE_NAME
-              value: "main"
+              value: "main" # Hardcoded value
             - name: DEX_CALLBACK_URL
               value: "https://{{ .Values.global.domain }}/dex/callback,http://{{ .Values.global.domain }}/dex/callback,http://localhost:3000/dex/callback,http://localhost:8080/dex/callback"
             - name: NAMESPACE
               value: "{{ .Release.Namespace }}"
-            - name: DEX_PUBLIC_CLIENT_REDIRECT_URIS
-              value: "https://{{ .Values.global.domain }}/callback,http://{{ .Values.global.domain }}/callback,http://localhost:3000/callback,http://localhost:8080/callback"
-            - name: DEX_PRIVATE_CLIENT_REDIRECT_URIS
-              value: "https://{{ .Values.global.domain }}/callback"

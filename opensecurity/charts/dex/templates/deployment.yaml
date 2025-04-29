@@ -55,55 +55,77 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
 
-      # ===== BEGIN Wait for PostgreSQL Init Container =====
-      # This init container ensures PostgreSQL is ready before Dex starts.
+            # ===== BEGIN Wait for PostgreSQL Init Container =====
+            # ===== BEGIN Wait for PostgreSQL Init Container =====
       initContainers:
         - name: wait-for-postgres-dex
-          # Use a PostgreSQL client image. Match major version if possible.
-          image: postgres:15.5 # Or adjust tag as needed
+          image: postgres:15.5
           env:
-            # Construct the PostgreSQL service hostname using the parent chart's release context.
-            # Assumes the PostgreSQL service follows the pattern '<release-name>-postgresql'.
-            - name: PG_HOST
-              value: {{ printf "%s-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace }}
-            # Default PostgreSQL port.
-            - name: PG_PORT
-              value: "5432"
-            # Password for the 'postgres' superuser for the readiness check.
-            # Assumes the PostgreSQL chart creates a secret named '<release-name>-postgresql'
-            # with the superuser password under the key 'postgres-password'.
-            # !! Verify this secret name and key are correct for your PostgreSQL dependency !!
+            {{- with .Values.dexDatabase }}
+            - name: PGHOST
+              value: {{ .hostName | default (printf "%s-postgresql-primary.%s.svc.cluster.local" $.Release.Name $.Release.Namespace) | quote }}
+            - name: PGPORT
+              value: {{ .port       | default "5432" | quote }}
+            - name: PGDATABASE
+              value: {{ .name       | default "dex"  | quote }}
+            - name: PGUSER
+              value: {{ .username   | default "dex_service" | quote }}
+            - name: PGSSLMODE
+              value: {{ .sslMode    | default "disable"    | quote }}
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ printf "%s-postgresql" .Release.Name }}
-                  key: postgres-password
-          command: ['sh', '-c']
+                  name: {{ .passwordSecretName | default "postgres-secret"             | quote }}
+                  key:  {{ .passwordSecretKey  | default "dexServiceUserPassword" | quote }}
+            {{- else }}
+            - name: PGHOST
+              value: {{ printf "%s-postgresql-primary.%s.svc.cluster.local" $.Release.Name $.Release.Namespace | quote }}
+            - name: PGPORT
+              value: "5432"
+            - name: PGDATABASE
+              value: "dex"
+            - name: PGUSER
+              value: "dex_service"
+            - name: PGSSLMODE
+              value: "disable"
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres-secret"
+                  key:  "dexServiceUserPassword"
+            {{- end }}
+          command: ["sh", "-xc"]
           args:
             - |
-              echo "InitContainer (dex): Waiting for PostgreSQL host ${PG_HOST}:${PG_PORT}..."
-              retries=30 # Number of attempts
-              delay=5  # Seconds between attempts
-              count=0
-              # Loop until pg_isready succeeds or retries are exhausted
-              until pg_isready -h ${PG_HOST} -p ${PG_PORT} -U postgres -q -t 2; do
-                count=$((count + 1))
-                if [ $count -ge $retries ]; then
-                  echo "InitContainer (dex): PostgreSQL unavailable at ${PG_HOST}:${PG_PORT} after ${retries} attempts. Exiting."
+              echo "Waiting for PostgreSQL at ${PGHOST}:${PGPORT} db=${PGDATABASE} user=${PGUSER} (sslmode=${PGSSLMODE})…"
+              retries=30; delay=5; count=0
+              until pg_isready \
+                -h "${PGHOST}" \
+                -p "${PGPORT}" \
+                -U "${PGUSER}" \
+                -d "${PGDATABASE}" \
+                -q -t 2; do
+                count=$((count+1))
+                if [ "$count" -ge "$retries" ]; then
+                  echo "PostgreSQL unavailable after ${retries} retries – exiting."
                   exit 1
                 fi
-                echo "InitContainer (dex): PostgreSQL unavailable - sleeping ${delay}s (Attempt ${count}/${retries})"
-                sleep ${delay}
+                echo "…sleep ${delay}s (attempt ${count}/${retries})"
+                sleep "${delay}"
               done
-              echo "InitContainer (dex): PostgreSQL is ready!"
-          resources: # Define reasonable resources for the init container
+              echo "PostgreSQL is ready!"
+          resources:
             limits:
-              cpu: 150m
-              memory: 128Mi
+              cpu:    "150m"
+              memory: "128Mi"
             requests:
-              cpu: 50m
-              memory: 64Mi
+              cpu:    "50m"
+              memory: "64Mi"
       # ===== END Wait for PostgreSQL Init Container =====
+
+
+
+
 
       containers:
         - name: {{ .Chart.Name }}

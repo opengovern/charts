@@ -370,6 +370,8 @@ monitoringDebugMode: false
 
 kube-prometheus-stack:
 
+
+  enabled: false
   alertmanager:
     enabled: false
   prometheus:
