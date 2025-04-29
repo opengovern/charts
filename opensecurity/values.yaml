@@ -61,7 +61,7 @@ dex:
     storage:
       type: postgres
       config:
-        host: "opengovernance-postgresql-primary.opengovernance.svc.cluster.local" # postgresql host
+        host: "opensecurity-postgresql-primary.opensecurity.svc.cluster.local" # postgresql host
         port: 5432
         database: dex
         user: dex_service
