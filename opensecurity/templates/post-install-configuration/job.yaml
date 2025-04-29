@@ -6,10 +6,12 @@ metadata:
   annotations:
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "0"
+    # Add hook-delete-policy if you want Helm to clean up successful jobs
+    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
     spec:
-      serviceAccountName: configuration
+      serviceAccountName: configuration # Ensure this ServiceAccount exists
       restartPolicy: OnFailure
       containers:
         - name: post-install-configuration
@@ -24,23 +26,30 @@ spec:
               cpu: 500m
               memory: 2000Mi
           env:
-{{- include "elastic.envs" . | indent 12 }}
+            # Assumes 'elastic.envs' helper template is defined in _helpers.tpl
+            {{- include "elastic.envs" . | indent 12 }}
+            # --- PostgreSQL Connection (for Migrator) ---
             - name: POSTGRESQL_HOST
+              # Assumes 'postgres.endpoint' helper template exists
               value: "{{ include "postgres.endpoint" . }}"
             - name: POSTGRESQL_PORT
+              # Assumes 'postgres.port' helper template exists
               value: "{{ include "postgres.port" . }}"
             - name: POSTGRESQL_DB
-              value: "migrator"
+              value: "migrator" # Job connects to 'migrator' DB
             - name: POSTGRESQL_USERNAME
-              value: "migrator_worker"
+              value: "migrator_worker" # Job connects as 'migrator_worker'
             - name: POSTGRESQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
-                  key: migratorServiceUserPassword
+                  name: postgres-secret # Assumes password is in this secret
+                  key: migratorServiceUserPassword # Under this key
             - name: POSTGRESQL_SSLMODE
+              # Assumes 'postgres.sslMode' helper template exists
               value: "{{ include "postgres.sslMode" . }}"
+            # --- Steampipe Connection ---
             - name: STEAMPIPE_HOST
+              # Assumes 'cloudql-service' exists
               value: cloudql-service.{{ .Release.Namespace }}.svc.cluster.local
             - name: STEAMPIPE_PORT
               value: "9193"
@@ -48,42 +57,54 @@ spec:
               value: "steampipe"
             - name: STEAMPIPE_USERNAME
               value: "steampipe"
-            - name: STEAMPIPE_PASSWORD
+            - name: STEAMPIPE_PASSWORD # TODO: Avoid hardcoding passwords
               value: "abcd"
             - name: STEAMPIPE_SSLMODE
               value: "disable"
+            # --- Other Config ---
             - name: HTTP_ADDRESS
-              value: "0.0.0.0:6251"
+              value: "0.0.0.0:6251" # Likely internal port for the job itself
             - name: ANALYTICS_GIT_URL
               value: "https://github.com/opengovern/platform-configuration"
-            - name: CONTROL_ENRICHMENT_GIT_URL
-              value: "https://github.com/kaytu-io/control-enrichmentor"
             - name: CORE_BASEURL
               value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
             - name: INTEGRATION_BASEURL
               value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
             - name: GITHUB_TOKEN
+              # Reads token from values file - ensure it's set if needed
               value: "{{ .Values.github.token }}"
             - name: PROMETHEUS_PUSH_ADDRESS
+              # Assumes prometheus pushgateway exists at this address
               value: "prom-system-prometheus-pushgateway.prom-system.svc.cluster.local:9091"
             - name: IS_MANUAL
               value: "false"
-            - name: JAEGER_AGENT_HOST
+            - name: JAEGER_AGENT_HOST # For tracing
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
             - name: JAEGER_SERVICE_NAME
               value: "migrator"
+            # --- Dex Defaults (used by job logic?) ---
             - name: DEX_GRPC_ADDRESS
-              value: "opengovernance-dex.{{ .Release.Namespace }}.svc.cluster.local:5557"
+              value: "{{ .Release.Name }}-dex.{{ .Release.Namespace }}.svc.cluster.local:5557" # Use .Release.Name here
             - name: DEFAULT_DEX_USER_ID
-              value: "08a8684b-db88-4b73-90a9-3cd1661f5466"
+              value: "08a8684b-db88-4b73-90a9-3cd1661f5466" # Hardcoded default ID
             - name: DEFAULT_DEX_USER_NAME
-              value: "admin"
+              value: "admin" # Hardcoded default user
             - name: DEFAULT_DEX_USER_EMAIL
-              value: "admin@opensecurity.sh"
+              value: "admin@clearcompass.so" # Hardcoded default email
+
+            # --- MODIFIED LINE: Use password from the initial admin secret ---
             - name: DEFAULT_DEX_USER_PASSWORD
-              value: "password"
+              valueFrom:
+                secretKeyRef:
+                  # Use the same name generated by initial-admin-password-secret.yaml
+                  name: {{ include "opensecurity.fullname" . }}-initial-admin-password
+                  # Key within the secret holding the password
+                  key: password
+            # --- END MODIFIED LINE ---
+
+            # --- Other Context ---
             - name: PLATFORM_NAMESPACE
               value: "{{ .Release.Namespace }}"
             - name: COMPLIANCE_ENABLED
@@ -98,7 +119,7 @@ spec:
               mountPath: /elasticsearch-index-config
             - name: inventory-data-config
               mountPath: /inventory-data-config
-
+            # Mounts for migrator-config
             - name: migrator-config
               mountPath: /core-migration/metadata.json
               subPath: metadata.json
@@ -132,85 +153,14 @@ spec:
       volumes:
         - name: elasticsearch-index-config
           configMap:
+            # Ensure this ConfigMap exists or is created by the chart
             name: elasticsearch-index-config
         - name: inventory-data-config
           configMap:
+            # Ensure this ConfigMap exists or is created by the chart
             name: inventory-data-config
         - name: migrator-config
           configMap:
+            # This ConfigMap is defined elsewhere (e.g., migrator-configmap.yaml)
             name: migrator-config
-  backoffLimit: 10
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: migrator-config
-  namespace: {{ .Release.Namespace }}
-data:
-
-  metadata.json: |
-    [
-      {"key": "workspace_date_time_format", "type": "string", "value": "1900-01-02"},
-      {"key": "workspace_debug_mode", "type": "bool", "value": "FALSE"},
-      {"key": "workspace_time_window", "type": "string", "value": "30d"},
-      {"key": "asset_management_enabled", "type": "bool", "value": "TRUE"},
-      {"key": "compliance_enabled", "type": "bool", "value": "TRUE"},
-      {"key": "product_management_enabled", "type": "bool", "value": "TRUE"},
-      {"key": "allow_invite", "type": "bool", "value": "TRUE"},
-      {"key": "workspace_key_support", "type": "bool", "value": "TRUE"},
-      {"key": "workspace_max_keys", "type": "int", "value": "3"},
-      {"key": "allowed_email_domains", "type": "string", "value": ""},
-      {"key": "auto_discovery_method", "type": "string", "value": "scheduled"},
-      {"key": "full_discovery_job_interval", "type": "int", "value": "48"},
-      {"key": "cost_discovery_job_interval", "type": "int", "value": "24"},
-      {"key": "describe_job_interval", "type": "int", "value": "8"},
-      {"key": "health_check_job_interval", "type": "int", "value": "60"},
-      {"key": "insight_job_interval", "type": "int", "value": "2"},
-      {"key": "metrics_job_interval", "type": "int", "value": "2"},
-      {"key": "compliance_job_interval", "type": "int", "value": "24"},
-      {"key": "data_retention_duration", "type": "int", "value": "366"},
-      {"key": "connection_limit", "type": "int", "value": "1000"},
-      {"key": "user_limit", "type": "int", "value": "1000"},
-      {"key": "analytics_git_url", "type": "string", "value": "https://github.com/opengovern/platform-configuration"},
-      {"key": "asset_discovery_aws_policy_arns", "type": "string", "value": "arn:aws:iam::aws:policy/SecurityAudit,arn:aws:iam::aws:policy/ReadOnlyAccess"},
-      {"key": "spend_discovery_aws_policy_arns", "type": "string", "value": "arn:aws:iam::aws:policy/AWSBillingReadOnlyAccess"},
-      {"key": "asset_discovery_azure_role_ids", "type": "string", "value": "/subscriptions/%s/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7"},
-      {"key": "spend_discovery_azure_role_ids", "type": "string", "value": "/subscriptions/%s/providers/Microsoft.Authorization/roleDefinitions/fa23ad8b-c56e-40d8-ac0c-ce449e1d2c64"},
-      {"key": "spend_discovery_azure_role_ids", "type": "string", "value": "/subscriptions/%s/providers/Microsoft.Authorization/roleDefinitions/fa23ad8b-c56e-40d8-ac0c-ce449e1d2c64"},
-      {"key": "aws_discovery_required_only", "type": "bool", "value": "true"},
-      {"key": "azure_discovery_required_only", "type": "bool", "value": "true"},
-      {"key": "asset_discovery_enabled", "type": "bool", "value": "true"},
-      {"key": "spend_discovery_enabled", "type": "bool", "value": "true"},
-      {"key": "customization_enabled", "type": "bool", "value": "true"}
-    ]
-
-  chat_prompt.txt: |
-    Prompt
-
-  main_prompt.txt: |
-    Prompt
-
-  assets_chat_prompt.txt: |
-    Prompt
-
-  assets_main_prompt.txt: |
-    Prompt
-
-  score_chat_prompt.txt: |
-    TODO
-  score_main_prompt.txt: |
-    Prompt
-
-  compliance_chat_prompt.txt: |
-    Prompt
-
-  compliance_main_prompt.txt: |
-    Prompt
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: inventory-data-config
-  namespace: {{ .Release.Namespace }}
-data:
-  {{- (.Files.Glob "inventory-data/*").AsConfig | nindent 2 }}
+  backoffLimit: 10 # Number of retries for the job

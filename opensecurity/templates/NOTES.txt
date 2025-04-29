@@ -1,0 +1,35 @@
+{{- /*
+NOTES.txt: This file contains instructions displayed after a successful Helm deployment.
+*/}}
+
+{{- define "opensecurity.notes" }}
+
+OpenSecurity has been deployed.
+
+1.  **Access the UI:**
+
+    To access the OpenSecurity UI, set up port forwarding to the nginx-proxy service. Open a separate terminal and run:
+
+    kubectl port-forward -n {{ .Release.Namespace }} svc/{{ .Release.Name }}-nginx-proxy 8080:80
+    {{- /* Note: Assuming service name follows <release-name>-nginx-proxy pattern */}}
+
+    Then, open your web browser and navigate to:
+
+    http://localhost:8080
+
+2.  **Login Credentials:**
+
+    * **Username:** admin@clearcompass.so
+    * **Password:** The initial admin password is stored in a Kubernetes Secret. To retrieve it, run the following command:
+
+        kubectl get secret -n {{ .Release.Namespace }} {{ include "opensecurity.fullname" . }}-initial-admin-password -o jsonpath='{.data.password}' | base64 --decode
+
+        (Note: The command prompt might show a '%' character after the password if there's no trailing newline; this is usually not part of the password itself.)
+
+3.  **Documentation:**
+
+    For more detailed information, guides, and configuration options, please refer to the official documentation:
+
+    https://docs.clearcompass.so
+
+{{- end }}
