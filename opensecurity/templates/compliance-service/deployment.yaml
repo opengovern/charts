@@ -1,4 +1,7 @@
 {{- if eq .Values.opengovernance.compliance true }}
+# /Users/anil/workspace/charts/opensecurity/templates/compliance-service/deployment.yaml
+# Defines the Deployment for the compliance-service, including an initContainer
+# to wait for PostgreSQL readiness.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,9 +9,15 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: compliance-service
+    # Add standard Helm labels for better identification
+    helm.sh/chart: {{ include "opensecurity.chart" . }}
+    app.kubernetes.io/name: compliance-service
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: service
 spec:
   minReadySeconds: 10
-  replicas: 1
+  replicas: 1 # Running a single replica as per original spec
   selector:
     matchLabels:
       app: compliance-service
@@ -16,7 +25,14 @@ spec:
     metadata:
       labels:
         app: compliance-service
+        # Mirror standard labels onto the Pods
+        helm.sh/chart: {{ include "opensecurity.chart" . }}
+        app.kubernetes.io/name: compliance-service
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        app.kubernetes.io/component: service
     spec:
+      # IMPORTANT: Ensure 'compliance' ServiceAccount exists, or change to 'compliance-service' if that's the correct name.
       serviceAccountName: compliance
       affinity:
         nodeAffinity:
@@ -28,55 +44,98 @@ spec:
                     operator: In
                     values:
                       - app
+
+      # ============================================================
+      # BEGIN Init Container to wait for PostgreSQL
+      # ============================================================
+      initContainers:
+        - name: wait-for-postgres
+          # Use an image containing pg_isready
+          image: postgres:15.5 # Adjust tag based on your DB version if needed
+          # Environment variables for the init container script
+          env:
+            - name: PG_HOST
+              value: "{{ include "postgres.endpoint" . }}" # Use same helper as main container
+            - name: PG_PORT
+              value: "{{ include "postgres.port" . }}"   # Use same helper as main container
+            # Provide PGPASSWORD for the 'postgres' user check (most reliable way to check DB readiness)
+            # Assumes the postgres superuser password is in postgres-secret under the key 'postgres-password'
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret       # Secret holding DB passwords
+                  key: postgres-password     # Key for 'postgres' user password
+          command: ['sh', '-c']
+          args:
+            - |
+              echo "InitContainer (compliance-service): Waiting for PostgreSQL host ${PG_HOST}:${PG_PORT}..."
+              # Loop until pg_isready succeeds using the 'postgres' superuser
+              # '-q' for quiet, '-t 2' for 2-second timeout per attempt
+              until pg_isready -h ${PG_HOST} -p ${PG_PORT} -U postgres -q -t 2; do
+                echo "InitContainer (compliance-service): PostgreSQL unavailable - sleeping 2s"
+                sleep 2
+              done
+              echo "InitContainer (compliance-service): PostgreSQL is ready!"
+          resources: # Define resources for the init container
+            limits:
+              cpu: 150m
+              memory: 128Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
+      # ============================================================
+      # END Init Container
+      # ============================================================
+
       containers:
       - name: compliance-service
         image: "{{ .Values.opengovernance.docker.registry }}/compliance-service:{{ .Values.opengovernance.docker.tags.compliance }}"
         command: ["/compliance-service"]
-        imagePullPolicy: Always
+        imagePullPolicy: Always # Consider changing to IfNotPresent for production stability
         resources:
           limits:
-            cpu: 500m
-            memory: 2500Mi
+            cpu: 500m      # 0.5 CPU Core limit
+            memory: 2500Mi # 2.5 GiB Memory limit
           requests:
-            cpu: 500m
-            memory: 1000Mi
+            cpu: 500m      # 0.5 CPU Core request
+            memory: 1000Mi # 1 GiB Memory request
         env:
-{{- include "elastic.envs" . | indent 8 }}
+{{- include "elastic.envs" . | indent 8 }} # Include Elasticsearch env vars
         - name: CURRENT_NAMESPACE
           value: "{{ .Release.Namespace }}"
         - name: POSTGRESQL_HOST
           value: "{{ include "postgres.endpoint" . }}"
-
-        - name: MIGRATOR_JOB_QUEUE_NAME
-          value: "migrator-jobs-queue"
-
         - name: POSTGRESQL_PORT
           value: "{{ include "postgres.port" . }}"
         - name: POSTGRESQL_USERNAME
-          value: "compliance_service"
+          value: "compliance_service" # Application-specific user
         - name: POSTGRESQL_PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgres-secret
-              key: complianceServiceUserPassword
+              key: complianceServiceUserPassword # Password for 'compliance_service' user
         - name: POSTGRESQL_DB
-          value: "compliance"
+          value: "compliance" # Application-specific database
         - name: POSTGRESQL_SSLMODE
           value: "{{ include "postgres.sslMode" . }}"
+        - name: MIGRATOR_JOB_QUEUE_NAME # Added back from original spec
+          value: "migrator-jobs-queue"
         - name: HTTP_ADDRESS
-          value: "0.0.0.0:7251"
+          value: "0.0.0.0:7251" # Service listens on this port internally
+        # Base URLs for internal service communication
         - name: SCHEDULER_BASEURL
           value: "http://scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251"
         - name: INTEGRATION_BASEURL
           value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
         - name: CORE_BASEURL
           value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
+        # Jaeger Tracing Configuration
         - name: JAEGER_AGENT_HOST
           valueFrom:
             fieldRef:
-              fieldPath: status.hostIP
+              fieldPath: status.hostIP # Send traces to Jaeger agent on the node
         - name: JAEGER_SERVICE_NAME
           value: "compliance-service"
         - name: JAEGER_SAMPLE_RATE
-          value: "0.0005"
-{{- end }}
+          value: "0.0005" # Adjust sample rate as needed
+{{- end }} # End of the 'if' block

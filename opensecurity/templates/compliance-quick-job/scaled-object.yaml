@@ -14,7 +14,7 @@ spec:
     name: compliance-quick-worker
   pollingInterval: 30
   cooldownPeriod:  300
-  minReplicaCount: 1
+  minReplicaCount: 0
   maxReplicaCount: {{ .Values.opengovernance.parallelism.complianceQuickJobMaxParallelism}}
   fallback:
     failureThreshold: 1
