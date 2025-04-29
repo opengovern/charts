@@ -4,7 +4,6 @@ kind: Secret
 metadata:
   name: auth-service-secret
   namespace: {{ .Release.Namespace }}
-
   annotations:
     kubernetes.io/service-account.name: auth-service
 type: kubernetes.io/service-account-token
@@ -18,7 +17,7 @@ metadata:
     app: auth-service
 spec:
   minReadySeconds: 10
-  replicas: 2
+  replicas: 2 # You have this set to 2 in the original spec
   selector:
     matchLabels:
       app: auth-service
@@ -38,6 +37,47 @@ spec:
                     operator: In
                     values:
                       - app
+
+      # ============================================================
+      # BEGIN Init Container to wait for PostgreSQL (Compatibility)
+      # ============================================================
+      initContainers:
+        - name: wait-for-postgres
+          # Use an image containing pg_isready, matching your DB version is best
+          image: postgres:15.5 # Adjust tag if needed
+          # Use environment variables to pass Helm template results to the shell command
+          env:
+            - name: PG_HOST
+              value: "{{ include "postgres.endpoint" . }}" # Use same helper as main container
+            - name: PG_PORT
+              value: "{{ include "postgres.port" . }}"   # Use same helper as main container
+            # Provide PGPASSWORD for the 'postgres' user check
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret       # Secret holding DB passwords
+                  key: postgres-password     # Key for 'postgres' user password
+          command: ['sh', '-c']
+          args:
+            - |
+              echo "InitContainer: Waiting for PostgreSQL host ${PG_HOST}:${PG_PORT}..."
+              # Loop until pg_isready succeeds, using env vars for host/port
+              until pg_isready -h ${PG_HOST} -p ${PG_PORT} -U postgres -q -t 2; do
+                echo "InitContainer: PostgreSQL unavailable - sleeping 2s"
+                sleep 2
+              done
+              echo "InitContainer: PostgreSQL is ready!"
+          resources: # Optional: Define resources for the init container
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+      # ============================================================
+      # END Init Container
+      # ============================================================
+
       containers:
         - name: auth-service
           image: "{{ .Values.opengovernance.docker.registry }}/auth-service:{{ .Values.opengovernance.docker.tags.auth }}"
@@ -54,9 +94,9 @@ spec:
             - name: PLATFORM_HOST
               value: {{ .Values.global.domain }}
             - name: POSTGRESQL_HOST
-              value: "{{ include "postgres.endpoint" . }}"
+              value: "{{ include "postgres.endpoint" . }}" # Uses helper
             - name: POSTGRESQL_PORT
-              value: "{{ include "postgres.port" . }}"
+              value: "{{ include "postgres.port" . }}"   # Uses helper
             - name: POSTGRESQL_DB
               value: "auth"
             - name: POSTGRESQL_USERNAME
@@ -65,7 +105,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
-                  key: authServiceUserPassword
+                  key: authServiceUserPassword # Correct password for app's user
             - name: POSTGRESQL_SSLMODE
               value: "{{ include "postgres.sslMode" . }}"
             - name: HTTP_ADDRESS
@@ -77,9 +117,9 @@ spec:
             - name: AUTH0_INVITE_TTL
               value: "21600"
             - name: AUTH0_MANAGE_DOMAIN
-              value: "https://kaytu.us.auth0.com"
+              value: "https://kaytu.us.auth0.com" # These AUTH0 vars seem unrelated but are kept
             - name: AUTH0_DOMAIN
-              value: "https://kaytu.us.auth0.com/"
+              value: "https://kaytu.us.auth0.com/" # Kept
             - name: DEX_AUTH_DOMAIN
               value: "http://{{ .Release.Name }}-dex.{{ .Release.Namespace }}.svc.cluster.local:5556/dex"
             - name: DEX_AUTH_PUBLIC_CLIENT_ID

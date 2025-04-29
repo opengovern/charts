@@ -6,8 +6,9 @@ metadata:
 type: Opaque
 data:
   openSslPassword: MDFaUlBGdU9OMFBNb25P
+
+{{- if not (lookup "batch/v1" "Job" .Release.Namespace "import-es-demo-data") }}
 ---
-{{- if not (lookup "batch/v1" "Job" .Release.Namespace "import-es-demo-data") -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -23,9 +24,9 @@ metadata:
     "helm.sh/hook-weight": "1"
     {{- end }}
 spec:
-{{- if eq .Values.populateWithSampleData.enabled false }}
+  {{- if eq .Values.populateWithSampleData.enabled false }}
   suspend: true
-{{- end }}
+  {{- end }}
   template:
     spec:
       containers:
@@ -33,7 +34,7 @@ spec:
           image: "{{ .Values.opengovernance.docker.registry }}/demo-importer-job:{{ .Values.opengovernance.docker.tags.demoImporterJob }}"
           command: ["/demo-importer-job"]
           env:
-{{- include "elastic.envs" . | indent 12 }}
+            {{- include "elastic.envs" . | indent 12 }}
             - name: POSTGRESQL_USERNAME
               value: "{{ include "postgres.masterUser" . }}"
             - name: POSTGRESQL_PASSWORD
@@ -52,8 +53,9 @@ spec:
       restartPolicy: Never
   backoffLimit: 4
 {{- end }}
+
+{{- if not (lookup "batch/v1" "Job" .Release.Namespace "import-psql-demo-data") }}
 ---
-{{- if not (lookup "batch/v1" "Job" .Release.Namespace "import-psql-demo-data") -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -63,15 +65,15 @@ metadata:
     "app.kubernetes.io/managed-by": "Helm"
     "meta.helm.sh/release-name": {{ .Release.Name }}
     "meta.helm.sh/release-namespace": {{ .Release.Namespace }}
-    "helm.sh/resource-policy": keep
+    helm.sh/resource-policy: keep
     {{- if eq .Values.populateWithSampleData.enabled true }}
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "1"
     {{- end }}
 spec:
-{{- if eq .Values.populateWithSampleData.enabled false }}
+  {{- if eq .Values.populateWithSampleData.enabled false }}
   suspend: true
-{{- end }}
+  {{- end }}
   template:
     spec:
       containers:
@@ -79,7 +81,7 @@ spec:
           image: "{{ .Values.opengovernance.docker.registry }}/import-data-script:{{ .Values.opengovernance.docker.tags.psqlImport }}"
           command: ["/bin/bash", "-c", "/usr/local/bin/import_psql_data.sh"]
           env:
-{{- include "elastic.envs" . | indent 12 }}
+            {{- include "elastic.envs" . | indent 12 }}
             - name: POSTGRESQL_USERNAME
               value: "{{ include "postgres.masterUser" . }}"
             - name: POSTGRESQL_PASSWORD
