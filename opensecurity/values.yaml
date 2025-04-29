@@ -10,23 +10,23 @@ opengovernance:
     registry: ghcr.io/opengovern
     tags:
       webui: v2.74.26
-      auth: v2.74.27
-      swagger: v2.74.27
-      checkupJob: v2.74.27
-      postInstallJob: v2.76.8
-      schedulerService: v2.76.0
-      integration: v2.76.6
-      core: v2.76.0
-      compliance: v2.76.0
-      complianceSummarizerJob: v2.74.27
-      complianceReportJob: v2.74.27
-      esSink: v2.74.27
-      complianceQuick: v2.74.27
-      queryRunnerJob: v2.74.27
-      queryValidatorJob: v2.74.27
-      demoImporterJob: v2.74.27
+      auth: v2.76.13
+      swagger: v2.76.13
+      checkupJob: v2.76.13
+      postInstallJob: v2.76.13
+      schedulerService: v2.76.13
+      integration: v2.76.13
+      core: v2.76.13
+      compliance: v2.76.13
+      complianceSummarizerJob: v2.76.13
+      complianceReportJob: v2.76.13
+      esSink: v2.76.13
+      complianceQuick: v2.76.13
+      queryRunnerJob: v2.76.13
+      queryValidatorJob: v2.76.13
+      demoImporterJob: v2.76.13
       psqlImport: v2.60.0
-      tasks: v2.74.27
+      tasks: v2.76.13
   vault:
     keyID: "workspace-creds"
   parallelism:
@@ -61,7 +61,7 @@ dex:
     storage:
       type: postgres
       config:
-        host: "opengovernance-postgresql-primary.opengovernance.svc.cluster.local" # postgresql host
+        host: "opensecurity-postgresql-primary.opensecurity.svc.cluster.local" # postgresql host
         port: 5432
         database: dex
         user: dex_service
@@ -362,6 +362,8 @@ populateWithSampleData:
 swagger:
   enabled: false
 queryvalidator:
+  enabled: false
+queryrunner:
   enabled: false
 
 
