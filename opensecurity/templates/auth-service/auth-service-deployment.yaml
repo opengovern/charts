@@ -154,7 +154,7 @@ spec:
               memory: 100Mi
           env:
             - name: PLATFORM_HOST
-              value: {{ .Values.global.domain | quote }} # Added quote for safety
+              value: {{ .Values.global.domain }}
             - name: POSTGRESQL_HOST
               value: "{{ include "postgres.endpoint" . }}"
             - name: POSTGRESQL_PORT
