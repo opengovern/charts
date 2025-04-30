@@ -51,7 +51,7 @@ spec:
             - name: AUTH_URL
               # Assuming a readiness/health endpoint on the main service port
               # Adjust path if needed (e.g., /healthz)
-              value: "http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251/healthz/ready"
+              value: "http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251/health"
           command: ["sh", "-xc"]
           args:
             - |
@@ -81,7 +81,7 @@ spec:
             - name: CORE_URL
               # Assuming a readiness/health endpoint on the main service port
               # Adjust path if needed (e.g., /healthz)
-              value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251/healthz/ready"
+              value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251/healthz/ready:"
           command: ["sh", "-xc"]
           args:
             - |
