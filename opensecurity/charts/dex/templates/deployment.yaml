@@ -55,15 +55,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
 
-            # ===== BEGIN Wait for PostgreSQL Init Container =====
-            # ===== BEGIN Wait for PostgreSQL Init Container =====
       initContainers:
         - name: wait-for-postgres-dex
           image: postgres:15.5
           env:
             {{- with .Values.dexDatabase }}
             - name: PGHOST
-              value: {{ .hostName | default (printf "%s-postgresql-primary.%s.svc.cluster.local" $.Release.Name $.Release.Namespace) | quote }}
+              value: {{ .hostName | default (printf "%s-postgresql-primary.%s.svc.cluster.local." $.Release.Name $.Release.Namespace) | quote }}
             - name: PGPORT
               value: {{ .port       | default "5432" | quote }}
             - name: PGDATABASE
@@ -79,7 +77,7 @@ spec:
                   key:  {{ .passwordSecretKey  | default "dexServiceUserPassword" | quote }}
             {{- else }}
             - name: PGHOST
-              value: {{ printf "%s-postgresql-primary.%s.svc.cluster.local" $.Release.Name $.Release.Namespace | quote }}
+              value: {{ printf "%s-postgresql-primary.%s.svc.cluster.local." $.Release.Name $.Release.Namespace | quote }}
             - name: PGPORT
               value: "5432"
             - name: PGDATABASE
@@ -122,6 +120,7 @@ spec:
               cpu:    "50m"
               memory: "64Mi"
       # ===== END Wait for PostgreSQL Init Container =====
+
 
 
 
