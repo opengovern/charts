@@ -1,5 +1,3 @@
-# /Users/anil/workspace/charts/opensecurity/charts/dex/templates/deployment.yaml
-# MODIFIED to include an initContainer to wait for PostgreSQL readiness.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -54,78 +52,6 @@ spec:
       hostAliases:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-
-      initContainers:
-        - name: wait-for-postgres-dex
-          image: postgres:15.5
-          env:
-            {{- with .Values.dexDatabase }}
-            - name: PGHOST
-              value: {{ .hostName | default (printf "%s-postgresql-primary.%s.svc.cluster.local." $.Release.Name $.Release.Namespace) | quote }}
-            - name: PGPORT
-              value: {{ .port       | default "5432" | quote }}
-            - name: PGDATABASE
-              value: {{ .name       | default "dex"  | quote }}
-            - name: PGUSER
-              value: {{ .username   | default "dex_service" | quote }}
-            - name: PGSSLMODE
-              value: {{ .sslMode    | default "disable"    | quote }}
-            - name: PGPASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .passwordSecretName | default "postgres-secret"             | quote }}
-                  key:  {{ .passwordSecretKey  | default "dexServiceUserPassword" | quote }}
-            {{- else }}
-            - name: PGHOST
-              value: {{ printf "%s-postgresql-primary.%s.svc.cluster.local." $.Release.Name $.Release.Namespace | quote }}
-            - name: PGPORT
-              value: "5432"
-            - name: PGDATABASE
-              value: "dex"
-            - name: PGUSER
-              value: "dex_service"
-            - name: PGSSLMODE
-              value: "disable"
-            - name: PGPASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: "postgres-secret"
-                  key:  "dexServiceUserPassword"
-            {{- end }}
-          command: ["sh", "-xc"]
-          args:
-            - |
-              echo "Waiting for PostgreSQL at ${PGHOST}:${PGPORT} db=${PGDATABASE} user=${PGUSER} (sslmode=${PGSSLMODE})…"
-              retries=30; delay=5; count=0
-              until pg_isready \
-                -h "${PGHOST}" \
-                -p "${PGPORT}" \
-                -U "${PGUSER}" \
-                -d "${PGDATABASE}" \
-                -q -t 2; do
-                count=$((count+1))
-                if [ "$count" -ge "$retries" ]; then
-                  echo "PostgreSQL unavailable after ${retries} retries – exiting."
-                  exit 1
-                fi
-                echo "…sleep ${delay}s (attempt ${count}/${retries})"
-                sleep "${delay}"
-              done
-              echo "PostgreSQL is ready!"
-          resources:
-            limits:
-              cpu:    "150m"
-              memory: "128Mi"
-            requests:
-              cpu:    "50m"
-              memory: "64Mi"
-      # ===== END Wait for PostgreSQL Init Container =====
-
-
-
-
-
-
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
