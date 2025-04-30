@@ -66,6 +66,8 @@ spec:
           value: "http://scheduler.%NAMESPACE%.svc.cluster.local:5251"
         - name: CORE_COMPLIANCE__BASE_URL
           value: "http://compliance-service.%NAMESPACE%.svc.cluster.local:7251"
+        - name: CORE_OPENGOVERNANCE_NAMESPACE
+          value: "{{ .Release.Namespace }}"
         - name: CORE_OPENSECURITY_NAMESPACE
           value: "{{ .Release.Namespace }}"
         - name: CORE_PRIMARY_DOMAIN_URL
