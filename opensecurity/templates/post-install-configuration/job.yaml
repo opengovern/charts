@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": post-install,post-upgrade
-    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-weight": "0" # Runs after default resources (weight 0)
     # Add hook-delete-policy if you want Helm to clean up successful jobs
     # "helm.sh/hook-delete-policy": hook-succeeded
 spec:
@@ -13,6 +13,98 @@ spec:
     spec:
       serviceAccountName: configuration # Ensure this ServiceAccount exists
       restartPolicy: OnFailure
+      # <<< START Init Containers >>>
+      initContainers:
+        # --- Wait for Dex ---
+        - name: wait-for-dex
+          image: curlimages/curl:7.85.0 # Lightweight curl image
+          env:
+            - name: DEX_URL
+              # Using Dex telemetry port for readiness check
+              value: "http://{{ .Release.Name }}-dex.{{ .Release.Namespace }}.svc.cluster.local:5558/healthz/ready"
+          command: ["sh", "-xc"]
+          args:
+            - |
+              echo "InitContainer (post-install): Waiting for Dex at ${DEX_URL}…"
+              retries=60; delay=5; count=0 # Increased retries for potentially slower services
+              until curl -sf "${DEX_URL}"; do
+                count=$((count+1))
+                if [ "$count" -ge "$retries" ]; then
+                  echo "InitContainer (post-install): Dex unavailable after ${retries} retries – exiting."
+                  exit 1
+                fi
+                echo "InitContainer (post-install): Dex unavailable - sleeping ${delay}s (attempt ${count}/${retries})"
+                sleep "${delay}"
+              done
+              echo "InitContainer (post-install): Dex is ready!"
+          resources:
+            limits:
+              cpu:    "50m"
+              memory: "50Mi"
+            requests:
+              cpu:    "25m"
+              memory: "25Mi"
+        # --- Wait for Auth Service ---
+        - name: wait-for-auth
+          image: curlimages/curl:7.85.0
+          env:
+            - name: AUTH_URL
+              # Assuming a readiness/health endpoint on the main service port
+              # Adjust path if needed (e.g., /healthz)
+              value: "http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251/healthz"
+          command: ["sh", "-xc"]
+          args:
+            - |
+              echo "InitContainer (post-install): Waiting for Auth Service at ${AUTH_URL}…"
+              retries=60; delay=5; count=0
+              until curl -sf "${AUTH_URL}"; do
+                count=$((count+1))
+                if [ "$count" -ge "$retries" ]; then
+                  echo "InitContainer (post-install): Auth Service unavailable after ${retries} retries – exiting."
+                  exit 1
+                fi
+                echo "InitContainer (post-install): Auth Service unavailable - sleeping ${delay}s (attempt ${count}/${retries})"
+                sleep "${delay}"
+              done
+              echo "InitContainer (post-install): Auth Service is ready!"
+          resources:
+            limits:
+              cpu:    "50m"
+              memory: "50Mi"
+            requests:
+              cpu:    "25m"
+              memory: "25Mi"
+        # --- Wait for Core Service ---
+        - name: wait-for-core
+          image: curlimages/curl:7.85.0
+          env:
+            - name: CORE_URL
+              # Assuming a readiness/health endpoint on the main service port
+              # Adjust path if needed (e.g., /healthz)
+              value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251/healthz"
+          command: ["sh", "-xc"]
+          args:
+            - |
+              echo "InitContainer (post-install): Waiting for Core Service at ${CORE_URL}…"
+              retries=60; delay=5; count=0
+              until curl -sf "${CORE_URL}"; do
+                count=$((count+1))
+                if [ "$count" -ge "$retries" ]; then
+                  echo "InitContainer (post-install): Core Service unavailable after ${retries} retries – exiting."
+                  exit 1
+                fi
+                echo "InitContainer (post-install): Core Service unavailable - sleeping ${delay}s (attempt ${count}/${retries})"
+                sleep "${delay}"
+              done
+              echo "InitContainer (post-install): Core Service is ready!"
+          resources:
+            limits:
+              cpu:    "50m"
+              memory: "50Mi"
+            requests:
+              cpu:    "25m"
+              memory: "25Mi"
+      # <<< END Init Containers >>>
       containers:
         - name: post-install-configuration
           image: "{{ .Values.opensecurity.docker.registry }}/post-install-job:{{ .Values.opensecurity.docker.tags.postInstallJob }}"
@@ -94,7 +186,7 @@ spec:
             - name: DEFAULT_DEX_USER_EMAIL
               value: "admin@clearcompass.so" # Hardcoded default email
 
-            # --- MODIFIED LINE: Use password from the initial admin secret ---
+            # --- Use password from the initial admin secret ---
             - name: DEFAULT_DEX_USER_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -165,13 +257,14 @@ spec:
             name: migrator-config
   backoffLimit: 10 # Number of retries for the job
 ---
+# Keep the ConfigMap definitions below as they were
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: migrator-config
   namespace: {{ .Release.Namespace }}
 data:
-
   metadata.json: |
     [
       {"key": "workspace_date_time_format", "type": "string", "value": "1900-01-02"},
@@ -200,36 +293,34 @@ data:
       {"key": "spend_discovery_aws_policy_arns", "type": "string", "value": "arn:aws:iam::aws:policy/AWSBillingReadOnlyAccess"},
       {"key": "asset_discovery_azure_role_ids", "type": "string", "value": "/subscriptions/%s/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7"},
       {"key": "spend_discovery_azure_role_ids", "type": "string", "value": "/subscriptions/%s/providers/Microsoft.Authorization/roleDefinitions/fa23ad8b-c56e-40d8-ac0c-ce449e1d2c64"},
-      {"key": "spend_discovery_azure_role_ids", "type": "string", "value": "/subscriptions/%s/providers/Microsoft.Authorization/roleDefinitions/fa23ad8b-c56e-40d8-ac0c-ce449e1d2c64"},
+      # Duplicated key below? Verify if intended.
+      # {"key": "spend_discovery_azure_role_ids", "type": "string", "value": "/subscriptions/%s/providers/Microsoft.Authorization/roleDefinitions/fa23ad8b-c56e-40d8-ac0c-ce449e1d2c64"},
       {"key": "aws_discovery_required_only", "type": "bool", "value": "true"},
       {"key": "azure_discovery_required_only", "type": "bool", "value": "true"},
       {"key": "asset_discovery_enabled", "type": "bool", "value": "true"},
       {"key": "spend_discovery_enabled", "type": "bool", "value": "true"},
       {"key": "customization_enabled", "type": "bool", "value": "true"}
     ]
-
+  # Placeholder prompts
   chat_prompt.txt: |
     Prompt
-
   main_prompt.txt: |
     Prompt
-
   assets_chat_prompt.txt: |
     Prompt
-
   assets_main_prompt.txt: |
     Prompt
-
   score_chat_prompt.txt: |
     TODO
   score_main_prompt.txt: |
     Prompt
-
   compliance_chat_prompt.txt: |
     Prompt
-
   compliance_main_prompt.txt: |
     Prompt
+  # Added query_parameters.json based on volumeMount
+  query_parameters.json: |
+    {} # Add default content if needed
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -237,4 +328,6 @@ metadata:
   name: inventory-data-config
   namespace: {{ .Release.Namespace }}
 data:
+  # This requires an 'inventory-data/' directory at the chart root
+  # containing files to be included here.
   {{- (.Files.Glob "inventory-data/*").AsConfig | nindent 2 }}
