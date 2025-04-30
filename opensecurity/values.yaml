@@ -16,7 +16,7 @@ opensecurity:
       postInstallJob: v2.76.13
       schedulerService: v2.76.13
       integration: v2.76.13
-      core: v2.76.13
+      core: v2.76.26
       compliance: v2.76.13
       complianceSummarizerJob: v2.76.13
       complianceReportJob: v2.76.13

@@ -18,7 +18,7 @@ spec:
         app: core-service
         cloudql-enabled: "true"
     spec:
-      serviceAccountName: core
+      serviceAccountName: core # Ensure 'core' ServiceAccount exists
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -42,97 +42,115 @@ spec:
             cpu: 500m
             memory: 100Mi
         env:
-{{- include "elastic.envs" . | indent 8 }}
-        - name: CORE_POSTGRES__HOST
-          value: "{{ include "postgres.endpoint" . }}"
-        - name: CORE_POSTGRES__PORT
-          value: "{{ include "postgres.port" . }}"
-        - name: CORE_POSTGRES__DB
-          value: "core"
-        - name: CORE_POSTGRES__USERNAME
-          value: "core_service"
-        - name: CORE_POSTGRES__PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: coreServiceUserPassword
-        - name: CORE_POSTGRES_SSL_MODE
-          value: "{{ include "postgres.sslMode" . }}"
-        - name: CORE_HTTP__ADDRESS
-          value: "0.0.0.0:6251"
-        - name: CORE_INTEGRATION__BASE_URL
-          value: "http://integration-service.%NAMESPACE%.svc.cluster.local:8000"
-        - name: CORE_SCHEDULER__BASE_URL
-          value: "http://scheduler.%NAMESPACE%.svc.cluster.local:5251"
-        - name: CORE_COMPLIANCE__BASE_URL
-          value: "http://compliance-service.%NAMESPACE%.svc.cluster.local:7251"
-        - name: CORE_OPENGOVERNANCE_NAMESPACE
-          value: "{{ .Release.Namespace }}"
-        - name: CORE_OPENSECURITY_NAMESPACE
-          value: "{{ .Release.Namespace }}"
-        - name: CORE_PRIMARY_DOMAIN_URL
-          value: "{{ .Values.global.domain }}"
-        - name: CORE_DEX_GRPC_ADDR
-          value: "{{ .Release.Namespace }}-dex.{{ .Release.Namespace }}.svc.cluster.local:5557"
-        - name: CORE_DEX_PUBLIC_CLIENT_REDIRECT_URIS
-          value: "https://{{ .Values.global.domain }}/callback,http://{{ .Values.global.domain }}/callback,http://localhost:3000/callback,http://localhost:8080/callback"
-        - name: CORE_DEX_PRIVATE_CLIENT_REDIRECT_URIS
-          value: "https://{{ .Values.global.domain }}/callback"
-        - name: DEX_PUBLIC_CLIENT_REDIRECT_URIS
-          value: "https://{{ .Values.global.domain }}/callback,http://{{ .Values.global.domain }}/callback,http://localhost:3000/callback,http://localhost:8080/callback"
-        - name: DEX_PRIVATE_CLIENT_REDIRECT_URIS
-          value: "https://{{ .Values.global.domain }}/callback"
-        - name: CORE_SAMPLEDATA_INTEGRATIONS_CHECK
-          value: "494894f0-aa87-4c32-bafd-066c3cf1a6ae,545a3e48-559d-4f1c-a446-27882bf77d68,f36afd2f-cd85-47c6-9eff-be8213289d28,218317b1-6f26-4ad0-91a7-40f17311d5b3,49d89218-1109-4b86-a7a4-edb55aa658dd,79302008-5d35-4a83-914c-20ecd80f4228,e6cb0afa-e624-4ca7-8b47-fa9988831137,1c2a6b18-ac87-4f5e-a472-1e26f8704f29,c00bb650-f448-41b7-8ccc-bcd6184f78c3"
-        - name: CORE_VAULT__PROVIDER
-          value: "hashicorp-vault"
-        - name: CORE_VAULT__HASHICORP__ADDRESS
-          value: "http://{{ .Release.Name }}-vault-internal.{{ .Release.Namespace }}.svc.cluster.local:8200"
-        - name: CORE_VAULT__KEY_ID
-          value: {{ .Values.opensecurity.vault.keyID }}
-        - name: STEAMPIPE_HOST
-          value: cloudql-service.{{ .Release.Namespace }}.svc.cluster.local
-        - name: STEAMPIPE_PORT
-          value: "9193"
-        - name: STEAMPIPE_USERNAME
-          value: "steampipe"
-        - name: STEAMPIPE_PASSWORD
-          value: "abcd"
-        - name: STEAMPIPE_DB
-          value: "steampipe"
-        - name: HTTP_ADDRESS
-          value: "0.0.0.0:6251"
-        - name: SCHEDULER_BASE_URL
-          value: "http://scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251"
-        - name: INTEGRATION_BASE_URL
-          value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
-        - name: COMPLIANCE_BASE_URL
-          value: "http://compliance-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
-        - name: AUTH_BASE_URL
-          value: "http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251"
-        - name: POSTGRESPLUGIN_HOST
-          value: "{{ include "postgres.endpoint" . }}"
-        - name: POSTGRESPLUGIN_PORT
-          value: "{{ include "postgres.port" . }}"
-        - name: POSTGRESPLUGIN_USERNAME
-          value: "steampipe_user"
-        - name: POSTGRESPLUGIN_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: steampipeUserPassword
-        - name: PG_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: steampipeUserPassword
-        - name: CORE_DB_HOST
-          value: "{{ include "postgres.endpoint" . }}"
-        - name: CORE_DB_PORT
-          value: "{{ include "postgres.port" . }}"
-        - name: CORE_DB_SSL_MODE
-          value: "{{ include "postgres.sslMode" . }}"
-        - name: CORE_BASEURL
-          value: "http://localhost:6251"
-        - name: COMPLIANCE_ENABLED
-          value: "{{ .Values.opensecurity.compliance }}"
+          # Assumes 'elastic.envs' helper template is defined in _helpers.tpl
+          {{- include "elastic.envs" . | indent 8 }}
+          # --- PostgreSQL Connection ---
+          - name: CORE_POSTGRES__HOST
+            # Assumes 'postgres.endpoint' helper template exists
+            value: "{{ include "postgres.endpoint" . }}"
+          - name: CORE_POSTGRES__PORT
+            # Assumes 'postgres.port' helper template exists
+            value: "{{ include "postgres.port" . }}"
+          - name: CORE_POSTGRES__DB
+            value: "core"
+          - name: CORE_POSTGRES__USERNAME
+            value: "core_service"
+          - name: CORE_POSTGRES__PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret # Assumes password is in this secret
+                key: coreServiceUserPassword # Under this key
+          - name: CORE_POSTGRES_SSL_MODE
+            # Assumes 'postgres.sslMode' helper template exists
+            value: "{{ include "postgres.sslMode" . }}"
+          # --- Service Addresses ---
+          - name: CORE_HTTP__ADDRESS
+            value: "0.0.0.0:6251"
+          - name: CORE_INTEGRATION__BASE_URL
+            value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
+          - name: CORE_SCHEDULER__BASE_URL
+            value: "http://scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251"
+          - name: CORE_COMPLIANCE__BASE_URL
+            # Fixed: Removed trailing quote
+            value: "http://compliance-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
+          # --- Namespace and Domain ---
+          - name: CORE_OPENGOVERNANCE_NAMESPACE # Used by config/model.go for Vault secret lookup
+            value: "{{ .Release.Namespace }}"
+          - name: CORE_OPENSECURITY_NAMESPACE # Added as per user request (redundant)
+            value: "{{ .Release.Namespace }}"
+          - name: CORE_PRIMARY_DOMAIN_URL
+            value: "{{ .Values.global.domain }}"
+          # --- Dex Configuration ---
+          - name: CORE_DEX_GRPC_ADDR
+            # Fixed: Used .Release.Name for the service prefix
+            value: "{{ .Release.Name }}-dex.{{ .Release.Namespace }}.svc.cluster.local:5557"
+          - name: CORE_DEX_PUBLIC_CLIENT_REDIRECT_URIS
+            value: "https://{{ .Values.global.domain }}/callback,http://{{ .Values.global.domain }}/callback,http://localhost:3000/callback,http://localhost:8080/callback"
+          - name: CORE_DEX_PRIVATE_CLIENT_REDIRECT_URIS
+            value: "https://{{ .Values.global.domain }}/callback"
+          # NOTE: These DEX_* vars seem redundant with CORE_DEX_* above
+          - name: DEX_PUBLIC_CLIENT_REDIRECT_URIS
+            value: "https://{{ .Values.global.domain }}/callback,http://{{ .Values.global.domain }}/callback,http://localhost:3000/callback,http://localhost:8080/callback"
+          - name: DEX_PRIVATE_CLIENT_REDIRECT_URIS
+            value: "https://{{ .Values.global.domain }}/callback"
+          # --- Other Integrations & Config ---
+          - name: CORE_SAMPLEDATA_INTEGRATIONS_CHECK
+            value: "494894f0-aa87-4c32-bafd-066c3cf1a6ae,545a3e48-559d-4f1c-a446-27882bf77d68,f36afd2f-cd85-47c6-9eff-be8213289d28,218317b1-6f26-4ad0-91a7-40f17311d5b3,49d89218-1109-4b86-a7a4-edb55aa658dd,79302008-5d35-4a83-914c-20ecd80f4228,e6cb0afa-e624-4ca7-8b47-fa9988831137,1c2a6b18-ac87-4f5e-a472-1e26f8704f29,c00bb650-f448-41b7-8ccc-bcd6184f78c3" # Hardcoded value
+          - name: CORE_VAULT__PROVIDER
+            value: "hashicorp-vault"
+          - name: CORE_VAULT__HASHICORP__ADDRESS
+            value: "http://{{ .Release.Name }}-vault-internal.{{ .Release.Namespace }}.svc.cluster.local:8200"
+          - name: CORE_VAULT__KEY_ID
+            value: {{ .Values.opensecurity.vault.keyID }}
+          - name: STEAMPIPE_HOST
+            value: cloudql-service.{{ .Release.Namespace }}.svc.cluster.local
+          - name: STEAMPIPE_PORT
+            value: "9193"
+          - name: STEAMPIPE_USERNAME
+            value: "steampipe"
+          - name: STEAMPIPE_PASSWORD # TODO: Avoid hardcoding passwords
+            value: "abcd"
+          - name: STEAMPIPE_DB
+            value: "steampipe"
+          # NOTE: HTTP_ADDRESS seems redundant with CORE_HTTP__ADDRESS
+          - name: HTTP_ADDRESS
+            value: "0.0.0.0:6251"
+          # NOTE: These BASE_URLs seem redundant with CORE_*__BASE_URL above
+          - name: SCHEDULER_BASE_URL
+            value: "http://scheduler.{{ .Release.Namespace }}.svc.cluster.local:5251"
+          - name: INTEGRATION_BASE_URL
+            value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
+          - name: COMPLIANCE_BASE_URL
+            value: "http://compliance-service.{{ .Release.Namespace }}.svc.cluster.local:7251"
+          - name: AUTH_BASE_URL
+            value: "http://auth-service.{{ .Release.Namespace }}.svc.cluster.local:8251"
+          # --- Steampipe Postgres Plugin Config ---
+          - name: POSTGRESPLUGIN_HOST
+            value: "{{ include "postgres.endpoint" . }}"
+          - name: POSTGRESPLUGIN_PORT
+            value: "{{ include "postgres.port" . }}"
+          - name: POSTGRESPLUGIN_USERNAME
+            value: "steampipe_user" # User for steampipe connection
+          - name: POSTGRESPLUGIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: steampipeUserPassword # Password for steampipe user
+          # NOTE: PG_PASSWORD seems redundant with CORE_POSTGRES__PASSWORD
+          - name: PG_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: steampipeUserPassword # This is using the steampipe password, not core_service password. Intentional?
+          # --- DB Connection Details (Redundant?) ---
+          - name: CORE_DB_HOST
+            value: "{{ include "postgres.endpoint" . }}"
+          - name: CORE_DB_PORT
+            value: "{{ include "postgres.port" . }}"
+          - name: CORE_DB_SSL_MODE
+            value: "{{ include "postgres.sslMode" . }}"
+          # --- Other ---
+          - name: CORE_BASEURL # Redundant with CORE_HTTP__ADDRESS?
+            value: "http://localhost:6251"
+          - name: COMPLIANCE_ENABLED
+            value: "{{ .Values.opensecurity.compliance }}"
