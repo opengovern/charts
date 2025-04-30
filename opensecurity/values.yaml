@@ -13,9 +13,9 @@ opensecurity:
       auth: v2.76.25
       swagger: v2.76.13
       checkupJob: v2.76.13
-      postInstallJob: v2.76.13
+      postInstallJob: v2.76.25
       schedulerService: v2.76.13
-      integration: v2.76.13
+      integration: v2.76.25
       core: v2.76.26
       compliance: v2.76.13
       complianceSummarizerJob: v2.76.13
@@ -26,7 +26,7 @@ opensecurity:
       queryValidatorJob: v2.76.13
       demoImporterJob: v2.76.13
       psqlImport: v2.60.0
-      tasks: v2.76.13
+      tasks: v2.76.25
   vault:
     keyID: "workspace-creds"
   parallelism:
