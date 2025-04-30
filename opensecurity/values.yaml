@@ -10,10 +10,10 @@ opensecurity:
     registry: ghcr.io/opengovern
     tags:
       webui: v2.76.23
-      auth: v2.76.25
+      auth: v2.76.27
       swagger: v2.76.13
       checkupJob: v2.76.13
-      postInstallJob: v2.76.25
+      postInstallJob: v2.76.27
       schedulerService: v2.76.13
       integration: v2.76.25
       core: v2.76.26
