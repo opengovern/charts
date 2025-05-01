@@ -17,8 +17,8 @@ opensecurity:
       integration: v2.76.30
       core: v2.76.34
       compliance: v2.76.30
-      complianceSummarizerJob: v0.465.10
-      complianceReportJob: v0.466.4
+      complianceSummarizerJob: v2.76.30
+      complianceReportJob: v2.76.30
       esSink: v2.76.13
       complianceQuick: v2.76.13
       queryRunnerJob: v2.76.13
