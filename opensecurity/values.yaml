@@ -36,6 +36,7 @@ opensecurity:
       targetCPUUtilizationPercentage: 90
       scaleUpStabilizationSeconds: 180
       scaleDownStabilizationSeconds: 300
+  
   vault:
     keyID: "workspace-creds"
   parallelism:
@@ -49,6 +50,11 @@ opensecurity:
     enabled: false
   initJob:
     enabled: true
+    # --- ADD THIS ---
+  # Tag to use when rendering the debug job template
+  # Leave empty or set to a default if desired
+    debugTag: ""
+  # --- END ADD ---
 dex:
   configSecret:
     create: false
