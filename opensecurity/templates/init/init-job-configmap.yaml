@@ -1,0 +1,36 @@
+{{- /* templates/init/init-job-configmap.yaml */}}
+{{- if .Values.opensecurity.initJob.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "opensecurity.fullname" . }}-init-job-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{ include "opensecurity.labels" . | nindent 4 }}
+    app.kubernetes.io/component: init-job-config
+data:
+  {{- $cfg := default (dict) .Values.opensecurity.initJob.config }}
+  {{- $names := default (dict) .Values.opensecurity.initJob.envVarNames }}
+
+  {{- /* Auth Service Name */}}
+  {{- $authSvcKey := default "AUTH_SERVICE_NAME" (index $names "authServiceName") }}
+  {{- $authSvcVal := default "core-service" (index $cfg "authServiceName") }}
+  {{ $authSvcKey }}: {{ $authSvcVal | quote }}
+
+  {{- /* Auth Namespace */}}
+  {{- $authNsKey := default "AUTH_NAMESPACE" (index $names "authNamespace") }}
+  {{- $authNsVal := default .Release.Namespace (index $cfg "authNamespace") }}
+  {{ $authNsKey }}: {{ $authNsVal | quote }}
+
+  {{- /* Auth Port */}}
+  {{- $authPortKey := default "AUTH_SERVICE_PORT" (index $names "authPort") }}
+  {{- $authPortVal := default "8251" (index $cfg "authPort") }}
+  {{ $authPortKey }}: {{ $authPortVal | quote }}
+
+  {{- /* Optional Auth Health Path */}}
+  {{- $authHealthVal := index $cfg "authHealthPath" }}
+  {{- if $authHealthVal }}
+  {{- $authHealthKey := default "AUTH_HEALTH_PATH" (index $names "authHealthPath") }}
+  {{ $authHealthKey }}: {{ $authHealthVal | quote }}
+  {{- end }}
+{{- end }}

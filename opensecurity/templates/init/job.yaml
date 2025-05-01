@@ -1,0 +1,87 @@
+{{- /* templates/init/job.yaml */}}
+{{- /* Check if the init job is enabled using the correct path */}}
+{{- if .Values.opensecurity.initJob.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  # Use the standard fullname helper and append '-init-job'
+  name: {{ include "opensecurity.fullname" . }}-init-job
+  # Use the standard namespace
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    # Use standard labels from the helper
+    {{- include "opensecurity.labels" . | nindent 4 }}
+    # Add a specific component label
+    app.kubernetes.io/component: init-job
+  annotations:
+    # Align Helm hook annotations with the example
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "0" # Ensure this job runs before higher-weighted hooks
+    # Allow adding custom annotations from values using the correct path
+    {{- with .Values.opensecurity.initJob.jobAnnotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  # Set backoff limit directly from values using the correct path
+  backoffLimit: {{ .Values.opensecurity.initJob.backoffLimit }}
+  # Removed activeDeadlineSeconds and ttlSecondsAfterFinished for alignment
+  template:
+    # Removed template metadata section for alignment
+    spec:
+      # Keep restart policy suitable for jobs
+      restartPolicy: OnFailure
+      # Specify service account name directly from values using the correct path (added default)
+      serviceAccountName: {{ .Values.opensecurity.initJob.serviceAccountName | default "default" }}
+      # Removed optional podSecurityContext and imagePullSecrets for alignment
+      containers:
+        # --- Aligned Container Definition ---
+        - name: integration-service # Keep the specific container name
+          # Removed optional container securityContext for alignment
+          # Use the image path and tag structure previously defined (references .Values.opensecurity.docker)
+          image: "{{ .Values.opensecurity.docker.registry }}/opensecurity-init-job:{{ .Values.opensecurity.docker.tags.initJob }}" # Corrected image name
+          # Keep imagePullPolicy
+          imagePullPolicy: Always
+          # Keep command
+          command: ["/integration-service"] # Assuming this is the correct path inside the initJob image
+          # --- Updated Env Var Section ---
+          # Define environment variables for the container using the correct path
+          env:
+            {{- /* Iterate over simple key-value env vars from values */}}
+            {{- range .Values.opensecurity.initJob.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
+            {{- /* Iterate over env vars sourced from secrets from values */}}
+            {{- range .Values.opensecurity.initJob.envFromSecret }}
+            - name: {{ .name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .secretName }}
+                  key: {{ .secretKey }}
+            {{- end }}
+            {{- /* Iterate over env vars sourced from config maps from values */}}
+            {{- range .Values.opensecurity.initJob.envFromConfigMap }}
+            - name: {{ .name }}
+              valueFrom:
+                configMapKeyRef:
+                  # Name of the ConfigMap to source from
+                  name: {{ .configMapName }}
+                  # Key within the ConfigMap whose value will be used
+                  key: {{ .configMapKey }}
+                  # Add optional flag if needed
+                  {{- if .optional }}
+                  optional: {{ .optional }}
+                  {{- end }}
+            {{- end }}
+          # --- End of Env Var Section ---
+          # Keep resources definition
+          resources:
+            limits:
+              cpu: 500m
+              memory: 4000Mi
+            requests:
+              cpu: 100m
+              memory: 2000Mi
+        # --- End of Aligned Container Definition ---
+      # Removed optional nodeSelector, affinity, and tolerations for alignment
+{{- end }} # End of if .Values.opensecurity.initJob.enabled
