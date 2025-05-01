@@ -231,11 +231,9 @@ postgresql:
           secretKeyRef:
             name: postgres-secret
             key: taskServiceUserPassword
-
 opensearch:
   enabled: true
   clusterName: opensearch-cluster
-
   persistence:
     size: 25Gi
   opensearchJavaOpts: "-Xms3072M -Xmx3072M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/share/opensearch/heap-dump.hprof"
@@ -250,8 +248,6 @@ opensearch:
   extraEnvs:
     - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
       value: myStrongPassword@123!
-    - name: AWS_REGION
-      value: "us-east-2"
   sysctlInit:
     enabled: true
   nodeAffinity:
@@ -305,7 +301,7 @@ opensearch:
                 ".opendistro-notebooks",
                 ".opendistro-asynchronous-search-response*",
               ]
-
+opensearch-dashboards:
   enabled: false
   replicaCount: 1
   resources:
@@ -361,5 +357,3 @@ nats:
 keda:
   enabled: true
 
-kube-prometheus-stack:
-  enabled: false
