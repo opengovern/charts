@@ -12,10 +12,10 @@ opensecurity:
       auth: v2.76.38
       swagger: v2.76.13
       checkupJob: v2.76.13
-      postInstallJob: v2.76.38
+      postInstallJob: v2.76.44
       schedulerService: v2.76.37
-      integration: v2.76.30
-      core: v2.76.39
+      integration: v2.76.44
+      core: v2.76.44
       compliance: v2.76.30
       complianceSummarizerJob: v2.76.30
       complianceReportJob: v2.76.30
@@ -24,7 +24,7 @@ opensecurity:
       queryRunnerJob: v2.76.13
       demoImporterJob: v2.76.13
       psqlImport: v2.60.0
-      tasks: v2.76.30
+      tasks: v2.76.44
   customDeploy:
     externalPostgresql: false
   scaling:
