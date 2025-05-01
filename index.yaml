@@ -2,6 +2,45 @@ apiVersion: v1
 entries:
   opensecurity:
   - apiVersion: v2
+    appVersion: 2.76.48
+    created: "2025-05-01T04:43:09.049545583Z"
+    dependencies:
+    - condition: keda.enabled
+      name: keda
+      repository: ""
+      version: 2.15.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: ""
+      version: 15.5.21
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: ""
+      version: 2.22.0
+    - condition: opensearch-dashboards.enabled
+      name: opensearch-dashboards
+      repository: ""
+      version: 2.20.0
+    - condition: dex.enabled
+      name: dex
+      repository: ""
+      version: 0.19.1
+    - condition: nats.enabled
+      name: nats
+      repository: ""
+      version: 1.2.2
+    - condition: vault.enabled
+      name: vault
+      repository: ""
+      version: 0.28.1
+    description: A Helm chart for deploying opensecurity to Kubernetes
+    digest: 96c4da0b5c28147ba8597fe0f31655d3d6127339107a4429f6c8021904b668d1
+    name: opensecurity
+    type: application
+    urls:
+    - https://github.com/opengovern/charts/releases/download/opensecurity-2.76.48/opensecurity-2.76.48.tgz
+    version: 2.76.48
+  - apiVersion: v2
     appVersion: 2.76.47
     created: "2025-05-01T03:44:08.216738223Z"
     dependencies:
@@ -2712,4 +2751,4 @@ entries:
     urls:
     - https://github.com/opengovern/charts/releases/download/opensecurity-2.4.2/opensecurity-2.4.2.tgz
     version: 2.4.2
-generated: "2025-05-01T03:44:08.217035389Z"
+generated: "2025-05-01T04:43:09.049786764Z"
