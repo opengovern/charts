@@ -80,7 +80,7 @@ spec:
         - name: COMPLIANCE_INTERVAL_HOURS
           value: "24"
         - name: QUERY_VALIDATOR_ENABLED
-          value: "{{ .Values.queryvalidator.enabled }}"
+          value: "{{ .Values.opensecurity.queryvalidator.enabled }}"
         - name: SERVERLESS_PROVIDER
           value: "local"
         - name: COMPLIANCEINTERVALHOURS

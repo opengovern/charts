@@ -8,7 +8,7 @@
 
 {{- define "dex.postgresPort" -}}
 {{- if .Values.externalPostgresql.enabled -}}
-{{ .Values.externalPostgresql.port }}
+{{ .Values.opensecurity.custom.externalPostgresql.port }}
 {{- else -}}
 {{- include "postgres.port" . -}}
 {{- end -}}

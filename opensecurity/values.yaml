@@ -5,28 +5,37 @@ global:
   size: lg
 
 opensecurity:
-  replicaCount: 1
   docker:
     registry: ghcr.io/opengovern
     tags:
       webui: v2.76.23
-      auth: v2.76.28
+      auth: v2.76.30
       swagger: v2.76.13
       checkupJob: v2.76.13
-      postInstallJob: v2.76.27
-      schedulerService: v2.76.13
-      integration: v2.76.25
-      core: v2.76.26
-      compliance: v2.76.13
-      complianceSummarizerJob: v2.76.13
-      complianceReportJob: v2.76.13
+      postInstallJob: v2.76.30
+      schedulerService: v2.76.30
+      integration: v2.76.30
+      core: v2.76.30
+      compliance: v2.76.30
+      complianceSummarizerJob: v0.465.10
+      complianceReportJob: v0.466.4
       esSink: v2.76.13
       complianceQuick: v2.76.13
       queryRunnerJob: v2.76.13
       queryValidatorJob: v2.76.13
       demoImporterJob: v2.76.13
       psqlImport: v2.60.0
-      tasks: v2.76.25
+      tasks: v2.76.30
+  customDeploy:
+    externalPostgresql: false
+  scaling:
+    AuthServiceAutoScaling: # This block must exist to potentially enable HPA
+      enabled: true          # This MUST be true to create the HPA resource
+      minReplicas: 1
+      maxReplicas: 3
+      targetCPUUtilizationPercentage: 90
+      scaleUpStabilizationSeconds: 180
+      scaleDownStabilizationSeconds: 300
   vault:
     keyID: "workspace-creds"
   parallelism:
@@ -34,6 +43,10 @@ opensecurity:
     complianceReportLagThreshold: "50" # should be string
     complianceQuickJobMaxParallelism: 5
   compliance: true
+  queryvalidator:
+    enabled: false
+  queryrunner:
+    enabled: false
 dex:
   configSecret:
     create: false
@@ -218,11 +231,6 @@ postgresql:
           secretKeyRef:
             name: postgres-secret
             key: taskServiceUserPassword
-externalOpensearch:
-  enabled: false
-  endpoint: "https://opensearch.example.com"
-  roleArn: "arn:aws:iam::000000000000:role/opensearch-fullaccess"
-  awsRegion: "us-east-1"
 
 opensearch:
   enabled: true
@@ -297,7 +305,7 @@ opensearch:
                 ".opendistro-notebooks",
                 ".opendistro-asynchronous-search-response*",
               ]
-opensearch-dashboards:
+
   enabled: false
   replicaCount: 1
   resources:
@@ -349,38 +357,6 @@ nats:
     enabled: true
     podMonitor:
       enabled: false
-vault-helm: {}
-aws:
-  accountID: "xxx"
-github:
-  token: ""
+
 keda:
   enabled: true
-populateWithSampleData:
-  enabled: false
-  fileURL: "https://demo-data.opencomply.io/v2/demo_data.tar.gz.enc"
-swagger:
-  enabled: false
-queryvalidator:
-  enabled: false
-queryrunner:
-  enabled: false
-
-
-# Following charts are only enabled if monitoringDebugMode is set to true. They could cause crd collision in existing clusters do not enable them unless you know what you are doing
-monitoringDebugMode: false
-
-kube-prometheus-stack:
-
-
-  enabled: false
-  alertmanager:
-    enabled: false
-  prometheus:
-    prometheusSpec:
-      storageSpec:
-        volumeClaimTemplate:
-          spec:
-            resources:
-              requests:
-                storage: 10Gi

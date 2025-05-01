@@ -162,9 +162,6 @@ spec:
               value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
             - name: INTEGRATION_BASEURL
               value: "http://integration-service.{{ .Release.Namespace }}.svc.cluster.local:8000"
-            - name: GITHUB_TOKEN
-              # Reads token from values file - ensure it's set if needed
-              value: "{{ .Values.github.token }}"
             - name: PROMETHEUS_PUSH_ADDRESS
               # Assumes prometheus pushgateway exists at this address
               value: "prom-system-prometheus-pushgateway.prom-system.svc.cluster.local:9091"

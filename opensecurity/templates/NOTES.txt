@@ -2,8 +2,6 @@
 NOTES.txt: This file contains instructions displayed after a successful Helm deployment.
 */}}
 
-{{- define "opensecurity.notes" }}
-
 OpenSecurity has been deployed.
 
 1.  **Access the UI:**
@@ -11,7 +9,7 @@ OpenSecurity has been deployed.
     To access the OpenSecurity UI, set up port forwarding to the nginx-proxy service. Open a separate terminal and run:
 
     kubectl port-forward -n {{ .Release.Namespace }} svc/{{ .Release.Name }}-nginx-proxy 8080:80
-    {{- /* Note: Assuming service name follows <release-name>-nginx-proxy pattern */}}
+    {{- /* Note: Ensure the service name '{{ .Release.Name }}-nginx-proxy' matches the actual service created by your chart. */}}
 
     Then, open your web browser and navigate to:
 
@@ -32,4 +30,3 @@ OpenSecurity has been deployed.
 
     https://docs.clearcompass.so
 
-{{- end }}
