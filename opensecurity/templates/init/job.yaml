@@ -42,7 +42,7 @@ spec:
           # Keep imagePullPolicy
           imagePullPolicy: Always
           # Keep command
-          command: ["/integration-service"] # Assuming this is the correct path inside the initJob image
+          command: ["/app/app-init-job"] # Assuming this is the correct path inside the initJob image
           # --- Updated Env Var Section ---
           # Define environment variables for the container using the correct path
           env:
