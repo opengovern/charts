@@ -1,6 +1,5 @@
 {{- define "elastic.envs"}}
-- name: ELASTICSEARCH_ISOPENSEARCH
-  value: "true"
+
 - name: ELASTICSEARCH_ADDRESS
   value: "https://opensearch-cluster-master.{{ .Release.Namespace }}.svc.cluster.local:9200"
 - name: ELASTICSEARCH_USERNAME
@@ -9,4 +8,6 @@
   value: "myStrongPassword@123!"
 - name: ELASTICSEARCH_INGESTION_ENDPOINT
   value: ""
+- name: ELASTICSEARCH_ISONAKS
+  value: "true"
 {{- end }}

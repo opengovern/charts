@@ -185,6 +185,15 @@ spec:
               value: "http://{{ .Release.Name }}-dex.{{ .Release.Namespace }}.svc.cluster.local:5556/dex"
             - name: DEX_AUTH_PUBLIC_CLIENT_ID
               value: public-client # Hardcoded value
+            - name: DEFAULT_DEX_USER_NAME
+              value: "admin"
+            - name: DEFAULT_DEX_USER_EMAIL
+              value: "admin@clearcompass.so"
+            - name: DEFAULT_DEX_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "opensecurity.fullname" . }}-initial-admin-password
+                  key: password
 
             {{- with .Values.opensecurity.apikey }}
             - name: PLATFORM_KEY_ENABLED

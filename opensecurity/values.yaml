@@ -9,20 +9,19 @@ opensecurity:
     registry: ghcr.io/opengovern
     tags:
       webui: v2.76.23
-      auth: v2.76.30
+      auth: v2.76.38
       swagger: v2.76.13
       checkupJob: v2.76.13
-      postInstallJob: v2.76.30
-      schedulerService: v2.76.30
+      postInstallJob: v2.76.38
+      schedulerService: v2.76.37
       integration: v2.76.30
-      core: v2.76.34
+      core: v2.76.39
       compliance: v2.76.30
       complianceSummarizerJob: v2.76.30
       complianceReportJob: v2.76.30
       esSink: v2.76.13
       complianceQuick: v2.76.13
       queryRunnerJob: v2.76.13
-      queryValidatorJob: v2.76.13
       demoImporterJob: v2.76.13
       psqlImport: v2.60.0
       tasks: v2.76.30
@@ -43,8 +42,6 @@ opensecurity:
     complianceReportLagThreshold: "50" # should be string
     complianceQuickJobMaxParallelism: 5
   compliance: true
-  queryvalidator:
-    enabled: false
   queryrunner:
     enabled: false
 dex:
