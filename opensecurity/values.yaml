@@ -15,7 +15,7 @@ opensecurity:
       postInstallJob: v2.76.30
       schedulerService: v2.76.30
       integration: v2.76.30
-      core: v2.76.30
+      core: v2.76.31
       compliance: v2.76.30
       complianceSummarizerJob: v0.465.10
       complianceReportJob: v0.466.4
@@ -360,3 +360,6 @@ nats:
 
 keda:
   enabled: true
+
+kube-prometheus-stack:
+  enabled: false
