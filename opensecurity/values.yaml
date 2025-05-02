@@ -9,7 +9,7 @@ opensecurity:
     registry: ghcr.io/opengovern
     tags:
       webui: v2.76.23
-      auth: v2.76.38
+      auth: v2.76.46
       swagger: v2.76.13
       checkupJob: v2.76.13
       postInstallJob: v2.76.44
