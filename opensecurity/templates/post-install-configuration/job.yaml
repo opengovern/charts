@@ -3,11 +3,9 @@ kind: Job
 metadata:
   name: post-install-configuration
   namespace: {{ .Release.Namespace }}
-  annotations:
-    "helm.sh/hook": post-install,post-upgrade
-    "helm.sh/hook-weight": "0" # Runs after default resources (weight 0)
-    # Add hook-delete-policy if you want Helm to clean up successful jobs
-    # "helm.sh/hook-delete-policy": hook-succeeded
+  # Add standard labels if desired, e.g., Helm chart labels
+  labels:
+    {{- include "opensecurity.labels" . | nindent 4 }} # Example using a standard labels helper
 spec:
   template:
     spec:
