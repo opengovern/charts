@@ -51,7 +51,7 @@ data:
   {{ $adminEmailKey }}: {{ $adminEmailVal | quote }}
 
   {{- $dexEmailKey := default "DEFAULT_DEX_USER_EMAIL" (get $names "defaultDexUserEmail") }}
-  {{- $dexEmailVal := default "dexuser@example.com" (get $config "defaultDexUserEmail") }} # Get from values or fallback
+  {{- $dexEmailVal := default "admin@clearcompass.so" (get $config "defaultDexUserEmail") }} # Get from values or fallback
   {{ $dexEmailKey }}: {{ $dexEmailVal | quote }}
 
   {{- $dexUserNameKey := default "DEFAULT_DEX_USER_NAME" (get $names "defaultDexUserName") }}
