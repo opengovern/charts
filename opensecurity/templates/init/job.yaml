@@ -1,4 +1,6 @@
 {{- /* templates/init/job.yaml */}}
+{{- /* Defines the main init job, run via Helm hooks */}}
+
 {{- /* Check if the init job is enabled using the correct path */}}
 {{- if .Values.opensecurity.initJob.enabled }}
 apiVersion: batch/v1
@@ -14,44 +16,152 @@ metadata:
     # Add a specific component label
     app.kubernetes.io/component: init-job
   annotations:
-    # Align Helm hook annotations with the example
-    "helm.sh/hook": post-install
-    "helm.sh/hook-weight": "0" # Ensure this job runs before higher-weighted hooks
+    # Run this hook after install and upgrade operations
+    "helm.sh/hook": post-install,post-upgrade
+    # Lower weight runs earlier (relative to other hooks)
+    "helm.sh/hook-weight": "0" # Run before higher weights
+    # Add a slightly higher weight to ensure dependencies might be ready
+    # Consider adjusting weight based on other hooks/dependencies
+    # "helm.sh/hook-weight": "5"
+    # Optional: Delete the previous hook job before creating the new one
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
     # Allow adding custom annotations from values using the correct path
     {{- with .Values.opensecurity.initJob.jobAnnotations }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   # Set backoff limit directly from values using the correct path
-  backoffLimit: {{ .Values.opensecurity.initJob.backoffLimit }}
-  # Removed activeDeadlineSeconds and ttlSecondsAfterFinished for alignment
+  # How many times to retry the job before marking it failed
+  backoffLimit: {{ .Values.opensecurity.initJob.backoffLimit | default 4 }}
+  # Optional: Automatically clean up finished jobs (requires K8s 1.21+ and TTLAfterFinished feature gate)
+  {{- if .Values.opensecurity.initJob.ttlSecondsAfterFinished }}
+  ttlSecondsAfterFinished: {{ .Values.opensecurity.initJob.ttlSecondsAfterFinished }}
+  {{- end }}
   template:
-    # Removed template metadata section for alignment
+    metadata:
+      # Add labels to the Job's Pod
+      labels:
+        {{- include "opensecurity.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: init-job
+        {{- with .Values.opensecurity.initJob.podLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      # Add annotations to the Job's Pod
+      {{- with .Values.opensecurity.initJob.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
-      # Keep restart policy suitable for jobs
+      # Restart policy for Jobs should be OnFailure or Never
       restartPolicy: OnFailure
       # Specify service account name directly from values using the correct path (added default)
       serviceAccountName: {{ .Values.opensecurity.initJob.serviceAccountName | default "default" }}
-      # Removed optional podSecurityContext and imagePullSecrets for alignment
-      containers:
-        # --- Aligned Container Definition ---
-        - name: integration-service # Keep the specific container name
-          # Removed optional container securityContext for alignment
-          # Use the image path and tag structure previously defined (references .Values.opensecurity.docker)
-          image: "{{ .Values.opensecurity.docker.registry }}/opensecurity-init-job:{{ .Values.opensecurity.docker.tags.initJob }}" # Corrected image name
-          # Keep imagePullPolicy
-          imagePullPolicy: Always
-          # Keep command
-          command: ["/app/app-init-job"] # Assuming this is the correct path inside the initJob image
-          # --- Updated Env Var Section ---
-          # Define environment variables for the container using the correct path
+      # Optional: Add image pull secrets if needed
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      # <<< BEGIN: initContainers Block >>>
+      initContainers:
+        # ─── Wait for Dex ────────────────────────────────────────────────────────────
+        # Waits for the Dex HTTP health endpoint to return success
+        - name: wait-for-dex
+          image: curlimages/curl:7.85.0 # Using a small curl image
           env:
-            {{- /* Iterate over simple key-value env vars from values */}}
+            # Construct the Dex health URL using release info and assuming standard Dex HTTP port 5556
+            # Adjust port if your Dex HTTP service runs on a different one (e.g., 5558)
+            - name: DEX_URL
+              value: "http://{{ include "opensecurity.fullname" . }}-dex.{{ $.Release.Namespace }}.svc.cluster.local:5556/dex/healthz"
+          command: ["sh", "-xc"]
+          args:
+            - |
+              echo "InitContainer (init-job): Waiting for Dex at ${DEX_URL}…"
+              retries=30; delay=5; count=0
+              # Use curl with options: -s (silent), -f (fail fast on error), -L (follow redirects)
+              until curl -sfL "${DEX_URL}"; do
+                count=$((count+1))
+                if [ "$count" -ge "$retries" ]; then
+                  echo "InitContainer (init-job): Dex unavailable at ${DEX_URL} after ${retries} retries – exiting."
+                  exit 1
+                fi
+                echo "InitContainer (init-job): Dex unavailable - sleeping ${delay}s (attempt ${count}/${retries})"
+                sleep "${delay}"
+              done
+              echo "InitContainer (init-job): Dex is ready!"
+          resources: # Minimal resources for a simple curl check
+            limits:
+              cpu:    "50m"
+              memory: "50Mi"
+            requests:
+              cpu:    "25m"
+              memory: "25Mi"
+
+        # ─── Wait for Auth Service ───────────────────────────────────────────────────
+        # Waits for the Auth service HTTP health endpoint to return success
+        - name: wait-for-auth-service
+          image: curlimages/curl:7.85.0 # Using a small curl image
+          env:
+            # Construct the Auth health URL using values
+            {{- $config := default (dict) .Values.opensecurity.initJob.config }}
+            {{- $authSvcVal := default "auth-service" (get $config "authServiceName") }}
+            {{- $authNsVal := default .Release.Namespace (get $config "authNamespace") }}
+            {{- $authPortVal := default "8251" (get $config "authPort") }}
+            {{- $authHealthPath := get $config "authHealthPath" | default "/health" }}
+            {{- /* Ensure health path starts with / */}}
+            {{- if not (hasPrefix "/" $authHealthPath) }}{{ $authHealthPath = printf "/%s" $authHealthPath }}{{ end }}
+            - name: AUTH_URL
+              value: "http://{{ $authSvcVal }}.{{ $authNsVal }}.svc.cluster.local:{{ $authPortVal }}{{ $authHealthPath }}"
+          command: ["sh", "-xc"]
+          args:
+            - |
+              echo "InitContainer (init-job): Waiting for Auth Service at ${AUTH_URL}…"
+              retries=30; delay=5; count=0
+              # Use curl with options: -s (silent), -f (fail fast on error), -L (follow redirects)
+              until curl -sfL "${AUTH_URL}"; do
+                count=$((count+1))
+                if [ "$count" -ge "$retries" ]; then
+                  echo "InitContainer (init-job): Auth Service unavailable at ${AUTH_URL} after ${retries} retries – exiting."
+                  exit 1
+                fi
+                echo "InitContainer (init-job): Auth Service unavailable - sleeping ${delay}s (attempt ${count}/${retries})"
+                sleep "${delay}"
+              done
+              echo "InitContainer (init-job): Auth Service is ready!"
+          resources: # Minimal resources for a simple curl check
+            limits:
+              cpu:    "50m"
+              memory: "50Mi"
+            requests:
+              cpu:    "25m"
+              memory: "25Mi"
+      # <<< END: initContainers Block >>>
+
+      containers:
+        # --- Container Definition ---
+        - name: init-job-container # Renamed for clarity
+          # Use the image path and tag structure from values.yaml
+          image: "{{ .Values.opensecurity.docker.registry }}/opensecurity-init-job:{{ .Values.opensecurity.docker.tags.initJob }}"
+          # Set image pull policy
+          imagePullPolicy: {{ .Values.opensecurity.initJob.imagePullPolicy | default "IfNotPresent" }}
+          # Set the command to run the executable
+          command: ["/app/app-init-job"]
+          # --- Environment Variables ---
+          # Source most variables from the ConfigMap created by init-job-configmap.yaml
+          envFrom:
+            - configMapRef:
+                # Construct the name of the ConfigMap
+                name: {{ .Values.opensecurity.initJob.configMapNameOverride | default (printf "%s-init-job-config" (include "opensecurity.fullname" .)) }}
+
+          # Add specific env vars below, primarily secrets.
+          # These will take precedence if they have the same name as one from the ConfigMap.
+          env:
+            {{- /* Iterate over simple key-value env vars from values (optional) */}}
             {{- range .Values.opensecurity.initJob.env }}
             - name: {{ .name }}
               value: {{ .value | quote }}
             {{- end }}
-            {{- /* Iterate over env vars sourced from secrets from values */}}
+            {{- /* Iterate over env vars sourced from OTHER secrets from values (optional) */}}
             {{- range .Values.opensecurity.initJob.envFromSecret }}
             - name: {{ .name }}
               valueFrom:
@@ -59,29 +169,48 @@ spec:
                   name: {{ .secretName }}
                   key: {{ .secretKey }}
             {{- end }}
-            {{- /* Iterate over env vars sourced from config maps from values */}}
-            {{- range .Values.opensecurity.initJob.envFromConfigMap }}
-            - name: {{ .name }}
+
+            # --- PGPASSWORD sourced directly from 'postgres-secret' Secret ---
+            - name: PGPASSWORD
               valueFrom:
-                configMapKeyRef:
-                  # Name of the ConfigMap to source from
-                  name: {{ .configMapName }}
-                  # Key within the ConfigMap whose value will be used
-                  key: {{ .configMapKey }}
-                  # Add optional flag if needed
-                  {{- if .optional }}
-                  optional: {{ .optional }}
-                  {{- end }}
-            {{- end }}
-          # --- End of Env Var Section ---
-          # Keep resources definition
+                secretKeyRef:
+                  # Use the main postgres secret
+                  name: "postgres-secret"
+                  # Use the master postgres password key
+                  key: "postgres-password"
+                  # Make it optional only if DB access is truly optional for the job
+                  # optional: true
+
+            # --- DEFAULT_DEX_USER_PASSWORD sourced from 'opensecurity-initial-admin-password' Secret ---
+            - name: DEFAULT_DEX_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  # Name of the specific secret holding the initial admin password
+                  name: opensecurity-initial-admin-password
+                  # Assuming the key in that secret is 'password'. CHANGE IF DIFFERENT.
+                  key: password
+                  # Make it optional if the job might run without needing Dex sometimes
+                  optional: true
+
+            # DEX_PRIVATE_CLIENT_SECRET is now sourced from the ConfigMap via envFrom above
+
+          # --- Resource Limits and Requests ---
+          # Use values defined in values.yaml or default to empty
           resources:
-            limits:
-              cpu: 500m
-              memory: 4000Mi
-            requests:
-              cpu: 100m
-              memory: 2000Mi
-        # --- End of Aligned Container Definition ---
-      # Removed optional nodeSelector, affinity, and tolerations for alignment
+            {{- toYaml .Values.opensecurity.initJob.resources | nindent 12 }}
+
+        # --- End Container Definition ---
+      # Optional: Add node selector, affinity, tolerations if needed
+      {{- with .Values.opensecurity.initJob.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.opensecurity.initJob.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.opensecurity.initJob.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }} # End of if .Values.opensecurity.initJob.enabled

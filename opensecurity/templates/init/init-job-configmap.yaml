@@ -3,34 +3,126 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  # Generate a unique name for the ConfigMap
   name: {{ include "opensecurity.fullname" . }}-init-job-config
-  namespace: {{ .Release.Namespace }}
+  namespace: "{{ .Release.Namespace }}"
   labels:
-    {{ include "opensecurity.labels" . | nindent 4 }}
+    # Include standard Helm labels
+    {{- include "opensecurity.labels" . | nindent 4 }}
     app.kubernetes.io/component: init-job-config
 data:
-  {{- $cfg := default (dict) .Values.opensecurity.initJob.config }}
-  {{- $names := default (dict) .Values.opensecurity.initJob.envVarNames }}
+  # --- IMPORTANT ---
+  # This ConfigMap stores non-sensitive configuration.
+  # Sensitive values like PGPASSWORD, DEFAULT_DEX_USER_PASSWORD
+  # MUST be stored in a Kubernetes Secret and referenced directly in the Job/Pod spec.
+  # DEX_PRIVATE_CLIENT_SECRET is included here with a default for compatibility,
+  # but ideally should also be sourced from a secret if not using the default "SECRET".
+  # ---
 
-  {{- /* Auth Service Name */}}
-  {{- $authSvcKey := default "AUTH_SERVICE_NAME" (index $names "authServiceName") }}
-  {{- $authSvcVal := default "core-service" (index $cfg "authServiceName") }}
+  {{- /* bring config and envVarNames into safe maps */}}
+  {{- $config := default (dict) .Values.opensecurity.initJob.config }}
+  {{- $names  := default (dict) .Values.opensecurity.initJob.envVarNames }}
+  {{- $global := default (dict) .Values.global }}
+  {{- /* Bring secrets config into a safe map for default checking */}}
+  {{- $secrets := default (dict) .Values.opensecurity.initJob.secrets }}
+
+
+  # --- Auth Service URL Components ---
+  {{- $authSvcKey := default "AUTH_SERVICE_NAME" (get $names "authServiceName") }}
+  {{- $authSvcVal := default "auth-service"          (get $config "authServiceName") }}
   {{ $authSvcKey }}: {{ $authSvcVal | quote }}
 
-  {{- /* Auth Namespace */}}
-  {{- $authNsKey := default "AUTH_NAMESPACE" (index $names "authNamespace") }}
-  {{- $authNsVal := default .Release.Namespace (index $cfg "authNamespace") }}
+  {{- $authNsKey := default "AUTH_NAMESPACE"         (get $names "authNamespace") }}
+  {{- $authNsVal := default .Release.Namespace       (get $config "authNamespace") }}
   {{ $authNsKey }}: {{ $authNsVal | quote }}
 
-  {{- /* Auth Port */}}
-  {{- $authPortKey := default "AUTH_SERVICE_PORT" (index $names "authPort") }}
-  {{- $authPortVal := default "8251" (index $cfg "authPort") }}
+  {{- $authPortKey := default "AUTH_SERVICE_PORT"    (get $names "authPort") }}
+  {{- $authPortVal := default "8251"                 (get $config "authPort") }}
   {{ $authPortKey }}: {{ $authPortVal | quote }}
 
-  {{- /* Optional Auth Health Path */}}
-  {{- $authHealthVal := index $cfg "authHealthPath" }}
-  {{- if $authHealthVal }}
-  {{- $authHealthKey := default "AUTH_HEALTH_PATH" (index $names "authHealthPath") }}
-  {{ $authHealthKey }}: {{ $authHealthVal | quote }}
+  {{- with get $config "authHealthPath" }}
+    {{- $authHealthKey := default "AUTH_HEALTH_PATH" (get $names "authHealthPath") }}
+    {{ $authHealthKey }}: {{ . | quote }}
   {{- end }}
+
+  # --- Default Admin/Dex User ---
+  {{- $adminEmailKey := default "DEFAULT_ADMIN_EMAIL" (get $names "defaultAdminEmail") }}
+  {{- $adminEmailVal := default "admin@clearcompass.so" (get $config "defaultAdminEmail") }}
+  {{ $adminEmailKey }}: {{ $adminEmailVal | quote }}
+
+  {{- $dexEmailKey := default "DEFAULT_DEX_USER_EMAIL" (get $names "defaultDexUserEmail") }}
+  {{- $dexEmailVal := default "dexuser@example.com" (get $config "defaultDexUserEmail") }} # Get from values or fallback
+  {{ $dexEmailKey }}: {{ $dexEmailVal | quote }}
+
+  {{- $dexUserNameKey := default "DEFAULT_DEX_USER_NAME" (get $names "defaultDexUserName") }}
+  {{- $dexUserNameVal := default "admin" (get $config "defaultDexUserName") }} # Get from values or fallback
+  {{ $dexUserNameKey }}: {{ $dexUserNameVal | quote }}
+
+  # --- PostgreSQL Connection Info (excluding password) ---
+  {{- $pgSrc  := default (dict) .Values.authDatabase }}
+  {{- $pgHost := default (printf "%s-postgresql-primary.%s.svc.cluster.local" $.Release.Name $.Release.Namespace) (get $pgSrc "host") }}
+  {{- $pgPort := default "5432"                                                             (get $pgSrc "port") }}
+  {{- $pgDb   := default "auth"                                                           (get $pgSrc "name") }}
+  {{- $pgUser := default "postgres"                                                       (get $pgSrc "user") }} # User is set here
+  {{- $pgSsl  := default "disable"                                                        (get $pgSrc "sslMode") }}
+
+  {{- $pgHostKey := default "PGHOST"    (get $names "pgHost") }}
+  {{ $pgHostKey }}: {{ $pgHost | quote }}
+
+  {{- $pgPortKey := default "PGPORT"    (get $names "pgPort") }}
+  {{ $pgPortKey }}: {{ $pgPort | quote }}
+
+  {{- $pgDbKey   := default "PGDATABASE" (get $names "pgDatabase") }}
+  {{ $pgDbKey }}: {{ $pgDb | quote }}
+
+  {{- $pgUserKey := default "PGUSER"    (get $names "pgUser") }}
+  {{ $pgUserKey }}: {{ $pgUser | quote }} # Value from $pgUser variable above
+
+  {{- $pgSslKey  := default "PGSSLMODE" (get $names "pgSslMode") }}
+  {{ $pgSslKey }}: {{ $pgSsl | quote }}
+
+  # --- Dex Configuration ---
+  {{- $dexGrpcKey := default "DEX_GRPC_ADDR" (get $names "dexGrpcAddr") }}
+  {{- $dexGrpcVal := default (printf "%s-dex.%s.svc.cluster.local:5557" $.Release.Name $.Release.Namespace) (get $config "dexGrpcAddr") }}
+  {{ $dexGrpcKey }}: {{ $dexGrpcVal | quote }}
+
+  {{- $dexPublicUrisKey := default "DEX_PUBLIC_CLIENT_REDIRECT_URIS" (get $names "dexPublicClientRedirectUris") }}
+  {{- $dexPublicUrisVal := default (printf "https://%s/callback,http://%s/callback,http://localhost:3000/callback,http://localhost:8080/callback" (get $global "domain") (get $global "domain")) (get $config "dexPublicClientRedirectUris") }}
+  {{ $dexPublicUrisKey }}: {{ $dexPublicUrisVal | quote }}
+
+  {{- $dexPrivateUrisKey := default "DEX_PRIVATE_CLIENT_REDIRECT_URIS" (get $names "dexPrivateClientRedirectUris") }}
+  {{- $dexPrivateUrisVal := default (printf "https://%s/callback" (get $global "domain")) (get $config "dexPrivateClientRedirectUris") }}
+  {{ $dexPrivateUrisKey }}: {{ $dexPrivateUrisVal | quote }}
+
+  {{- $dexPublicClientIdKey := default "DEX_PUBLIC_CLIENT_ID" (get $names "dexPublicClientId") }}
+  {{- $dexPublicClientIdVal := default "public-client" (get $config "dexPublicClientId") }} # Default 'public-client'
+  {{ $dexPublicClientIdKey }}: {{ $dexPublicClientIdVal | quote }}
+
+  {{- $dexPrivateClientIdKey := default "DEX_PRIVATE_CLIENT_ID" (get $names "dexPrivateClientId") }}
+  {{- $dexPrivateClientIdVal := default "private-client" (get $config "dexPrivateClientId") }} # Provide a default or require in values
+  {{ $dexPrivateClientIdKey }}: {{ $dexPrivateClientIdVal | quote }}
+
+  {{- $dexHttpHealthKey := default "DEX_HTTP_HEALTH_URL" (get $names "dexHttpHealthUrl") }}
+  {{- $dexHttpHealthVal := default (printf "http://%s-dex.%s.svc.cluster.local:5556/dex/healthz" $.Release.Name $.Release.Namespace) (get $config "dexHttpHealthUrl") }} # Construct default health URL
+  {{ $dexHttpHealthKey }}: {{ $dexHttpHealthVal | quote }}
+
+  # --- BEGIN: Add Dex Private Client Secret with Default ---
+  {{- $dexPrivSecretKey := default "DEX_PRIVATE_CLIENT_SECRET" (get $names "dexPrivateClientSecret") }}
+  {{- /* Get value from secrets if defined, otherwise default to "SECRET" */}}
+  {{- $dexPrivSecretVal := get $secrets "dexPrivateClientSecret" | default "SECRET" }}
+  {{ $dexPrivSecretKey }}: {{ $dexPrivSecretVal | quote }}
+  # --- END: Add Dex Private Client Secret with Default ---
+
+  # --- Other Hardcoded/Constructed Values ---
+  {{- $workspaceNameKey := default "WORKSPACE_NAME" (get $names "workspaceName") }}
+  {{ $workspaceNameKey }}: "main" # Hardcoded as per snippet
+
+  {{- $dexCallbackKey := default "DEX_CALLBACK_URL" (get $names "dexCallbackUrl") }}
+  {{- $dexCallbackVal := default (printf "https://%s/dex/callback,http://%s/dex/callback,http://localhost:3000/dex/callback,http://localhost:8080/dex/callback" (get $global "domain") (get $global "domain")) (get $config "dexCallbackUrl") }}
+  {{ $dexCallbackKey }}: {{ $dexCallbackVal | quote }}
+
+  {{- $dexAuthDomainKey := default "DEX_AUTH_DOMAIN" (get $names "dexAuthDomain") }}
+  {{- $dexAuthDomainVal := default (printf "http://%s-dex.%s.svc.cluster.local:5556/dex" $.Release.Name $.Release.Namespace) (get $config "dexAuthDomain") }}
+  {{ $dexAuthDomainKey }}: {{ $dexAuthDomainVal | quote }}
+
 {{- end }}

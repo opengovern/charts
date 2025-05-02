@@ -50,6 +50,8 @@ opensecurity:
     enabled: false
   initJob:
     enabled: true
+    dexPrivateClientSecret: "secret"
+
     # --- ADD THIS ---
   # Tag to use when rendering the debug job template
   # Leave empty or set to a default if desired
