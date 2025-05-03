@@ -1,3 +1,4 @@
+{{- /* /Users/anil/workspace/charts/opensecurity/templates/es-sink/deployment.yaml */}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -7,7 +8,8 @@ metadata:
     app: es-sink-service
 spec:
   minReadySeconds: 10
-  replicas: {{ .Values.opensecurity.replicaCount }}
+  # Use replicaCount from values, assuming it exists under opensecurity
+  replicas: {{ .Values.opensecurity.replicaCount | default 1 }}
   selector:
     matchLabels:
       app: es-sink-service
@@ -26,6 +28,51 @@ spec:
                     operator: In
                     values:
                       - app
+
+      # <<< BEGIN: initContainers Block >>>
+      initContainers:
+        # ─── Wait for Elasticsearch/OpenSearch ───────────────────────────────────────
+        # Waits for the Elasticsearch/OpenSearch service endpoint to be reachable
+        - name: wait-for-elasticsearch
+          image: curlimages/curl:8.5.0 # Use a specific curl image version
+          env:
+            # Get the Elasticsearch URL from the main container's env vars for consistency
+            # Note: This assumes the service name 'opensearch-cluster-master' is static
+            - name: ES_URL
+              value: "https://opensearch-cluster-master.{{ $.Release.Namespace }}.svc.cluster.local:9200"
+              # Alternative using values if defined:
+              # value: {{ .Values.opensecurity.esSink.elasticsearch.address | default "https://opensearch-cluster-master.{{ $.Release.Namespace }}.svc.cluster.local:9200" }}
+          command: ["sh", "-xc"]
+          args:
+            - |
+              echo "InitContainer (es-sink): Waiting for Elasticsearch at ${ES_URL}…"
+              retries=60 # Increase retries slightly
+              delay=5; count=0
+              # Use curl with options:
+              # -k: Allow insecure connections (skips TLS verification, common in internal clusters)
+              # -s: Silent mode (don't show progress)
+              # -f: Fail fast (return error on HTTP failure codes >= 400)
+              # -o /dev/null: Discard output body
+              # We check for reachability and basic HTTP success, not necessarily full auth success (e.g., 401 is okay here)
+              until curl -k -sf -o /dev/null "${ES_URL}"; do
+                count=$((count+1))
+                if [ "$count" -ge "$retries" ]; then
+                  echo "InitContainer (es-sink): Elasticsearch unavailable at ${ES_URL} after ${retries} retries – exiting."
+                  exit 1
+                fi
+                echo "InitContainer (es-sink): Elasticsearch unavailable - sleeping ${delay}s (attempt ${count}/${retries})"
+                sleep "${delay}"
+              done
+              echo "InitContainer (es-sink): Elasticsearch is reachable!"
+          resources: # Minimal resources for a simple curl check
+            limits:
+              cpu:    "50m"
+              memory: "50Mi"
+            requests:
+              cpu:    "25m"
+              memory: "25Mi"
+      # <<< END: initContainers Block >>>
+
       containers:
         - name: es-sink-service
           image: "{{ .Values.opensecurity.docker.registry }}/es-sink:{{ .Values.opensecurity.docker.tags.esSink }}"
@@ -45,17 +92,19 @@ spec:
             - name: ESSINK_GRPC__ADDRESS
               value: "0.0.0.0:5252"
             - name: ESSINK_GRPC__AUTH_URI
-              value: "auth-service.{{ .Release.Namespace }}.svc.cluster.local:50051"
+              # Use helper for service name if available, otherwise construct
+              value: "{{ include "opensecurity.fullname" . }}-auth-service.{{ .Release.Namespace }}.svc.cluster.local:50051"
 
             - name: ESSINK_ELASTICSEARCH__ADDRESS
               value: "https://opensearch-cluster-master.{{ .Release.Namespace }}.svc.cluster.local:9200"
             - name: ESSINK_ELASTICSEARCH__IS_OPEN_SEARCH
               value: "true"
-            - name: ESSINK_ELASTICSEARCH__IS_ON_AKS
+            - name: ESSINK_ELASTICSEARCH__IS_ON_AKS # Consider if this is still needed or configurable
               value: "true"
             - name: ESSINK_ELASTICSEARCH__USERNAME
-              value: "admin"
+              value: "admin" # Consider sourcing from secret
             - name: ESSINK_ELASTICSEARCH__PASSWORD
-              value: "myStrongPassword@123!"
+              value: "myStrongPassword@123!" # !!! HIGHLY RECOMMEND sourcing from secret !!!
             - name: ESSINK_NATS__URL
               value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
+
