@@ -40,8 +40,6 @@ spec:
             # Note: This assumes the service name 'opensearch-cluster-master' is static
             - name: ES_URL
               value: "https://opensearch-cluster-master.{{ $.Release.Namespace }}.svc.cluster.local:9200"
-              # Alternative using values if defined:
-              # value: {{ .Values.opensecurity.esSink.elasticsearch.address | default "https://opensearch-cluster-master.{{ $.Release.Namespace }}.svc.cluster.local:9200" }}
           command: ["sh", "-xc"]
           args:
             - |
