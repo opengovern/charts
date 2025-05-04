@@ -39,7 +39,7 @@ spec:
             # Get the Elasticsearch URL from the main container's env vars for consistency
             # Note: This assumes the service name 'opensearch-cluster-master' is static
             - name: ES_URL
-              value: "https://opensearch-cluster-master.{{ $.Release.Namespace }}.svc.cluster.local:9200"
+              value: "http://opensearch-cluster-master.{{ $.Release.Namespace }}.svc.cluster.local:9200"
           command: ["sh", "-xc"]
           args:
             - |
