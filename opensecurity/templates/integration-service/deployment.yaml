@@ -27,6 +27,41 @@ spec:
                     operator: In
                     values:
                       - app
+
+      # <<< BEGIN: initContainers Block >>>
+      initContainers:
+        - name: wait-for-core-service
+          image: curlimages/curl:8.5.0 # Consistent image
+          env:
+            - name: CORE_HEALTH_URL
+              # URL for the core-service health endpoint
+              value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251/health"
+          command: ["sh","-xc"]
+          args:
+            - |
+              # Consistent use of Helm values with defaults
+              retries={{ .Values.opensecurity.initRetryCount | default 30 }}
+              delay={{ .Values.opensecurity.initRetryDelay | default 5 }}
+
+              # Updated logging context to 'integration-service'
+              echo "InitContainer (integration-service): Waiting for core-service at ${CORE_HEALTH_URL}…"
+              count=0
+              # Loop until core-service health check succeeds
+              until curl -sf "${CORE_HEALTH_URL}" -o /dev/null; do
+                count=$((count+1))
+                if [ "$count" -ge "$retries" ]; then
+                  # Updated logging context
+                  echo "InitContainer (integration-service): core-service at ${CORE_HEALTH_URL} still unreachable after ${retries} retries – exiting."
+                  exit 1
+                fi
+                # Updated logging context
+                echo "InitContainer (integration-service): Sleeping ${delay}s before retrying core-service (attempt ${count}/${retries})…"
+                sleep "${delay}"
+              done
+              # Updated logging context
+              echo "InitContainer (integration-service): core-service is healthy!"
+      # <<< END: initContainers Block >>>
+
       containers:
       - name: integration-service
         image: "{{ .Values.opensecurity.docker.registry }}/integration:{{ .Values.opensecurity.docker.tags.integration }}"
@@ -40,6 +75,7 @@ spec:
             cpu: 100m
             memory: 2000Mi
         env:
+        # --- Keep all existing env vars ---
         - name: INTEGRATION_POSTGRES__HOST
           value: "{{ include "postgres.endpoint" . }}"
         - name: INTEGRATION_POSTGRES__PORT

@@ -27,6 +27,37 @@ spec:
                     operator: In
                     values:
                       - app
+
+      # <<< BEGIN: initContainers Block (Compatible Version) >>>
+      initContainers:
+        - name: wait-for-core-service
+          image: curlimages/curl:8.5.0 # Using the same image version as es-sink example
+          env:
+            - name: CORE_HEALTH_URL
+              value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251/health"
+          command: ["sh","-xc"]
+          args:
+            - |
+              # Ensure these Helm values exist in your values.yaml or provide defaults
+              retries={{ .Values.opensecurity.initRetryCount | default 30 }} # Added default just in case
+              delay={{ .Values.opensecurity.initRetryDelay | default 5 }}    # Added default just in case
+
+              echo "InitContainer (scheduler): Waiting for core-service at ${CORE_HEALTH_URL}…"
+              count=0
+              # Loop until curl successfully retrieves the health endpoint (HTTP 2xx/3xx)
+              # -sf: silent (-s) and fail on server error (-f)
+              until curl -sf "${CORE_HEALTH_URL}" -o /dev/null; do
+                count=$((count+1))
+                if [ "$count" -ge "$retries" ]; then
+                  echo "InitContainer (scheduler): core-service at ${CORE_HEALTH_URL} still unreachable after ${retries} retries – exiting."
+                  exit 1
+                fi
+                echo "InitContainer (scheduler): Sleeping ${delay}s before retrying core-service (attempt ${count}/${retries})…"
+                sleep "${delay}"
+              done
+              echo "InitContainer (scheduler): core-service is healthy!"
+      # <<< END: initContainers Block >>>
+
       containers:
       - name: scheduler
         image: "{{ .Values.opensecurity.docker.registry }}/scheduler-service:{{ .Values.opensecurity.docker.tags.schedulerService }}"
@@ -42,6 +73,7 @@ spec:
         - --id=$(SCHEDULER_ID)
         imagePullPolicy: Always
         env:
+        # --- Keep all existing env vars ---
         - name: NATS_URL
           value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
         - name: HTTP_ADDRESS
@@ -108,19 +140,14 @@ spec:
           value: "scheduler.{{ .Release.Namespace }}.svc.cluster.local:5252"
         - name: DESCRIBE_DELIVER_ENDPOINT_LOCAL
           value: "es-sink-service.{{ .Release.Namespace }}.svc.cluster.local:5252"
-{{/*        - name: DESCRIBE_DELIVER_ENDPOINT_EXTERNAL*/}}
-{{/*          value: "{{ .Values.opensecurity.domain.grpc_external }}:443"*/}}
-
         - name: KMS_ACCOUNT_REGION
           value: "us-east-2"
-          
         - name: VAULT_PROVIDER
           value: "hashicorp-vault"
         - name: VAULT_HASHICORP_ADDRESS
           value: "http://{{ .Release.Name }}-vault-internal.{{.Release.Namespace}}.svc.cluster.local:8200"
         - name: VAULT_KEY_ID
           value: {{ .Values.opensecurity.vault.keyID }}
-
         - name: DO_DELETE_OLD_RESOURCES
           value: "true"
         - name: DO_PROCESS_RECEIVED_MSGS

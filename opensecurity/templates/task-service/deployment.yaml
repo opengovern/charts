@@ -17,12 +17,48 @@ spec:
         app: task-service
     spec:
       serviceAccountName: task
+
+      # <<< BEGIN: initContainers Block >>>
+      initContainers:
+        - name: wait-for-core-service
+          image: curlimages/curl:8.5.0 # Consistent image
+          env:
+            - name: CORE_HEALTH_URL
+              # URL for the core-service health endpoint
+              value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251/health"
+          command: ["sh","-xc"]
+          args:
+            - |
+              # Consistent use of Helm values with defaults
+              retries={{ .Values.opensecurity.initRetryCount | default 30 }}
+              delay={{ .Values.opensecurity.initRetryDelay | default 5 }}
+
+              # Updated logging context to 'task-service'
+              echo "InitContainer (task-service): Waiting for core-service at ${CORE_HEALTH_URL}…"
+              count=0
+              # Loop until core-service health check succeeds
+              until curl -sf "${CORE_HEALTH_URL}" -o /dev/null; do
+                count=$((count+1))
+                if [ "$count" -ge "$retries" ]; then
+                  # Updated logging context
+                  echo "InitContainer (task-service): core-service at ${CORE_HEALTH_URL} still unreachable after ${retries} retries – exiting."
+                  exit 1
+                fi
+                # Updated logging context
+                echo "InitContainer (task-service): Sleeping ${delay}s before retrying core-service (attempt ${count}/${retries})…"
+                sleep "${delay}"
+              done
+              # Updated logging context
+              echo "InitContainer (task-service): core-service is healthy!"
+      # <<< END: initContainers Block >>>
+
       containers:
       - name: task-service
         image: "{{ .Values.opensecurity.docker.registry }}/task-service:{{ .Values.opensecurity.docker.tags.tasks }}"
         command: ["/task-service"]
         imagePullPolicy: Always
         env:
+        # --- Keep all existing env vars ---
         - name: TASKS_POSTGRES__HOST
           value: "{{ include "postgres.endpoint" . }}"
         - name: TASKS_POSTGRES__PORT
@@ -62,7 +98,7 @@ spec:
           value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
         - name: SCALED_OBJECT_NATS_URL
           value: "{{ .Release.Namespace }}-nats-headless.{{ .Release.Namespace }}.svc.cluster.local:8222"
-        - name: CORE_BASEURL
+        - name: CORE_BASEURL # Note: This seems redundant with TASKS_CORE__BASE_URL
           value: "http://core-service.{{ .Release.Namespace }}.svc.cluster.local:6251"
-        - name: NATS_URL
+        - name: NATS_URL # Note: This seems redundant with TASKS_NATS__URL
           value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
