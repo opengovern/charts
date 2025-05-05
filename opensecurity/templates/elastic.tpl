@@ -9,4 +9,6 @@
   value: "myStrongPassword@123!"
 - name: ELASTICSEARCH_INGESTION_ENDPOINT
   value: ""
+- name: ELASTICSEARCH_ISONAKS
+  value: "true"
 {{- end }}

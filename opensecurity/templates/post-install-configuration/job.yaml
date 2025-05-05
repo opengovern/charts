@@ -72,7 +72,7 @@ spec:
               # Assumes prometheus pushgateway exists at this address
               value: "prom-system-prometheus-pushgateway.prom-system.svc.cluster.local:9091"
             - name: IS_MANUAL
-              value: "false"
+              value: "true"
             - name: JAEGER_AGENT_HOST # For tracing
               valueFrom:
                 fieldRef:

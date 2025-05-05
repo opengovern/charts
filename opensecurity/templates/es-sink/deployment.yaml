@@ -1,4 +1,3 @@
-{{- /* /Users/anil/workspace/charts/opensecurity/templates/es-sink/deployment.yaml */}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -37,9 +36,9 @@ spec:
             - name: ES_URL
               value: "https://opensearch-cluster-master.{{ .Release.Namespace }}.svc.cluster.local:9200"
             - name: ES_USER
-              value: "{{ .Values.opensecurity.elasticsearch.user }}"
+              value: "admin"
             - name: ES_PASS
-              value: "{{ .Values.opensecurity.elasticsearch.password }}"
+              value: "myStrongPassword@123!"
           command: ["sh","-xc"]
           args:
             - |
@@ -88,9 +87,9 @@ spec:
             - name: ESSINK_ELASTICSEARCH__IS_ON_AKS
               value: "true"
             - name: ESSINK_ELASTICSEARCH__USERNAME
-              value: "{{ .Values.opensecurity.elasticsearch.user }}"
+              value: "admin"
             - name: ESSINK_ELASTICSEARCH__PASSWORD
-              value: "{{ .Values.opensecurity.elasticsearch.password }}"
+              value: "myStrongPassword@123!"
             - name: ESSINK_NATS__URL
               value: "{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222"
 
