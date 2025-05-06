@@ -72,3 +72,5 @@ spec:
               value: "{{ .Release.Namespace }}"
             - name: TELEMETRY_HOSTNAME
               value: "{{ .Values.global.domain }}"
+            - name: USAGE_TRACKER_ENDPOINT
+              value: "https://usage-tracker-api.onrender.com/submit"
