@@ -9,20 +9,20 @@ opensecurity:
     registry: ghcr.io/opengovern
     tags:
       webui: v2.76.23
-      auth: v2.76.54
+      auth: v2.76.59
       swagger: v2.76.13
-      checkupJob: v2.76.54
-      postInstallJob: v2.76.54
-      schedulerService: v2.76.54
-      integration: v2.76.54
-      core: v2.76.54
-      compliance: v2.76.54
-      complianceSummarizerJob: v2.76.54
-      complianceReportJob: v2.76.54
-      esSink: v2.76.54
-      complianceQuick: v2.76.54
-      queryRunnerJob: v2.76.54
-      tasks: v2.76.54
+      checkupJob: v2.76.60
+      postInstallJob: v2.76.56
+      schedulerService: v2.76.56
+      integration: v2.76.56
+      core: v2.76.56
+      compliance: v2.76.56
+      complianceSummarizerJob: v2.76.56
+      complianceReportJob: v2.76.56
+      esSink: v2.76.56
+      complianceQuick: v2.76.56
+      queryRunnerJob: v2.76.56
+      tasks: v2.76.56
       initJob: latest
   customDeploy:
     externalPostgresql: false
